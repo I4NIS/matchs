@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Report - Bind</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f1923; color: #ece8e1; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; background: #1f2326; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .header { text-align: center; border-bottom: 2px solid #ff4655; padding-bottom: 20px; margin-bottom: 30px; }
+        .header h1 { color: #ff4655; font-size: 2.5em; margin: 0 0 10px 0; text-transform: uppercase;}
+        .subtitle { font-size: 1.2em; color: #8b978f; }
+        .score { font-size: 3em; font-weight: bold; margin: 20px 0; }
+        .is-win { color: #00ff87; }
+        .is-loss { color: #ff4655; }
+        
+        .section-title { font-size: 1.5em; border-bottom: 1px solid #454545; padding-bottom: 10px; margin-top: 40px; color: #ff4655;}
+        
+        .most-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;}
+        .most-card { background: #2a2e33; padding: 15px; border-radius: 6px; text-align: center; }
+        .most-title { font-size: 0.9em; color: #8b978f; text-transform: uppercase; margin-bottom: 5px;}
+        .most-value { font-weight: bold; font-size: 1.1em; }
+        
+        .player-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .player-table th, .player-table td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
+        .player-table th { background: #2a2e33; color: #ff4655; text-transform: uppercase; font-size: 0.9em; }
+        .player-row:hover { background: #2a2e33; }
+        
+        .agent-img { width: 40px; border-radius: 50%; vertical-align: middle; margin-right: 10px; }
+        .blue-team { border-left: 4px solid #00ff87; }
+        .red-team { border-left: 4px solid #ff4655; }
+        
+        .details-small { font-size: 0.8em; color: #aaa; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Rapport de Match - Bind</h1>
+            <div class="subtitle">Competitive | EU | Friday, April 03, 2026 07:55 PM</div>
+            <div class="score"><span class="is-win">Victoire</span> 13 - 6</div>
+        </div>
+
+        <h2 class="section-title">Les "Most" du Match</h2>
+        <div class="most-grid">
+            <div class="most-card"><div class="most-title">Spike Planté</div><div class="most-value">SEΛNC#swag (3)</div></div>
+            <div class="most-card"><div class="most-title">Spike Désamorcé</div><div class="most-value">SEΛNC#swag (1)</div></div>
+            <div class="most-card"><div class="most-title">Headshot %</div><div class="most-value">Leeeeeroooy#JENKI (41%)</div></div>
+            <div class="most-card"><div class="most-title">Legshot %</div><div class="most-value">SEΛNC#swag (19%)</div></div>
+            <div class="most-card"><div class="most-title">Dégats Infligés</div><div class="most-value">zab valorant#11167 (3793)</div></div>
+            <div class="most-card"><div class="most-title">Dégats Reçus</div><div class="most-value">Leeeeeroooy#JENKI (3428)</div></div>
+            <div class="most-card"><div class="most-title">Écart Dégats (Made-Received)</div><div class="most-value">I4NIS#128GO (1681)</div></div>
+        </div>
+
+        <h2 class="section-title">Tableau des scores</h2>
+        <table class="player-table">
+            <thead>
+                <tr>
+                    <th>Joueur</th>
+                    <th>Rank / Lvl</th>
+                    <th>Score / KDA</th>
+                    <th>Précision (H/B/L)</th>
+                    <th>Économie (Loadout)</th>
+                    <th>Armes / Versus</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" class="agent-img" alt="Jett">
+                        <strong>zab valorant#11167</strong> (Jett)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 164</small></td>
+                    <td><strong>6030</strong><br>22/10/4</td>
+                    <td>14% / 81% / 6%</td>
+                    <td>4218¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Spectre: 5, Operator: 4, Ghost: 3, Vandal: 3, Outlaw: 2, None: 2, Phantom: 2, Sheriff: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Marteen#M16: 3-1 | vs Groot#1307: 4-2 | vs Leeeeeroooy#JENKI: 7-2 | vs Akuzu#0001: 4-2 | vs Sabeos#p4x: 4-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="agent-img" alt="Neon">
+                        <strong>I4NIS#128GO</strong> (Neon)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 313</small></td>
+                    <td><strong>5679</strong><br>20/10/3</td>
+                    <td>14% / 78% / 8%</td>
+                    <td>3579¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Phantom: 10, Ghost: 3, Spectre: 3, Vandal: 2, Bucky: 1, Shorty: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Leeeeeroooy#JENKI: 4-3 | vs Groot#1307: 3-3 | vs Sabeos#p4x: 4-0 | vs Akuzu#0001: 5-3 | vs Marteen#M16: 4-1</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/6f2a04ca-43e0-be17-7f36-b3908627744d/displayicon.png" class="agent-img" alt="Skye">
+                        <strong>SmallCornishPipe#AAAA</strong> (Skye)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 150</small></td>
+                    <td><strong>5365</strong><br>19/9/6</td>
+                    <td>26% / 63% / 11%</td>
+                    <td>4011¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 9, Spectre: 5, Phantom: 3, Ghost: 2</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Sabeos#p4x: 3-1 | vs Akuzu#0001: 6-0 | vs Leeeeeroooy#JENKI: 4-3 | vs Groot#1307: 4-4 | vs Marteen#M16: 2-1</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="agent-img" alt="Chamber">
+                        <strong>Groot#1307</strong> (Chamber)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 238</small></td>
+                    <td><strong>4277</strong><br>15/13/0</td>
+                    <td>28% / 63% / 9%</td>
+                    <td>3442¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 12, Bucky: 1, Operator: 1, None: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs ネイコ N e y k o#1001: 3-1 | vs SEΛNC#swag: 3-1 | vs I4NIS#128GO: 3-3 | vs SmallCornishPipe#AAAA: 4-4 | vs zab valorant#11167: 2-4</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayicon.png" class="agent-img" alt="Clove">
+                        <strong>Leeeeeroooy#JENKI</strong> (Clove)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 278</small></td>
+                    <td><strong>3872</strong><br>13/19/2</td>
+                    <td>41% / 55% / 3%</td>
+                    <td>3324¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 7, Sheriff: 3, Classic: 2, Ghost: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs SEΛNC#swag: 3-1 | vs SmallCornishPipe#AAAA: 3-4 | vs ネイコ N e y k o#1001: 2-3 | vs zab valorant#11167: 2-7 | vs I4NIS#128GO: 3-4</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png" class="agent-img" alt="Cypher">
+                        <strong>ネイコ N e y k o#1001</strong> (Cypher)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 202</small></td>
+                    <td><strong>2690</strong><br>9/10/7</td>
+                    <td>41% / 55% / 3%</td>
+                    <td>3371¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 7, Spectre: 1, Ghost: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Sabeos#p4x: 4-1 | vs Leeeeeroooy#JENKI: 3-2 | vs Marteen#M16: 1-2 | vs Groot#1307: 1-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/41fb69c1-4189-7b37-f117-bcaf1e96f1bf/displayicon.png" class="agent-img" alt="Astra">
+                        <strong>SEΛNC#swag</strong> (Astra)
+                    </td>
+                    <td>Diamond 2<br><small>Lvl 206</small></td>
+                    <td><strong>2500</strong><br>9/10/13</td>
+                    <td>16% / 66% / 19%</td>
+                    <td>3634¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 6, Spectre: 2, Ghost: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Akuzu#0001: 2-0 | vs Marteen#M16: 4-3 | vs Sabeos#p4x: 1-1 | vs Groot#1307: 1-3 | vs Leeeeeroooy#JENKI: 1-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/f94c3b30-42be-e959-889c-5aa313dba261/displayicon.png" class="agent-img" alt="Raze">
+                        <strong>Akuzu#0001</strong> (Raze)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 437</small></td>
+                    <td><strong>2405</strong><br>7/17/2</td>
+                    <td>21% / 79% / 0%</td>
+                    <td>3242¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 3, Phantom: 2, Bucky: 1, Classic: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs ネイコ N e y k o#1001: 2-0 | vs I4NIS#128GO: 3-5 | vs zab valorant#11167: 2-4</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/df1cb487-4902-002e-5c17-d28e83e78588/displayicon.png" class="agent-img" alt="Waylay">
+                        <strong>Marteen#M16</strong> (Waylay)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 182</small></td>
+                    <td><strong>2251</strong><br>8/14/0</td>
+                    <td>21% / 67% / 12%</td>
+                    <td>3503¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 4, Ghost: 2, Operator: 1, Guardian: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs I4NIS#128GO: 1-4 | vs ネイコ N e y k o#1001: 2-1 | vs SEΛNC#swag: 3-4 | vs SmallCornishPipe#AAAA: 1-2 | vs zab valorant#11167: 1-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/601dbbe7-43ce-be57-2a40-4abd24953621/displayicon.png" class="agent-img" alt="KAY/O">
+                        <strong>Sabeos#p4x</strong> (KAY/O)
+                    </td>
+                    <td>Unrated<br><small>Lvl 88</small></td>
+                    <td><strong>2180</strong><br>6/16/4</td>
+                    <td>19% / 81% / 0%</td>
+                    <td>3158¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 6</div>
+                        <div class="details-small"><strong>Versus:</strong> vs zab valorant#11167: 3-4 | vs ネイコ N e y k o#1001: 1-4 | vs SEΛNC#swag: 1-1 | vs SmallCornishPipe#AAAA: 1-3</div>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
