@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Report - Haven</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f1923; color: #ece8e1; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; background: #1f2326; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .header { text-align: center; border-bottom: 2px solid #ff4655; padding-bottom: 20px; margin-bottom: 30px; }
+        .header h1 { color: #ff4655; font-size: 2.5em; margin: 0 0 10px 0; text-transform: uppercase;}
+        .subtitle { font-size: 1.2em; color: #8b978f; }
+        .score { font-size: 3em; font-weight: bold; margin: 20px 0; }
+        .is-win { color: #00ff87; }
+        .is-loss { color: #ff4655; }
+        
+        .section-title { font-size: 1.5em; border-bottom: 1px solid #454545; padding-bottom: 10px; margin-top: 40px; color: #ff4655;}
+        
+        .most-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;}
+        .most-card { background: #2a2e33; padding: 15px; border-radius: 6px; text-align: center; }
+        .most-title { font-size: 0.9em; color: #8b978f; text-transform: uppercase; margin-bottom: 5px;}
+        .most-value { font-weight: bold; font-size: 1.1em; }
+        
+        .player-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .player-table th, .player-table td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
+        .player-table th { background: #2a2e33; color: #ff4655; text-transform: uppercase; font-size: 0.9em; }
+        .player-row:hover { background: #2a2e33; }
+        
+        .agent-img { width: 40px; border-radius: 50%; vertical-align: middle; margin-right: 10px; }
+        .blue-team { border-left: 4px solid #00ff87; }
+        .red-team { border-left: 4px solid #ff4655; }
+        
+        .details-small { font-size: 0.8em; color: #aaa; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Rapport de Match - Haven</h1>
+            <div class="subtitle">Competitive | EU | Monday, March 30, 2026 08:46 PM</div>
+            <div class="score"><span class="is-loss">Défaite</span> 11 - 13</div>
+        </div>
+
+        <h2 class="section-title">Les "Most" du Match</h2>
+        <div class="most-grid">
+            <div class="most-card"><div class="most-title">Spike Planté</div><div class="most-value">Expense#8122 (8)</div></div>
+            <div class="most-card"><div class="most-title">Spike Désamorcé</div><div class="most-value">G Herbo#NLMBG (1)</div></div>
+            <div class="most-card"><div class="most-title">Headshot %</div><div class="most-value">onetap1#tap (40%)</div></div>
+            <div class="most-card"><div class="most-title">Legshot %</div><div class="most-value">G Herbo#NLMBG (14%)</div></div>
+            <div class="most-card"><div class="most-title">Dégats Infligés</div><div class="most-value">n1no#ggwp (4539)</div></div>
+            <div class="most-card"><div class="most-title">Dégats Reçus</div><div class="most-value">G Herbo#NLMBG (4344)</div></div>
+            <div class="most-card"><div class="most-title">Écart Dégats (Made-Received)</div><div class="most-value">n1no#ggwp (900)</div></div>
+        </div>
+
+        <h2 class="section-title">Tableau des scores</h2>
+        <table class="player-table">
+            <thead>
+                <tr>
+                    <th>Joueur</th>
+                    <th>Rank / Lvl</th>
+                    <th>Score / KDA</th>
+                    <th>Précision (H/B/L)</th>
+                    <th>Économie (Loadout)</th>
+                    <th>Armes / Versus</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="agent-img" alt="Chamber">
+                        <strong>n1no#ggwp</strong> (Chamber)
+                    </td>
+                    <td>Unrated<br><small>Lvl 156</small></td>
+                    <td><strong>6606</strong><br>21/19/4</td>
+                    <td>20% / 80% / 0%</td>
+                    <td>3842¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 10, Operator: 5, None: 4, Guardian: 2</div>
+                        <div class="details-small"><strong>Versus:</strong> vs rage baiter#8891: 6-2 | vs G Herbo#NLMBG: 7-4 | vs Oxumpart#1012: 3-5 | vs ヨプラニー#81541: 5-2</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="agent-img" alt="Phoenix">
+                        <strong>G Herbo#NLMBG</strong> (Phoenix)
+                    </td>
+                    <td>Diamond 1<br><small>Lvl 188</small></td>
+                    <td><strong>6182</strong><br>21/18/9</td>
+                    <td>14% / 72% / 14%</td>
+                    <td>3646¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 8, Phantom: 7, Marshal: 4, Sheriff: 2</div>
+                        <div class="details-small"><strong>Versus:</strong> vs I4NIS#128GO: 6-3 | vs Y0nkoso#ASCE: 5-3 | vs onetap1#tap: 4-2 | vs cholot#qlf: 2-3 | vs n1no#ggwp: 4-7</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png" class="agent-img" alt="Omen">
+                        <strong>Oxumpart#1012</strong> (Omen)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 453</small></td>
+                    <td><strong>6179</strong><br>21/18/6</td>
+                    <td>33% / 60% / 6%</td>
+                    <td>3719¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 10, Guardian: 7, Ghost: 3, Sheriff: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Y0nkoso#ASCE: 5-2 | vs n1no#ggwp: 5-3 | vs cholot#qlf: 3-1 | vs onetap1#tap: 5-10 | vs I4NIS#128GO: 3-2</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" class="agent-img" alt="Jett">
+                        <strong>onetap1#tap</strong> (Jett)
+                    </td>
+                    <td>Diamond 2<br><small>Lvl 251</small></td>
+                    <td><strong>6103</strong><br>19/19/5</td>
+                    <td>40% / 54% / 6%</td>
+                    <td>3121¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 14, Sheriff: 3, None: 2</div>
+                        <div class="details-small"><strong>Versus:</strong> vs ヨプラニー#81541: 5-2 | vs Oxumpart#1012: 10-5 | vs Expense#8122: 2-4 | vs G Herbo#NLMBG: 2-4</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayicon.png" class="agent-img" alt="Clove">
+                        <strong>Y0nkoso#ASCE</strong> (Clove)
+                    </td>
+                    <td>Diamond 1<br><small>Lvl 188</small></td>
+                    <td><strong>5429</strong><br>19/19/4</td>
+                    <td>13% / 76% / 10%</td>
+                    <td>3777¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Phantom: 10, Vandal: 7, Classic: 1, Stinger: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs rage baiter#8891: 5-4 | vs G Herbo#NLMBG: 3-5 | vs ヨプラニー#81541: 4-2 | vs Expense#8122: 5-3 | vs Oxumpart#1012: 2-5</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png" class="agent-img" alt="Cypher">
+                        <strong>rage baiter#8891</strong> (Cypher)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 179</small></td>
+                    <td><strong>5170</strong><br>19/17/3</td>
+                    <td>28% / 60% / 11%</td>
+                    <td>3202¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 10, Ares: 3, Phantom: 3, Sheriff: 1, Ghost: 1, Spectre: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs cholot#qlf: 4-3 | vs onetap1#tap: 4-0 | vs I4NIS#128GO: 5-3 | vs n1no#ggwp: 2-6 | vs Y0nkoso#ASCE: 4-5</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" class="agent-img" alt="Jett">
+                        <strong>ヨプラニー#81541</strong> (Jett)
+                    </td>
+                    <td>Platinum 3<br><small>Lvl 80</small></td>
+                    <td><strong>4417</strong><br>15/21/3</td>
+                    <td>23% / 66% / 11%</td>
+                    <td>3638¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Phantom: 5, None: 4, Outlaw: 2, Vandal: 2, Sheriff: 1, Operator: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs n1no#ggwp: 2-5 | vs I4NIS#128GO: 4-1 | vs onetap1#tap: 2-5 | vs Y0nkoso#ASCE: 2-4 | vs cholot#qlf: 5-6</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/320b2a48-4d9b-a075-30f1-1f93a9b638fa/displayicon.png" class="agent-img" alt="Sova">
+                        <strong>Expense#8122</strong> (Sova)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 238</small></td>
+                    <td><strong>4069</strong><br>17/12/5</td>
+                    <td>13% / 81% / 6%</td>
+                    <td>3725¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 7, Sheriff: 3, Guardian: 3, Classic: 2, Spectre: 2</div>
+                        <div class="details-small"><strong>Versus:</strong> vs onetap1#tap: 4-2 | vs cholot#qlf: 3-2 | vs Y0nkoso#ASCE: 3-5 | vs n1no#ggwp: 6-0 | vs I4NIS#128GO: 1-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="agent-img" alt="Gekko">
+                        <strong>cholot#qlf</strong> (Gekko)
+                    </td>
+                    <td>Diamond 1<br><small>Lvl 170</small></td>
+                    <td><strong>4061</strong><br>15/17/3</td>
+                    <td>35% / 59% / 6%</td>
+                    <td>3558¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 9, Ghost: 4, Sheriff: 1, Marshal: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs ヨプラニー#81541: 6-5 | vs Expense#8122: 2-3 | vs rage baiter#8891: 3-4 | vs G Herbo#NLMBG: 3-2 | vs Oxumpart#1012: 1-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="agent-img" alt="Neon">
+                        <strong>I4NIS#128GO</strong> (Neon)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 312</small></td>
+                    <td><strong>3540</strong><br>12/19/5</td>
+                    <td>26% / 69% / 5%</td>
+                    <td>3225¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 9, Ghost: 2, None: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Oxumpart#1012: 2-3 | vs Expense#8122: 3-1 | vs G Herbo#NLMBG: 3-6 | vs rage baiter#8891: 3-5 | vs ヨプラニー#81541: 1-4</div>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
