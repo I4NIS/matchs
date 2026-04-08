@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Report - Fracture</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f1923; color: #ece8e1; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; background: #1f2326; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .header { text-align: center; border-bottom: 2px solid #ff4655; padding-bottom: 20px; margin-bottom: 30px; }
+        .header h1 { color: #ff4655; font-size: 2.5em; margin: 0 0 10px 0; text-transform: uppercase;}
+        .subtitle { font-size: 1.2em; color: #8b978f; }
+        .score { font-size: 3em; font-weight: bold; margin: 20px 0; }
+        .is-win { color: #00ff87; }
+        .is-loss { color: #ff4655; }
+        
+        .section-title { font-size: 1.5em; border-bottom: 1px solid #454545; padding-bottom: 10px; margin-top: 40px; color: #ff4655;}
+        
+        .most-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;}
+        .most-card { background: #2a2e33; padding: 15px; border-radius: 6px; text-align: center; }
+        .most-title { font-size: 0.9em; color: #8b978f; text-transform: uppercase; margin-bottom: 5px;}
+        .most-value { font-weight: bold; font-size: 1.1em; }
+        
+        .player-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .player-table th, .player-table td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
+        .player-table th { background: #2a2e33; color: #ff4655; text-transform: uppercase; font-size: 0.9em; }
+        .player-row:hover { background: #2a2e33; }
+        
+        .agent-img { width: 40px; border-radius: 50%; vertical-align: middle; margin-right: 10px; }
+        .blue-team { border-left: 4px solid #00ff87; }
+        .red-team { border-left: 4px solid #ff4655; }
+        
+        .details-small { font-size: 0.8em; color: #aaa; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Rapport de Match - Fracture</h1>
+            <div class="subtitle">Competitive | EU | Tuesday, March 31, 2026 04:36 PM</div>
+            <div class="score"><span class="is-win">Victoire</span> 13 - 6</div>
+        </div>
+
+        <h2 class="section-title">Les "Most" du Match</h2>
+        <div class="most-grid">
+            <div class="most-card"><div class="most-title">Spike Planté</div><div class="most-value">cholot#qlf (4)</div></div>
+            <div class="most-card"><div class="most-title">Spike Désamorcé</div><div class="most-value">cholot#qlf (2)</div></div>
+            <div class="most-card"><div class="most-title">Headshot %</div><div class="most-value">ikpo#8484 (66%)</div></div>
+            <div class="most-card"><div class="most-title">Legshot %</div><div class="most-value">Ireeyツ#GxF (20%)</div></div>
+            <div class="most-card"><div class="most-title">Dégats Infligés</div><div class="most-value">ikpo#8484 (3881)</div></div>
+            <div class="most-card"><div class="most-title">Dégats Reçus</div><div class="most-value">Shaos#6900 (3395)</div></div>
+            <div class="most-card"><div class="most-title">Écart Dégats (Made-Received)</div><div class="most-value">ikpo#8484 (1822)</div></div>
+        </div>
+
+        <h2 class="section-title">Tableau des scores</h2>
+        <table class="player-table">
+            <thead>
+                <tr>
+                    <th>Joueur</th>
+                    <th>Rank / Lvl</th>
+                    <th>Score / KDA</th>
+                    <th>Précision (H/B/L)</th>
+                    <th>Économie (Loadout)</th>
+                    <th>Armes / Versus</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="agent-img" alt="Chamber">
+                        <strong>ikpo#8484</strong> (Chamber)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 136</small></td>
+                    <td><strong>5465</strong><br>21/9/5</td>
+                    <td>66% / 34% / 0%</td>
+                    <td>3937¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> None: 11, Vandal: 7, Phantom: 3</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Shiipudèn#1345: 6-5 | vs tAArt1n#1337: 5-0 | vs iced matcha#lait: 5-0 | vs Shaos#6900: 3-1 | vs tifo#valo: 2-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/7c8a4701-4de6-9355-b254-e09bc2a34b72/displayicon.png" class="agent-img" alt="Miks">
+                        <strong>iced matcha#lait</strong> (Miks)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 276</small></td>
+                    <td><strong>5063</strong><br>18/14/4</td>
+                    <td>43% / 57% / 0%</td>
+                    <td>3468¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 16, Ghost: 1, Classic: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs I4NIS#128GO: 6-3 | vs cholot#qlf: 4-3 | vs Ireeyツ#GxF: 5-2 | vs Nebaヅ#777: 3-1</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="agent-img" alt="Gekko">
+                        <strong>cholot#qlf</strong> (Gekko)
+                    </td>
+                    <td>Diamond 1<br><small>Lvl 170</small></td>
+                    <td><strong>4784</strong><br>19/11/1</td>
+                    <td>30% / 65% / 5%</td>
+                    <td>3811¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 9, Bulldog: 6, Ghost: 3, Outlaw: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs tifo#valo: 4-0 | vs Shiipudèn#1345: 4-1 | vs iced matcha#lait: 3-4 | vs Shaos#6900: 7-1 | vs tAArt1n#1337: 1-5</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="agent-img" alt="Neon">
+                        <strong>I4NIS#128GO</strong> (Neon)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 312</small></td>
+                    <td><strong>4023</strong><br>14/15/3</td>
+                    <td>16% / 76% / 8%</td>
+                    <td>3629¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Phantom: 5, Vandal: 5, Judge: 2, Ghost: 1, Sheriff: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs iced matcha#lait: 3-6 | vs Shaos#6900: 5-0 | vs Shiipudèn#1345: 1-2 | vs tifo#valo: 3-4 | vs tAArt1n#1337: 2-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/9f0d8ba9-4140-b941-57d3-a7ad57c6b417/displayicon.png" class="agent-img" alt="Brimstone">
+                        <strong>Ireeyツ#GxF</strong> (Brimstone)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 112</small></td>
+                    <td><strong>3971</strong><br>14/12/8</td>
+                    <td>13% / 67% / 20%</td>
+                    <td>3939¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 9, Spectre: 1, Sheriff: 1, None: 1, Ghost: 1, Bulldog: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs tifo#valo: 3-4 | vs tAArt1n#1337: 5-1 | vs iced matcha#lait: 2-5 | vs Shaos#6900: 1-1 | vs Shiipudèn#1345: 3-1</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" class="agent-img" alt="Reyna">
+                        <strong>tifo#valo</strong> (Reyna)
+                    </td>
+                    <td>Diamond 1<br><small>Lvl 35</small></td>
+                    <td><strong>3945</strong><br>12/13/4</td>
+                    <td>18% / 73% / 8%</td>
+                    <td>3761¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 4, Phantom: 3, Spectre: 3, Operator: 1, Judge: 1, None: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Ireeyツ#GxF: 4-3 | vs ikpo#8484: 3-2 | vs I4NIS#128GO: 4-3 | vs Nebaヅ#777: 1-1 | vs tifo#valo: 1-1</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" class="agent-img" alt="Jett">
+                        <strong>Nebaヅ#777</strong> (Jett)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 269</small></td>
+                    <td><strong>3632</strong><br>11/13/6</td>
+                    <td>23% / 70% / 6%</td>
+                    <td>3771¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 6, Ghost: 2, None: 1, Sheriff: 1, Guardian: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Shaos#6900: 4-4 | vs tAArt1n#1337: 3-2 | vs tifo#valo: 1-1 | vs Shiipudèn#1345: 2-3 | vs iced matcha#lait: 1-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/569fdd95-4d10-43ab-ca70-79becc718b46/displayicon.png" class="agent-img" alt="Sage">
+                        <strong>tAArt1n#1337</strong> (Sage)
+                    </td>
+                    <td>Diamond 2<br><small>Lvl 199</small></td>
+                    <td><strong>3447</strong><br>11/16/3</td>
+                    <td>22% / 69% / 10%</td>
+                    <td>3108¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Guardian: 5, Vandal: 3, Phantom: 2, Sheriff: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs cholot#qlf: 5-1 | vs Nebaヅ#777: 2-3 | vs I4NIS#128GO: 3-2 | vs Ireeyツ#GxF: 1-5</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="agent-img" alt="Chamber">
+                        <strong>Shiipudèn#1345</strong> (Chamber)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 169</small></td>
+                    <td><strong>3053</strong><br>12/16/0</td>
+                    <td>59% / 41% / 0%</td>
+                    <td>3261¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 7, None: 5</div>
+                        <div class="details-small"><strong>Versus:</strong> vs I4NIS#128GO: 2-1 | vs Ireeyツ#GxF: 1-3 | vs Nebaヅ#777: 3-2 | vs ikpo#8484: 5-6 | vs cholot#qlf: 1-4</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" class="agent-img" alt="Jett">
+                        <strong>Shaos#6900</strong> (Jett)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 246</small></td>
+                    <td><strong>2281</strong><br>7/20/2</td>
+                    <td>50% / 50% / 0%</td>
+                    <td>2847¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 4, Sheriff: 1, Guardian: 1, Phantom: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Nebaヅ#777: 4-4 | vs cholot#qlf: 1-7 | vs Ireeyツ#GxF: 1-1 | vs ikpo#8484: 1-3</div>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
