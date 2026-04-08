@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Report - Bind</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f1923; color: #ece8e1; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; background: #1f2326; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .header { text-align: center; border-bottom: 2px solid #ff4655; padding-bottom: 20px; margin-bottom: 30px; }
+        .header h1 { color: #ff4655; font-size: 2.5em; margin: 0 0 10px 0; text-transform: uppercase;}
+        .subtitle { font-size: 1.2em; color: #8b978f; }
+        .score { font-size: 3em; font-weight: bold; margin: 20px 0; }
+        .is-win { color: #00ff87; }
+        .is-loss { color: #ff4655; }
+        
+        .section-title { font-size: 1.5em; border-bottom: 1px solid #454545; padding-bottom: 10px; margin-top: 40px; color: #ff4655;}
+        
+        .most-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;}
+        .most-card { background: #2a2e33; padding: 15px; border-radius: 6px; text-align: center; }
+        .most-title { font-size: 0.9em; color: #8b978f; text-transform: uppercase; margin-bottom: 5px;}
+        .most-value { font-weight: bold; font-size: 1.1em; }
+        
+        .player-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .player-table th, .player-table td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
+        .player-table th { background: #2a2e33; color: #ff4655; text-transform: uppercase; font-size: 0.9em; }
+        .player-row:hover { background: #2a2e33; }
+        
+        .agent-img { width: 40px; border-radius: 50%; vertical-align: middle; margin-right: 10px; }
+        .blue-team { border-left: 4px solid #00ff87; }
+        .red-team { border-left: 4px solid #ff4655; }
+        
+        .details-small { font-size: 0.8em; color: #aaa; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Rapport de Match - Bind</h1>
+            <div class="subtitle">Competitive | EU | Saturday, April 04, 2026 12:20 PM</div>
+            <div class="score"><span class="is-win">Victoire</span> 13 - 9</div>
+        </div>
+
+        <h2 class="section-title">Les "Most" du Match</h2>
+        <div class="most-grid">
+            <div class="most-card"><div class="most-title">Spike Planté</div><div class="most-value">bipo#lmao (3)</div></div>
+            <div class="most-card"><div class="most-title">Spike Désamorcé</div><div class="most-value">Wazzy#M8WIN (2)</div></div>
+            <div class="most-card"><div class="most-title">Headshot %</div><div class="most-value">BySweenn#A29 (52%)</div></div>
+            <div class="most-card"><div class="most-title">Legshot %</div><div class="most-value">overlord Jinwoo#0001 (6%)</div></div>
+            <div class="most-card"><div class="most-title">Dégats Infligés</div><div class="most-value">Wazzy#M8WIN (4473)</div></div>
+            <div class="most-card"><div class="most-title">Dégats Reçus</div><div class="most-value">bipo#lmao (3366)</div></div>
+            <div class="most-card"><div class="most-title">Écart Dégats (Made-Received)</div><div class="most-value">년에 공식 언어가되었#XVIIX (1370)</div></div>
+        </div>
+
+        <h2 class="section-title">Tableau des scores</h2>
+        <table class="player-table">
+            <thead>
+                <tr>
+                    <th>Joueur</th>
+                    <th>Rank / Lvl</th>
+                    <th>Score / KDA</th>
+                    <th>Précision (H/B/L)</th>
+                    <th>Économie (Loadout)</th>
+                    <th>Armes / Versus</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="agent-img" alt="Chamber">
+                        <strong>년에 공식 언어가되었#XVIIX</strong> (Chamber)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 154</small></td>
+                    <td><strong>6972</strong><br>25/16/1</td>
+                    <td>25% / 75% / 0%</td>
+                    <td>3436¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 14, None: 8, Sheriff: 2, Marshal: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Wazzy#M8WIN: 7-5 | vs I4NIS#128GO: 4-3 | vs BySweenn#A29: 5-4 | vs Kavoune#2211: 4-2 | vs Tarezium#1204: 5-2</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="agent-img" alt="Neon">
+                        <strong>I4NIS#128GO</strong> (Neon)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 314</small></td>
+                    <td><strong>6912</strong><br>25/12/3</td>
+                    <td>23% / 73% / 4%</td>
+                    <td>3880¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 19, Ghost: 2, Outlaw: 1, Classic: 1, None: 1, Phantom: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs overlord Jinwoo#0001: 6-5 | vs bipo#lmao: 7-0 | vs Ryusei#2510: 4-1 | vs wasd#30407: 5-2 | vs 년에 공식 언어가되었#XVIIX: 3-4</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" class="agent-img" alt="Jett">
+                        <strong>Wazzy#M8WIN</strong> (Jett)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 512</small></td>
+                    <td><strong>6820</strong><br>25/16/3</td>
+                    <td>24% / 75% / 2%</td>
+                    <td>3661¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 13, None: 5, Marshal: 4, Sheriff: 2, Operator: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Ryusei#2510: 5-2 | vs wasd#30407: 6-3 | vs overlord Jinwoo#0001: 7-3 | vs 년에 공식 언어가되었#XVIIX: 5-7 | vs bipo#lmao: 2-1</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" class="agent-img" alt="Jett">
+                        <strong>overlord Jinwoo#0001</strong> (Jett)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 167</small></td>
+                    <td><strong>4963</strong><br>16/19/6</td>
+                    <td>21% / 73% / 6%</td>
+                    <td>3161¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 11, Sheriff: 2, Bucky: 1, Ghost: 1, Classic: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Kavoune#2211: 3-3 | vs Wazzy#M8WIN: 3-7 | vs Tarezium#1204: 4-0 | vs I4NIS#128GO: 5-6 | vs BySweenn#A29: 1-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/7c8a4701-4de6-9355-b254-e09bc2a34b72/displayicon.png" class="agent-img" alt="Miks">
+                        <strong>bipo#lmao</strong> (Miks)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 177</small></td>
+                    <td><strong>4506</strong><br>14/19/15</td>
+                    <td>30% / 70% / 0%</td>
+                    <td>3652¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 9, Sheriff: 3, Classic: 1, Outlaw: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Tarezium#1204: 3-5 | vs Wazzy#M8WIN: 1-2 | vs BySweenn#A29: 4-4 | vs Kavoune#2211: 6-1</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/569fdd95-4d10-43ab-ca70-79becc718b46/displayicon.png" class="agent-img" alt="Sage">
+                        <strong>wasd#30407</strong> (Sage)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 657</small></td>
+                    <td><strong>4088</strong><br>15/18/5</td>
+                    <td>39% / 58% / 3%</td>
+                    <td>3341¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 12, Ghost: 2, Guardian: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Kavoune#2211: 2-4 | vs BySweenn#A29: 5-2 | vs Wazzy#M8WIN: 3-6 | vs I4NIS#128GO: 2-5 | vs Tarezium#1204: 3-1</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="agent-img" alt="Chamber">
+                        <strong>BySweenn#A29</strong> (Chamber)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 309</small></td>
+                    <td><strong>4074</strong><br>16/17/0</td>
+                    <td>52% / 48% / 0%</td>
+                    <td>4227¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 7, None: 4, Operator: 2, Classic: 1, Outlaw: 1, Phantom: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs wasd#30407: 2-5 | vs bipo#lmao: 4-4 | vs overlord Jinwoo#0001: 3-1 | vs 년에 공식 언어가되었#XVIIX: 4-5 | vs Ryusei#2510: 3-2</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/6f2a04ca-43e0-be17-7f36-b3908627744d/displayicon.png" class="agent-img" alt="Skye">
+                        <strong>Kavoune#2211</strong> (Skye)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 518</small></td>
+                    <td><strong>3658</strong><br>13/15/9</td>
+                    <td>33% / 63% / 5%</td>
+                    <td>3789¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 7, Phantom: 3, Judge: 2, Sheriff: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs overlord Jinwoo#0001: 3-3 | vs wasd#30407: 4-2 | vs Ryusei#2510: 3-0 | vs bipo#lmao: 1-6 | vs 년에 공식 언어가되었#XVIIX: 2-4</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayicon.png" class="agent-img" alt="Clove">
+                        <strong>Tarezium#1204</strong> (Clove)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 168</small></td>
+                    <td><strong>3620</strong><br>11/18/8</td>
+                    <td>20% / 78% / 2%</td>
+                    <td>3486¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 8, Judge: 2, Ghost: 1, None: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs 년에 공식 언어가되었#XVIIX: 2-5 | vs bipo#lmao: 5-3 | vs Ryusei#2510: 3-2 | vs Tarezium#1204: 1-1 | vs wasd#30407: 1-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/6f2a04ca-43e0-be17-7f36-b3908627744d/displayicon.png" class="agent-img" alt="Skye">
+                        <strong>Ryusei#2510</strong> (Skye)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 196</small></td>
+                    <td><strong>2535</strong><br>7/18/4</td>
+                    <td>27% / 70% / 3%</td>
+                    <td>3505¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Phantom: 4, Vandal: 2, Sheriff: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Tarezium#1204: 2-3 | vs I4NIS#128GO: 1-4 | vs Wazzy#M8WIN: 2-5 | vs BySweenn#A29: 2-3</div>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
