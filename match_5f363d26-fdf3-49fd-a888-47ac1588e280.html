@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Report - Lotus</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f1923; color: #ece8e1; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; background: #1f2326; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .header { text-align: center; border-bottom: 2px solid #ff4655; padding-bottom: 20px; margin-bottom: 30px; }
+        .header h1 { color: #ff4655; font-size: 2.5em; margin: 0 0 10px 0; text-transform: uppercase;}
+        .subtitle { font-size: 1.2em; color: #8b978f; }
+        .score { font-size: 3em; font-weight: bold; margin: 20px 0; }
+        .is-win { color: #00ff87; }
+        .is-loss { color: #ff4655; }
+        
+        .section-title { font-size: 1.5em; border-bottom: 1px solid #454545; padding-bottom: 10px; margin-top: 40px; color: #ff4655;}
+        
+        .most-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;}
+        .most-card { background: #2a2e33; padding: 15px; border-radius: 6px; text-align: center; }
+        .most-title { font-size: 0.9em; color: #8b978f; text-transform: uppercase; margin-bottom: 5px;}
+        .most-value { font-weight: bold; font-size: 1.1em; }
+        
+        .player-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .player-table th, .player-table td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
+        .player-table th { background: #2a2e33; color: #ff4655; text-transform: uppercase; font-size: 0.9em; }
+        .player-row:hover { background: #2a2e33; }
+        
+        .agent-img { width: 40px; border-radius: 50%; vertical-align: middle; margin-right: 10px; }
+        .blue-team { border-left: 4px solid #00ff87; }
+        .red-team { border-left: 4px solid #ff4655; }
+        
+        .details-small { font-size: 0.8em; color: #aaa; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Rapport de Match - Lotus</h1>
+            <div class="subtitle">Competitive | EU | Tuesday, April 07, 2026 07:15 PM</div>
+            <div class="score"><span class="is-win">Victoire</span> 13 - 7</div>
+        </div>
+
+        <h2 class="section-title">Les "Most" du Match</h2>
+        <div class="most-grid">
+            <div class="most-card"><div class="most-title">Spike Planté</div><div class="most-value">massif#SQL (6)</div></div>
+            <div class="most-card"><div class="most-title">Spike Désamorcé</div><div class="most-value">xMihawk#CKR (1)</div></div>
+            <div class="most-card"><div class="most-title">Headshot %</div><div class="most-value">LetItHappen#lovin (24%)</div></div>
+            <div class="most-card"><div class="most-title">Legshot %</div><div class="most-value">LetItHappen#lovin (11%)</div></div>
+            <div class="most-card"><div class="most-title">Dégats Infligés</div><div class="most-value">Cekica#GTNIK (4021)</div></div>
+            <div class="most-card"><div class="most-title">Dégats Reçus</div><div class="most-value">FreeDork#4504 (3222)</div></div>
+            <div class="most-card"><div class="most-title">Écart Dégats (Made-Received)</div><div class="most-value">I4NIS#128GO (1254)</div></div>
+        </div>
+
+        <h2 class="section-title">Tableau des scores</h2>
+        <table class="player-table">
+            <thead>
+                <tr>
+                    <th>Joueur</th>
+                    <th>Rank / Lvl</th>
+                    <th>Score / KDA</th>
+                    <th>Précision (H/B/L)</th>
+                    <th>Économie (Loadout)</th>
+                    <th>Armes / Versus</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png" class="agent-img" alt="Omen">
+                        <strong>Cekica#GTNIK</strong> (Omen)
+                    </td>
+                    <td>Platinum 2<br><small>Lvl 381</small></td>
+                    <td><strong>6608</strong><br>25/13/5</td>
+                    <td>18% / 77% / 5%</td>
+                    <td>3685¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 13, Spectre: 7, Stinger: 3, Ghost: 2</div>
+                        <div class="details-small"><strong>Versus:</strong> vs VOSVOS#3737: 3-4 | vs xMihawk#CKR: 3-3 | vs Lutenitsa#BGN: 5-2 | vs LetItHappen#lovin: 7-2 | vs FreeDork#4504: 7-2</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="agent-img" alt="Neon">
+                        <strong>I4NIS#128GO</strong> (Neon)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 315</small></td>
+                    <td><strong>5985</strong><br>23/11/4</td>
+                    <td>23% / 74% / 3%</td>
+                    <td>3410¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 10, Ghost: 4, Spectre: 3, None: 2, Phantom: 2, Shorty: 1, Bucky: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs FreeDork#4504: 5-4 | vs LetItHappen#lovin: 3-3 | vs Lutenitsa#BGN: 7-1 | vs xMihawk#CKR: 4-0 | vs VOSVOS#3737: 4-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/df1cb487-4902-002e-5c17-d28e83e78588/displayicon.png" class="agent-img" alt="Waylay">
+                        <strong>Lutenitsa#BGN</strong> (Waylay)
+                    </td>
+                    <td>Platinum 3<br><small>Lvl 229</small></td>
+                    <td><strong>5088</strong><br>15/17/8</td>
+                    <td>16% / 79% / 5%</td>
+                    <td>2912¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 7, Bucky: 3, Outlaw: 2, Guardian: 2, Phantom: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs fiiisssssss#SENKC: 4-3 | vs Zikorigolo#1324: 4-2 | vs massif#SQL: 4-0 | vs Cekica#GTNIK: 2-5 | vs I4NIS#128GO: 1-7</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/5f8d3a7f-467b-97f3-062c-13acf203c006/displayicon.png" class="agent-img" alt="Breach">
+                        <strong>VOSVOS#3737</strong> (Breach)
+                    </td>
+                    <td>Platinum 2<br><small>Lvl 470</small></td>
+                    <td><strong>4667</strong><br>15/15/5</td>
+                    <td>16% / 84% / 0%</td>
+                    <td>3615¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 12, Sheriff: 2, Ghost: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs I4NIS#128GO: 3-4 | vs fiiisssssss#SENKC: 2-2 | vs Zikorigolo#1324: 5-4 | vs Cekica#GTNIK: 4-3 | vs massif#SQL: 1-2</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/f94c3b30-42be-e959-889c-5aa313dba261/displayicon.png" class="agent-img" alt="Raze">
+                        <strong>fiiisssssss#SENKC</strong> (Raze)
+                    </td>
+                    <td>Unrated<br><small>Lvl 116</small></td>
+                    <td><strong>4355</strong><br>13/14/7</td>
+                    <td>15% / 80% / 5%</td>
+                    <td>3188¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 12, Marshal: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Lutenitsa#BGN: 3-4 | vs VOSVOS#3737: 2-2 | vs xMihawk#CKR: 5-1 | vs LetItHappen#lovin: 2-3 | vs FreeDork#4504: 1-4</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayicon.png" class="agent-img" alt="Clove">
+                        <strong>LetItHappen#lovin</strong> (Clove)
+                    </td>
+                    <td>Platinum 3<br><small>Lvl 495</small></td>
+                    <td><strong>4329</strong><br>16/17/6</td>
+                    <td>24% / 65% / 11%</td>
+                    <td>3642¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 8, Phantom: 6, Bucky: 1, Classic: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Cekica#GTNIK: 2-7 | vs Zikorigolo#1324: 4-4 | vs massif#SQL: 4-1 | vs fiiisssssss#SENKC: 3-2 | vs I4NIS#128GO: 3-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="agent-img" alt="Chamber">
+                        <strong>Zikorigolo#1324</strong> (Chamber)
+                    </td>
+                    <td>Gold 1<br><small>Lvl 127</small></td>
+                    <td><strong>3207</strong><br>13/15/2</td>
+                    <td>23% / 72% / 5%</td>
+                    <td>3625¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 5, None: 3, Ghost: 2, Bucky: 2, Operator: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Lutenitsa#BGN: 2-4 | vs LetItHappen#lovin: 4-4 | vs VOSVOS#3737: 4-5 | vs FreeDork#4504: 1-0 | vs xMihawk#CKR: 2-2</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" class="agent-img" alt="Jett">
+                        <strong>FreeDork#4504</strong> (Jett)
+                    </td>
+                    <td>Platinum 3<br><small>Lvl 42</small></td>
+                    <td><strong>3193</strong><br>12/16/2</td>
+                    <td>10% / 83% / 7%</td>
+                    <td>3318¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 8, Operator: 2, Frenzy: 1, None: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs massif#SQL: 2-2 | vs Cekica#GTNIK: 2-7 | vs I4NIS#128GO: 4-5 | vs fiiisssssss#SENKC: 4-1</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/1e58de9c-4950-5125-93e9-a0aee9f98746/displayicon.png" class="agent-img" alt="Killjoy">
+                        <strong>xMihawk#CKR</strong> (Killjoy)
+                    </td>
+                    <td>Gold 1<br><small>Lvl 201</small></td>
+                    <td><strong>2527</strong><br>8/15/1</td>
+                    <td>15% / 79% / 5%</td>
+                    <td>3278¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 4, Phantom: 3, Classic: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Zikorigolo#1324: 2-2 | vs massif#SQL: 2-1 | vs Cekica#GTNIK: 3-3 | vs fiiisssssss#SENKC: 1-5</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="agent-img" alt="Gekko">
+                        <strong>massif#SQL</strong> (Gekko)
+                    </td>
+                    <td>Unrated<br><small>Lvl 258</small></td>
+                    <td><strong>2313</strong><br>6/13/8</td>
+                    <td>12% / 79% / 9%</td>
+                    <td>3325¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 5, Spectre: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs VOSVOS#3737: 2-1 | vs FreeDork#4504: 2-2 | vs LetItHappen#lovin: 1-4 | vs xMihawk#CKR: 1-2</div>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
