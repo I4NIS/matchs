@@ -3,221 +3,925 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Match Report - Haven</title>
+    <title>Rapport - Haven</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f1923; color: #ece8e1; margin: 0; padding: 20px; }
-        .container { max-width: 1000px; margin: auto; background: #1f2326; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-        .header { text-align: center; border-bottom: 2px solid #ff4655; padding-bottom: 20px; margin-bottom: 30px; }
-        .header h1 { color: #ff4655; font-size: 2.5em; margin: 0 0 10px 0; text-transform: uppercase;}
-        .subtitle { font-size: 1.2em; color: #8b978f; }
-        .score { font-size: 3em; font-weight: bold; margin: 20px 0; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: #0f1923; color: #ece8e1; margin: 0; padding: 20px; line-height: 1.5; }
+        .container { max-width: 900px; margin: auto; background: #1f2326; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        /* HEADER */
+        .header { text-align: center; margin-bottom: 40px; position: relative; }
+        .header h1 { color: #ff4655; font-size: 3em; margin: 0; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+        .subtitle { font-size: 1.1em; color: #8b978f; font-weight: 600; margin-top: 5px; }
+        .score-box { background: #2a2e33; display: inline-block; padding: 15px 40px; border-radius: 8px; margin-top: 20px; font-size: 2.5em; font-weight: 800; }
         .is-win { color: #00ff87; }
         .is-loss { color: #ff4655; }
         
-        .section-title { font-size: 1.5em; border-bottom: 1px solid #454545; padding-bottom: 10px; margin-top: 40px; color: #ff4655;}
+        /* MOST STATS */
+        .section-title { font-size: 1.3em; margin: 40px 0 20px 0; color: #ece8e1; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #333; padding-bottom: 5px; }
+        .most-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
+        .most-card { background: linear-gradient(145deg, #2a2e33, #23272b); border: 1px solid #3d4247; padding: 15px; border-radius: 8px; text-align: center; }
+        .most-title { font-size: 0.8em; color: #8b978f; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+        .most-value { font-weight: 800; font-size: 1.1em; color: #00ff87; }
         
-        .most-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;}
-        .most-card { background: #2a2e33; padding: 15px; border-radius: 6px; text-align: center; }
-        .most-title { font-size: 0.9em; color: #8b978f; text-transform: uppercase; margin-bottom: 5px;}
-        .most-value { font-weight: bold; font-size: 1.1em; }
+        /* ACCORDIONS SYSTEM */
+        details { background: #2a2e33; border-radius: 8px; margin-bottom: 12px; transition: background 0.2s; border: 1px solid transparent; }
+        details:hover { background: #32373d; border-color: #454a50; }
+        details[open] { background: #23272b; border-color: #454a50; }
+        summary { display: flex; align-items: center; padding: 15px 20px; cursor: pointer; list-style: none; position: relative; border-left: 5px solid #555; border-radius: 8px; }
+        summary::-webkit-details-marker { display: none; }
+        .blue-team summary { border-left-color: #00ff87; }
+        .red-team summary { border-left-color: #ff4655; }
         
-        .player-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .player-table th, .player-table td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
-        .player-table th { background: #2a2e33; color: #ff4655; text-transform: uppercase; font-size: 0.9em; }
-        .player-row:hover { background: #2a2e33; }
+        /* SUMMARY ROW */
+        .summary-content { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 10px; }
+        .player-info { display: flex; align-items: center; gap: 15px; flex: 1.5; }
+        .agent-img { width: 50px; height: 50px; border-radius: 8px; background: #1a1c1e; padding: 2px; }
+        .player-name { font-weight: 800; font-size: 1.1em; color: #fff; margin-bottom: 3px; }
+        .player-meta { font-size: 0.8em; color: #a9b5ab; font-weight: 600; }
         
-        .agent-img { width: 40px; border-radius: 50%; vertical-align: middle; margin-right: 10px; }
-        .blue-team { border-left: 4px solid #00ff87; }
-        .red-team { border-left: 4px solid #ff4655; }
+        .score-col { flex: 0.8; text-align: center; font-size: 1.2em; font-weight: 800; color: #ece8e1; }
+        .kda-col { flex: 1.2; text-align: center; font-weight: 800; font-size: 1.1em; letter-spacing: 1px; }
+        .kda-sub { font-size: 0.75em; color: #8b978f; font-weight: 600; margin-top: 5px; text-transform: uppercase; }
         
-        .details-small { font-size: 0.8em; color: #aaa; margin-top: 5px; }
+        .expand-hint { color: #555; font-size: 0.8em; margin-left: 10px; }
+        
+        /* DETAILED STATS PANE */
+        .details-pane { padding: 25px; border-top: 1px solid #3d4247; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        
+        .stat-block h4 { margin: 0 0 15px 0; color: #ff4655; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; }
+        
+        /* ACCURACY BARS */
+        .acc-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 0.9em; font-weight: 600; }
+        .acc-label { width: 60px; color: #ece8e1; }
+        .acc-bar { flex: 1; height: 12px; background: #1f2326; border-radius: 6px; margin: 0 15px; overflow: hidden; display: flex; }
+        .acc-fill { height: 100%; border-radius: 6px; }
+        .fill-hs { background: #00ff87; }
+        .fill-body { background: #ffce00; }
+        .fill-leg { background: #ff4655; }
+        .acc-val { width: 40px; text-align: right; color: #8b978f; }
+
+        /* LISTS (Weapons & VS) */
+        .info-list { list-style: none; padding: 0; margin: 0; font-size: 0.9em; }
+        .info-list li { background: #1a1c1e; padding: 8px 12px; margin-bottom: 8px; border-radius: 5px; display: flex; justify-content: space-between; border: 1px solid #2a2e33; }
+        .info-list li span { font-weight: 800; color: #00ff87; }
+        
+        /* ECONOMY */
+        .eco-badge { background: #1a1c1e; border: 1px solid #333; display: inline-block; padding: 10px 20px; border-radius: 6px; font-weight: 800; font-size: 1.1em; color: #ece8e1; }
+        
+        @media (max-width: 600px) {
+            .summary-content { flex-direction: column; align-items: flex-start; }
+            .score-col, .kda-col { text-align: left; margin-top: 10px;}
+            .details-pane { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        
         <div class="header">
-            <h1>Rapport de Match - Haven</h1>
-            <div class="subtitle">Competitive | EU | 04/04/2026 à 08h46</div>
-            <div class="score"><span class="is-loss">Défaite</span> 9 - 13</div>
+            <h1>Haven</h1>
+            <div class="subtitle">Competitive • EU • 04/04/2026 à 08h46</div>
+            <div class="score-box">
+                <span class="is-loss">Défaite</span> 
+                9 - 13
+            </div>
         </div>
 
-        <h2 class="section-title">Les "Most" du Match</h2>
+        <h2 class="section-title">Palmarès du Match</h2>
         <div class="most-grid">
-            <div class="most-card"><div class="most-title">Spike Planté</div><div class="most-value">ALI GATEAU#HAAHA (5)</div></div>
-            <div class="most-card"><div class="most-title">Spike Désamorcé</div><div class="most-value">NQSTYY#FRA (1)</div></div>
-            <div class="most-card"><div class="most-title">Headshot %</div><div class="most-value">NC Rosix#Lovin (39%)</div></div>
-            <div class="most-card"><div class="most-title">Legshot %</div><div class="most-value">middlepiff#2209 (10%)</div></div>
-            <div class="most-card"><div class="most-title">Dégats Infligés</div><div class="most-value">Skaiill#2308 (4060)</div></div>
-            <div class="most-card"><div class="most-title">Dégats Reçus</div><div class="most-value">NQSTYY#FRA (3197)</div></div>
-            <div class="most-card"><div class="most-title">Écart Dégats (Made-Received)</div><div class="most-value">Skaiill#2308 (1733)</div></div>
+            <div class="most-card"><div class="most-title">Planteur</div><div class="most-value">ALI GATEAU#HAAHA (5)</div></div>
+            <div class="most-card"><div class="most-title">Désamorceur</div><div class="most-value">NQSTYY#FRA (1)</div></div>
+            <div class="most-card"><div class="most-title">Gros Dégâts</div><div class="most-value">Skaiill#2308 (4060)</div></div>
+            <div class="most-card"><div class="most-title">Roi du Headshot</div><div class="most-value">NC Rosix#Lovin (39%)</div></div>
+            <div class="most-card"><div class="most-title">Aim Chevilles</div><div class="most-value">middlepiff#2209 (10%)</div></div>
         </div>
 
-        <h2 class="section-title">Tableau des scores</h2>
-        <table class="player-table">
-            <thead>
-                <tr>
-                    <th>Joueur</th>
-                    <th>Rank / Lvl</th>
-                    <th>Score / KDA</th>
-                    <th>Précision (H/B/L)</th>
-                    <th>Économie (Loadout)</th>
-                    <th>Armes / Versus</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-                <tr class="player-row blue-team">
-                    <td>
+        <h2 class="section-title">Rapports Individuels <span style="font-size: 0.6em; color: #777; font-weight: 400; text-transform: none;">(Cliquez sur un joueur)</span></h2>
+        
+        
+        <details class="blue-team">
+            <summary>
+                <div class="summary-content">
+                    <div class="player-info">
                         <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" class="agent-img" alt="Jett">
-                        <strong>Skaiill#2308</strong> (Jett)
-                    </td>
-                    <td>Ascendant 1<br><small>Lvl 227</small></td>
-                    <td><strong>7231</strong><br>26/11/2</td>
-                    <td>15% / 79% / 7%</td>
-                    <td>4648¤</td>
-                    <td>
-                        <div class="details-small"><strong>Armes:</strong> Operator: 13, Spectre: 9, Classic: 1, Ghost: 1, None: 1, Phantom: 1</div>
-                        <div class="details-small"><strong>Versus:</strong> vs Kyu#l1on: 5-4 | vs NQSTYY#FRA: 6-1 | vs ZoloSteffen#8895: 7-2 | vs OMAIN#GTL: 3-2 | vs I4NIS#128GO: 5-2</div>
-                    </td>
-                </tr>
+                        <div>
+                            <div class="player-name">Skaiill#2308</div>
+                            <div class="player-meta">Jett • Ascendant 1 (Lvl 227)</div>
+                        </div>
+                    </div>
+                    <div class="score-col">
+                        7231 PTS
+                    </div>
+                    <div class="kda-col">
+                        26 / 11 / 2
+                        <div class="kda-sub">K/D/A • 15% HS</div>
+                    </div>
+                </div>
+            </summary>
+            
+            <div class="details-pane">
+                <!-- COLONNE GAUCHE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Précision (Aim)</h4>
+                        <div class="acc-row">
+                            <div class="acc-label">Tête</div>
+                            <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 15%;"></div></div>
+                            <div class="acc-val">15%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Corps</div>
+                            <div class="acc-bar"><div class="acc-fill fill-body" style="width: 79%;"></div></div>
+                            <div class="acc-val">79%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Jambes</div>
+                            <div class="acc-bar"><div class="acc-fill fill-leg" style="width: 7%;"></div></div>
+                            <div class="acc-val">7%</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-block">
+                        <h4>Impact Dégâts</h4>
+                        <ul class="info-list">
+                            <li>Infligés <span>4060</span></li>
+                            <li>Reçus <span style="color: #ff4655;">2327</span></li>
+                        </ul>
+                    </div>
+                </div>
                 
-                <tr class="player-row blue-team">
-                    <td>
+                <!-- COLONNE DROITE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Kills par arme</h4>
+                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                Operator: 13, Spectre: 9, Classic: 1, Ghost: 1, None: 1, Phantom: 1
+                            
+                        </div>
+                    </div>
+
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Duels (Victime vs Tueur)</h4>
+                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                vs Kyu#l1on: 5-4 | vs NQSTYY#FRA: 6-1 | vs ZoloSteffen#8895: 7-2 | vs OMAIN#GTL: 3-2 | vs I4NIS#128GO: 5-2
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="stat-block">
+                        <h4>Économie moyenne</h4>
+                        <div class="eco-badge">
+                            4648 ¤
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </details>
+        
+        <details class="blue-team">
+            <summary>
+                <div class="summary-content">
+                    <div class="player-info">
                         <img src="https://media.valorant-api.com/agents/df1cb487-4902-002e-5c17-d28e83e78588/displayicon.png" class="agent-img" alt="Waylay">
-                        <strong>NC Rosix#Lovin</strong> (Waylay)
-                    </td>
-                    <td>Ascendant 3<br><small>Lvl 301</small></td>
-                    <td><strong>5922</strong><br>22/13/3</td>
-                    <td>39% / 52% / 9%</td>
-                    <td>3864¤</td>
-                    <td>
-                        <div class="details-small"><strong>Armes:</strong> Vandal: 16, Ghost: 3, Judge: 2, Phantom: 1</div>
-                        <div class="details-small"><strong>Versus:</strong> vs I4NIS#128GO: 8-0 | vs NQSTYY#FRA: 6-1 | vs ZoloSteffen#8895: 2-4 | vs Kyu#l1on: 3-3 | vs OMAIN#GTL: 3-5</div>
-                    </td>
-                </tr>
+                        <div>
+                            <div class="player-name">NC Rosix#Lovin</div>
+                            <div class="player-meta">Waylay • Ascendant 3 (Lvl 301)</div>
+                        </div>
+                    </div>
+                    <div class="score-col">
+                        5922 PTS
+                    </div>
+                    <div class="kda-col">
+                        22 / 13 / 3
+                        <div class="kda-sub">K/D/A • 39% HS</div>
+                    </div>
+                </div>
+            </summary>
+            
+            <div class="details-pane">
+                <!-- COLONNE GAUCHE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Précision (Aim)</h4>
+                        <div class="acc-row">
+                            <div class="acc-label">Tête</div>
+                            <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 39%;"></div></div>
+                            <div class="acc-val">39%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Corps</div>
+                            <div class="acc-bar"><div class="acc-fill fill-body" style="width: 52%;"></div></div>
+                            <div class="acc-val">52%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Jambes</div>
+                            <div class="acc-bar"><div class="acc-fill fill-leg" style="width: 9%;"></div></div>
+                            <div class="acc-val">9%</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-block">
+                        <h4>Impact Dégâts</h4>
+                        <ul class="info-list">
+                            <li>Infligés <span>3768</span></li>
+                            <li>Reçus <span style="color: #ff4655;">2740</span></li>
+                        </ul>
+                    </div>
+                </div>
                 
-                <tr class="player-row red-team">
-                    <td>
+                <!-- COLONNE DROITE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Kills par arme</h4>
+                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                Vandal: 16, Ghost: 3, Judge: 2, Phantom: 1
+                            
+                        </div>
+                    </div>
+
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Duels (Victime vs Tueur)</h4>
+                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                vs I4NIS#128GO: 8-0 | vs NQSTYY#FRA: 6-1 | vs ZoloSteffen#8895: 2-4 | vs Kyu#l1on: 3-3 | vs OMAIN#GTL: 3-5
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="stat-block">
+                        <h4>Économie moyenne</h4>
+                        <div class="eco-badge">
+                            3864 ¤
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </details>
+        
+        <details class="red-team">
+            <summary>
+                <div class="summary-content">
+                    <div class="player-info">
                         <img src="https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png" class="agent-img" alt="Omen">
-                        <strong>Kyu#l1on</strong> (Omen)
-                    </td>
-                    <td>Ascendant 2<br><small>Lvl 418</small></td>
-                    <td><strong>4443</strong><br>16/15/5</td>
-                    <td>38% / 62% / 0%</td>
-                    <td>3600¤</td>
-                    <td>
-                        <div class="details-small"><strong>Armes:</strong> Phantom: 13, Ghost: 1, Sheriff: 1, Bucky: 1</div>
-                        <div class="details-small"><strong>Versus:</strong> vs middlepiff#2209: 3-2 | vs Skaiill#2308: 4-5 | vs NC Rosix#Lovin: 3-3 | vs glgon#EUW: 5-2 | vs ALI GATEAU#HAAHA: 1-3</div>
-                    </td>
-                </tr>
+                        <div>
+                            <div class="player-name">Kyu#l1on</div>
+                            <div class="player-meta">Omen • Ascendant 2 (Lvl 418)</div>
+                        </div>
+                    </div>
+                    <div class="score-col">
+                        4443 PTS
+                    </div>
+                    <div class="kda-col">
+                        16 / 15 / 5
+                        <div class="kda-sub">K/D/A • 38% HS</div>
+                    </div>
+                </div>
+            </summary>
+            
+            <div class="details-pane">
+                <!-- COLONNE GAUCHE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Précision (Aim)</h4>
+                        <div class="acc-row">
+                            <div class="acc-label">Tête</div>
+                            <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 38%;"></div></div>
+                            <div class="acc-val">38%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Corps</div>
+                            <div class="acc-bar"><div class="acc-fill fill-body" style="width: 62%;"></div></div>
+                            <div class="acc-val">62%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Jambes</div>
+                            <div class="acc-bar"><div class="acc-fill fill-leg" style="width: 0%;"></div></div>
+                            <div class="acc-val">0%</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-block">
+                        <h4>Impact Dégâts</h4>
+                        <ul class="info-list">
+                            <li>Infligés <span>3094</span></li>
+                            <li>Reçus <span style="color: #ff4655;">2668</span></li>
+                        </ul>
+                    </div>
+                </div>
                 
-                <tr class="player-row blue-team">
-                    <td>
+                <!-- COLONNE DROITE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Kills par arme</h4>
+                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                Phantom: 13, Ghost: 1, Sheriff: 1, Bucky: 1
+                            
+                        </div>
+                    </div>
+
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Duels (Victime vs Tueur)</h4>
+                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                vs middlepiff#2209: 3-2 | vs Skaiill#2308: 4-5 | vs NC Rosix#Lovin: 3-3 | vs glgon#EUW: 5-2 | vs ALI GATEAU#HAAHA: 1-3
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="stat-block">
+                        <h4>Économie moyenne</h4>
+                        <div class="eco-badge">
+                            3600 ¤
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </details>
+        
+        <details class="blue-team">
+            <summary>
+                <div class="summary-content">
+                    <div class="player-info">
                         <img src="https://media.valorant-api.com/agents/6f2a04ca-43e0-be17-7f36-b3908627744d/displayicon.png" class="agent-img" alt="Skye">
-                        <strong>middlepiff#2209</strong> (Skye)
-                    </td>
-                    <td>Ascendant 1<br><small>Lvl 243</small></td>
-                    <td><strong>4230</strong><br>14/14/6</td>
-                    <td>19% / 71% / 10%</td>
-                    <td>4020¤</td>
-                    <td>
-                        <div class="details-small"><strong>Armes:</strong> Vandal: 11, Ghost: 2, Bulldog: 1</div>
-                        <div class="details-small"><strong>Versus:</strong> vs ZoloSteffen#8895: 5-2 | vs OMAIN#GTL: 4-2 | vs Kyu#l1on: 2-3 | vs I4NIS#128GO: 2-4 | vs NQSTYY#FRA: 1-3</div>
-                    </td>
-                </tr>
+                        <div>
+                            <div class="player-name">middlepiff#2209</div>
+                            <div class="player-meta">Skye • Ascendant 1 (Lvl 243)</div>
+                        </div>
+                    </div>
+                    <div class="score-col">
+                        4230 PTS
+                    </div>
+                    <div class="kda-col">
+                        14 / 14 / 6
+                        <div class="kda-sub">K/D/A • 19% HS</div>
+                    </div>
+                </div>
+            </summary>
+            
+            <div class="details-pane">
+                <!-- COLONNE GAUCHE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Précision (Aim)</h4>
+                        <div class="acc-row">
+                            <div class="acc-label">Tête</div>
+                            <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 19%;"></div></div>
+                            <div class="acc-val">19%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Corps</div>
+                            <div class="acc-bar"><div class="acc-fill fill-body" style="width: 71%;"></div></div>
+                            <div class="acc-val">71%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Jambes</div>
+                            <div class="acc-bar"><div class="acc-fill fill-leg" style="width: 10%;"></div></div>
+                            <div class="acc-val">10%</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-block">
+                        <h4>Impact Dégâts</h4>
+                        <ul class="info-list">
+                            <li>Infligés <span>2983</span></li>
+                            <li>Reçus <span style="color: #ff4655;">2755</span></li>
+                        </ul>
+                    </div>
+                </div>
                 
-                <tr class="player-row red-team">
-                    <td>
+                <!-- COLONNE DROITE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Kills par arme</h4>
+                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                Vandal: 11, Ghost: 2, Bulldog: 1
+                            
+                        </div>
+                    </div>
+
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Duels (Victime vs Tueur)</h4>
+                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                vs ZoloSteffen#8895: 5-2 | vs OMAIN#GTL: 4-2 | vs Kyu#l1on: 2-3 | vs I4NIS#128GO: 2-4 | vs NQSTYY#FRA: 1-3
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="stat-block">
+                        <h4>Économie moyenne</h4>
+                        <div class="eco-badge">
+                            4020 ¤
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </details>
+        
+        <details class="red-team">
+            <summary>
+                <div class="summary-content">
+                    <div class="player-info">
                         <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="agent-img" alt="Phoenix">
-                        <strong>OMAIN#GTL</strong> (Phoenix)
-                    </td>
-                    <td>Ascendant 1<br><small>Lvl 280</small></td>
-                    <td><strong>3959</strong><br>14/14/7</td>
-                    <td>17% / 77% / 6%</td>
-                    <td>3616¤</td>
-                    <td>
-                        <div class="details-small"><strong>Armes:</strong> Vandal: 6, Judge: 4, Sheriff: 3, Bucky: 1</div>
-                        <div class="details-small"><strong>Versus:</strong> vs NC Rosix#Lovin: 5-3 | vs glgon#EUW: 2-2 | vs Skaiill#2308: 2-3 | vs ALI GATEAU#HAAHA: 3-2 | vs middlepiff#2209: 2-4</div>
-                    </td>
-                </tr>
+                        <div>
+                            <div class="player-name">OMAIN#GTL</div>
+                            <div class="player-meta">Phoenix • Ascendant 1 (Lvl 280)</div>
+                        </div>
+                    </div>
+                    <div class="score-col">
+                        3959 PTS
+                    </div>
+                    <div class="kda-col">
+                        14 / 14 / 7
+                        <div class="kda-sub">K/D/A • 17% HS</div>
+                    </div>
+                </div>
+            </summary>
+            
+            <div class="details-pane">
+                <!-- COLONNE GAUCHE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Précision (Aim)</h4>
+                        <div class="acc-row">
+                            <div class="acc-label">Tête</div>
+                            <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 17%;"></div></div>
+                            <div class="acc-val">17%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Corps</div>
+                            <div class="acc-bar"><div class="acc-fill fill-body" style="width: 77%;"></div></div>
+                            <div class="acc-val">77%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Jambes</div>
+                            <div class="acc-bar"><div class="acc-fill fill-leg" style="width: 6%;"></div></div>
+                            <div class="acc-val">6%</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-block">
+                        <h4>Impact Dégâts</h4>
+                        <ul class="info-list">
+                            <li>Infligés <span>2564</span></li>
+                            <li>Reçus <span style="color: #ff4655;">2791</span></li>
+                        </ul>
+                    </div>
+                </div>
                 
-                <tr class="player-row red-team">
-                    <td>
+                <!-- COLONNE DROITE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Kills par arme</h4>
+                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                Vandal: 6, Judge: 4, Sheriff: 3, Bucky: 1
+                            
+                        </div>
+                    </div>
+
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Duels (Victime vs Tueur)</h4>
+                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                vs NC Rosix#Lovin: 5-3 | vs glgon#EUW: 2-2 | vs Skaiill#2308: 2-3 | vs ALI GATEAU#HAAHA: 3-2 | vs middlepiff#2209: 2-4
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="stat-block">
+                        <h4>Économie moyenne</h4>
+                        <div class="eco-badge">
+                            3616 ¤
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </details>
+        
+        <details class="red-team">
+            <summary>
+                <div class="summary-content">
+                    <div class="player-info">
                         <img src="https://media.valorant-api.com/agents/320b2a48-4d9b-a075-30f1-1f93a9b638fa/displayicon.png" class="agent-img" alt="Sova">
-                        <strong>NQSTYY#FRA</strong> (Sova)
-                    </td>
-                    <td>Ascendant 2<br><small>Lvl 242</small></td>
-                    <td><strong>3737</strong><br>12/17/5</td>
-                    <td>37% / 59% / 4%</td>
-                    <td>3300¤</td>
-                    <td>
-                        <div class="details-small"><strong>Armes:</strong> Vandal: 9, None: 2, Ghost: 1</div>
-                        <div class="details-small"><strong>Versus:</strong> vs glgon#EUW: 3-1 | vs ALI GATEAU#HAAHA: 4-3 | vs middlepiff#2209: 3-1 | vs NC Rosix#Lovin: 1-6 | vs Skaiill#2308: 1-6</div>
-                    </td>
-                </tr>
+                        <div>
+                            <div class="player-name">NQSTYY#FRA</div>
+                            <div class="player-meta">Sova • Ascendant 2 (Lvl 242)</div>
+                        </div>
+                    </div>
+                    <div class="score-col">
+                        3737 PTS
+                    </div>
+                    <div class="kda-col">
+                        12 / 17 / 5
+                        <div class="kda-sub">K/D/A • 37% HS</div>
+                    </div>
+                </div>
+            </summary>
+            
+            <div class="details-pane">
+                <!-- COLONNE GAUCHE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Précision (Aim)</h4>
+                        <div class="acc-row">
+                            <div class="acc-label">Tête</div>
+                            <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 37%;"></div></div>
+                            <div class="acc-val">37%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Corps</div>
+                            <div class="acc-bar"><div class="acc-fill fill-body" style="width: 59%;"></div></div>
+                            <div class="acc-val">59%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Jambes</div>
+                            <div class="acc-bar"><div class="acc-fill fill-leg" style="width: 4%;"></div></div>
+                            <div class="acc-val">4%</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-block">
+                        <h4>Impact Dégâts</h4>
+                        <ul class="info-list">
+                            <li>Infligés <span>2587</span></li>
+                            <li>Reçus <span style="color: #ff4655;">3197</span></li>
+                        </ul>
+                    </div>
+                </div>
                 
-                <tr class="player-row red-team">
-                    <td>
+                <!-- COLONNE DROITE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Kills par arme</h4>
+                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                Vandal: 9, None: 2, Ghost: 1
+                            
+                        </div>
+                    </div>
+
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Duels (Victime vs Tueur)</h4>
+                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                vs glgon#EUW: 3-1 | vs ALI GATEAU#HAAHA: 4-3 | vs middlepiff#2209: 3-1 | vs NC Rosix#Lovin: 1-6 | vs Skaiill#2308: 1-6
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="stat-block">
+                        <h4>Économie moyenne</h4>
+                        <div class="eco-badge">
+                            3300 ¤
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </details>
+        
+        <details class="red-team">
+            <summary>
+                <div class="summary-content">
+                    <div class="player-info">
                         <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="agent-img" alt="Neon">
-                        <strong>I4NIS#128GO</strong> (Neon)
-                    </td>
-                    <td>Ascendant 1<br><small>Lvl 313</small></td>
-                    <td><strong>3656</strong><br>11/18/4</td>
-                    <td>24% / 73% / 2%</td>
-                    <td>3377¤</td>
-                    <td>
-                        <div class="details-small"><strong>Armes:</strong> Vandal: 6, Phantom: 2, Classic: 1, Bucky: 1, Ghost: 1</div>
-                        <div class="details-small"><strong>Versus:</strong> vs glgon#EUW: 2-1 | vs ALI GATEAU#HAAHA: 3-2 | vs middlepiff#2209: 4-2 | vs Skaiill#2308: 2-5</div>
-                    </td>
-                </tr>
+                        <div>
+                            <div class="player-name">I4NIS#128GO</div>
+                            <div class="player-meta">Neon • Ascendant 1 (Lvl 313)</div>
+                        </div>
+                    </div>
+                    <div class="score-col">
+                        3656 PTS
+                    </div>
+                    <div class="kda-col">
+                        11 / 18 / 4
+                        <div class="kda-sub">K/D/A • 24% HS</div>
+                    </div>
+                </div>
+            </summary>
+            
+            <div class="details-pane">
+                <!-- COLONNE GAUCHE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Précision (Aim)</h4>
+                        <div class="acc-row">
+                            <div class="acc-label">Tête</div>
+                            <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 24%;"></div></div>
+                            <div class="acc-val">24%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Corps</div>
+                            <div class="acc-bar"><div class="acc-fill fill-body" style="width: 73%;"></div></div>
+                            <div class="acc-val">73%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Jambes</div>
+                            <div class="acc-bar"><div class="acc-fill fill-leg" style="width: 2%;"></div></div>
+                            <div class="acc-val">2%</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-block">
+                        <h4>Impact Dégâts</h4>
+                        <ul class="info-list">
+                            <li>Infligés <span>2348</span></li>
+                            <li>Reçus <span style="color: #ff4655;">2929</span></li>
+                        </ul>
+                    </div>
+                </div>
                 
-                <tr class="player-row red-team">
-                    <td>
+                <!-- COLONNE DROITE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Kills par arme</h4>
+                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                Vandal: 6, Phantom: 2, Classic: 1, Bucky: 1, Ghost: 1
+                            
+                        </div>
+                    </div>
+
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Duels (Victime vs Tueur)</h4>
+                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                vs glgon#EUW: 2-1 | vs ALI GATEAU#HAAHA: 3-2 | vs middlepiff#2209: 4-2 | vs Skaiill#2308: 2-5
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="stat-block">
+                        <h4>Économie moyenne</h4>
+                        <div class="eco-badge">
+                            3377 ¤
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </details>
+        
+        <details class="red-team">
+            <summary>
+                <div class="summary-content">
+                    <div class="player-info">
                         <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="agent-img" alt="Chamber">
-                        <strong>ZoloSteffen#8895</strong> (Chamber)
-                    </td>
-                    <td>Diamond 2<br><small>Lvl 220</small></td>
-                    <td><strong>3524</strong><br>12/17/2</td>
-                    <td>16% / 76% / 8%</td>
-                    <td>3902¤</td>
-                    <td>
-                        <div class="details-small"><strong>Armes:</strong> Outlaw: 3, None: 3, Operator: 3, Vandal: 2, Classic: 1</div>
-                        <div class="details-small"><strong>Versus:</strong> vs middlepiff#2209: 2-5 | vs ALI GATEAU#HAAHA: 1-1 | vs glgon#EUW: 3-2 | vs NC Rosix#Lovin: 4-2 | vs Skaiill#2308: 2-7</div>
-                    </td>
-                </tr>
+                        <div>
+                            <div class="player-name">ZoloSteffen#8895</div>
+                            <div class="player-meta">Chamber • Diamond 2 (Lvl 220)</div>
+                        </div>
+                    </div>
+                    <div class="score-col">
+                        3524 PTS
+                    </div>
+                    <div class="kda-col">
+                        12 / 17 / 2
+                        <div class="kda-sub">K/D/A • 16% HS</div>
+                    </div>
+                </div>
+            </summary>
+            
+            <div class="details-pane">
+                <!-- COLONNE GAUCHE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Précision (Aim)</h4>
+                        <div class="acc-row">
+                            <div class="acc-label">Tête</div>
+                            <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 16%;"></div></div>
+                            <div class="acc-val">16%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Corps</div>
+                            <div class="acc-bar"><div class="acc-fill fill-body" style="width: 76%;"></div></div>
+                            <div class="acc-val">76%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Jambes</div>
+                            <div class="acc-bar"><div class="acc-fill fill-leg" style="width: 8%;"></div></div>
+                            <div class="acc-val">8%</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-block">
+                        <h4>Impact Dégâts</h4>
+                        <ul class="info-list">
+                            <li>Infligés <span>2502</span></li>
+                            <li>Reçus <span style="color: #ff4655;">2801</span></li>
+                        </ul>
+                    </div>
+                </div>
                 
-                <tr class="player-row blue-team">
-                    <td>
+                <!-- COLONNE DROITE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Kills par arme</h4>
+                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                Outlaw: 3, None: 3, Operator: 3, Vandal: 2, Classic: 1
+                            
+                        </div>
+                    </div>
+
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Duels (Victime vs Tueur)</h4>
+                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                vs middlepiff#2209: 2-5 | vs ALI GATEAU#HAAHA: 1-1 | vs glgon#EUW: 3-2 | vs NC Rosix#Lovin: 4-2 | vs Skaiill#2308: 2-7
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="stat-block">
+                        <h4>Économie moyenne</h4>
+                        <div class="eco-badge">
+                            3902 ¤
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </details>
+        
+        <details class="blue-team">
+            <summary>
+                <div class="summary-content">
+                    <div class="player-info">
                         <img src="https://media.valorant-api.com/agents/7c8a4701-4de6-9355-b254-e09bc2a34b72/displayicon.png" class="agent-img" alt="Miks">
-                        <strong>glgon#EUW</strong> (Miks)
-                    </td>
-                    <td>Diamond 3<br><small>Lvl 347</small></td>
-                    <td><strong>2737</strong><br>8/15/14</td>
-                    <td>11% / 89% / 0%</td>
-                    <td>3868¤</td>
-                    <td>
-                        <div class="details-small"><strong>Armes:</strong> Vandal: 4, Phantom: 2, Ghost: 1, Sheriff: 1</div>
-                        <div class="details-small"><strong>Versus:</strong> vs OMAIN#GTL: 2-2 | vs ZoloSteffen#8895: 2-3 | vs Kyu#l1on: 2-5 | vs NQSTYY#FRA: 1-3 | vs I4NIS#128GO: 1-2</div>
-                    </td>
-                </tr>
+                        <div>
+                            <div class="player-name">glgon#EUW</div>
+                            <div class="player-meta">Miks • Diamond 3 (Lvl 347)</div>
+                        </div>
+                    </div>
+                    <div class="score-col">
+                        2737 PTS
+                    </div>
+                    <div class="kda-col">
+                        8 / 15 / 14
+                        <div class="kda-sub">K/D/A • 11% HS</div>
+                    </div>
+                </div>
+            </summary>
+            
+            <div class="details-pane">
+                <!-- COLONNE GAUCHE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Précision (Aim)</h4>
+                        <div class="acc-row">
+                            <div class="acc-label">Tête</div>
+                            <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 11%;"></div></div>
+                            <div class="acc-val">11%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Corps</div>
+                            <div class="acc-bar"><div class="acc-fill fill-body" style="width: 89%;"></div></div>
+                            <div class="acc-val">89%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Jambes</div>
+                            <div class="acc-bar"><div class="acc-fill fill-leg" style="width: 0%;"></div></div>
+                            <div class="acc-val">0%</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-block">
+                        <h4>Impact Dégâts</h4>
+                        <ul class="info-list">
+                            <li>Infligés <span>1973</span></li>
+                            <li>Reçus <span style="color: #ff4655;">3120</span></li>
+                        </ul>
+                    </div>
+                </div>
                 
-                <tr class="player-row blue-team">
-                    <td>
+                <!-- COLONNE DROITE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Kills par arme</h4>
+                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                Vandal: 4, Phantom: 2, Ghost: 1, Sheriff: 1
+                            
+                        </div>
+                    </div>
+
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Duels (Victime vs Tueur)</h4>
+                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                vs OMAIN#GTL: 2-2 | vs ZoloSteffen#8895: 2-3 | vs Kyu#l1on: 2-5 | vs NQSTYY#FRA: 1-3 | vs I4NIS#128GO: 1-2
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="stat-block">
+                        <h4>Économie moyenne</h4>
+                        <div class="eco-badge">
+                            3868 ¤
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </details>
+        
+        <details class="blue-team">
+            <summary>
+                <div class="summary-content">
+                    <div class="player-info">
                         <img src="https://media.valorant-api.com/agents/569fdd95-4d10-43ab-ca70-79becc718b46/displayicon.png" class="agent-img" alt="Sage">
-                        <strong>ALI GATEAU#HAAHA</strong> (Sage)
-                    </td>
-                    <td>Diamond 3<br><small>Lvl 144</small></td>
-                    <td><strong>2672</strong><br>11/12/11</td>
-                    <td>25% / 75% / 0%</td>
-                    <td>3720¤</td>
-                    <td>
-                        <div class="details-small"><strong>Armes:</strong> Vandal: 5, Ghost: 3, Spectre: 1, Judge: 1, Phantom: 1</div>
-                        <div class="details-small"><strong>Versus:</strong> vs Kyu#l1on: 3-1 | vs OMAIN#GTL: 2-3 | vs NQSTYY#FRA: 3-4 | vs I4NIS#128GO: 2-3 | vs ZoloSteffen#8895: 1-1</div>
-                    </td>
-                </tr>
+                        <div>
+                            <div class="player-name">ALI GATEAU#HAAHA</div>
+                            <div class="player-meta">Sage • Diamond 3 (Lvl 144)</div>
+                        </div>
+                    </div>
+                    <div class="score-col">
+                        2672 PTS
+                    </div>
+                    <div class="kda-col">
+                        11 / 12 / 11
+                        <div class="kda-sub">K/D/A • 25% HS</div>
+                    </div>
+                </div>
+            </summary>
+            
+            <div class="details-pane">
+                <!-- COLONNE GAUCHE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Précision (Aim)</h4>
+                        <div class="acc-row">
+                            <div class="acc-label">Tête</div>
+                            <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 25%;"></div></div>
+                            <div class="acc-val">25%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Corps</div>
+                            <div class="acc-bar"><div class="acc-fill fill-body" style="width: 75%;"></div></div>
+                            <div class="acc-val">75%</div>
+                        </div>
+                        <div class="acc-row">
+                            <div class="acc-label">Jambes</div>
+                            <div class="acc-bar"><div class="acc-fill fill-leg" style="width: 0%;"></div></div>
+                            <div class="acc-val">0%</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-block">
+                        <h4>Impact Dégâts</h4>
+                        <ul class="info-list">
+                            <li>Infligés <span>1578</span></li>
+                            <li>Reçus <span style="color: #ff4655;">2129</span></li>
+                        </ul>
+                    </div>
+                </div>
                 
-            </tbody>
-        </table>
+                <!-- COLONNE DROITE -->
+                <div>
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Kills par arme</h4>
+                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                Vandal: 5, Ghost: 3, Spectre: 1, Judge: 1, Phantom: 1
+                            
+                        </div>
+                    </div>
+
+                    <div class="stat-block" style="margin-bottom: 30px;">
+                        <h4>Duels (Victime vs Tueur)</h4>
+                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
+                            
+                                vs Kyu#l1on: 3-1 | vs OMAIN#GTL: 2-3 | vs NQSTYY#FRA: 3-4 | vs I4NIS#128GO: 2-3 | vs ZoloSteffen#8895: 1-1
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="stat-block">
+                        <h4>Économie moyenne</h4>
+                        <div class="eco-badge">
+                            3720 ¤
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </details>
+        
+        
     </div>
 </body>
 </html>
