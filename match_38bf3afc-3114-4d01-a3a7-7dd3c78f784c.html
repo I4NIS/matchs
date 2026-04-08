@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Report - Breeze</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f1923; color: #ece8e1; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; background: #1f2326; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .header { text-align: center; border-bottom: 2px solid #ff4655; padding-bottom: 20px; margin-bottom: 30px; }
+        .header h1 { color: #ff4655; font-size: 2.5em; margin: 0 0 10px 0; text-transform: uppercase;}
+        .subtitle { font-size: 1.2em; color: #8b978f; }
+        .score { font-size: 3em; font-weight: bold; margin: 20px 0; }
+        .is-win { color: #00ff87; }
+        .is-loss { color: #ff4655; }
+        
+        .section-title { font-size: 1.5em; border-bottom: 1px solid #454545; padding-bottom: 10px; margin-top: 40px; color: #ff4655;}
+        
+        .most-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;}
+        .most-card { background: #2a2e33; padding: 15px; border-radius: 6px; text-align: center; }
+        .most-title { font-size: 0.9em; color: #8b978f; text-transform: uppercase; margin-bottom: 5px;}
+        .most-value { font-weight: bold; font-size: 1.1em; }
+        
+        .player-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .player-table th, .player-table td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
+        .player-table th { background: #2a2e33; color: #ff4655; text-transform: uppercase; font-size: 0.9em; }
+        .player-row:hover { background: #2a2e33; }
+        
+        .agent-img { width: 40px; border-radius: 50%; vertical-align: middle; margin-right: 10px; }
+        .blue-team { border-left: 4px solid #00ff87; }
+        .red-team { border-left: 4px solid #ff4655; }
+        
+        .details-small { font-size: 0.8em; color: #aaa; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Rapport de Match - Breeze</h1>
+            <div class="subtitle">Competitive | EU | Saturday, April 04, 2026 10:24 AM</div>
+            <div class="score"><span class="is-win">Victoire</span> 13 - 10</div>
+        </div>
+
+        <h2 class="section-title">Les "Most" du Match</h2>
+        <div class="most-grid">
+            <div class="most-card"><div class="most-title">Spike Planté</div><div class="most-value">BabarR#GRRRR (7)</div></div>
+            <div class="most-card"><div class="most-title">Spike Désamorcé</div><div class="most-value">Skyzzzz#1111 (2)</div></div>
+            <div class="most-card"><div class="most-title">Headshot %</div><div class="most-value">PRX niiwoZZ#ZMJKK (41%)</div></div>
+            <div class="most-card"><div class="most-title">Legshot %</div><div class="most-value">Skyzzzz#1111 (9%)</div></div>
+            <div class="most-card"><div class="most-title">Dégats Infligés</div><div class="most-value">nusayaba#213 (3942)</div></div>
+            <div class="most-card"><div class="most-title">Dégats Reçus</div><div class="most-value">BabarR#GRRRR (3467)</div></div>
+            <div class="most-card"><div class="most-title">Écart Dégats (Made-Received)</div><div class="most-value">SMK#3349 (955)</div></div>
+        </div>
+
+        <h2 class="section-title">Tableau des scores</h2>
+        <table class="player-table">
+            <thead>
+                <tr>
+                    <th>Joueur</th>
+                    <th>Rank / Lvl</th>
+                    <th>Score / KDA</th>
+                    <th>Précision (H/B/L)</th>
+                    <th>Économie (Loadout)</th>
+                    <th>Armes / Versus</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/320b2a48-4d9b-a075-30f1-1f93a9b638fa/displayicon.png" class="agent-img" alt="Sova">
+                        <strong>nusayaba#213</strong> (Sova)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 125</small></td>
+                    <td><strong>6253</strong><br>23/18/4</td>
+                    <td>28% / 70% / 2%</td>
+                    <td>3641¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 11, Sheriff: 4, None: 3, Bulldog: 3, Ghost: 1, Spectre: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Skyzzzz#1111: 7-4 | vs I4NIS#128GO: 3-3 | vs SMK#3349: 6-5 | vs skz#эскиз: 6-3 | vs BabarR#GRRRR: 1-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/cc8b64c8-4b25-4ff9-6e7f-37b4da43d235/displayicon.png" class="agent-img" alt="Deadlock">
+                        <strong>SMK#3349</strong> (Deadlock)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 247</small></td>
+                    <td><strong>5802</strong><br>22/14/3</td>
+                    <td>27% / 69% / 3%</td>
+                    <td>2822¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 17, Ghost: 2, Bulldog: 1, Sheriff: 1, Classic: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs kikiolol#1337: 2-3 | vs PRX niiwoZZ#ZMJKK: 7-3 | vs nusayaba#213: 5-6 | vs Bienaymé#17yo: 5-2 | vs sam#rad: 3-0</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" class="agent-img" alt="Jett">
+                        <strong>PRX niiwoZZ#ZMJKK</strong> (Jett)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 220</small></td>
+                    <td><strong>5591</strong><br>22/20/0</td>
+                    <td>41% / 57% / 2%</td>
+                    <td>3335¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 6, Ghost: 4, Guardian: 4, Outlaw: 4, Sheriff: 1, Phantom: 1, Shorty: 1, None: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs SMK#3349: 3-7 | vs I4NIS#128GO: 5-3 | vs skz#эскиз: 4-3 | vs BabarR#GRRRR: 6-6 | vs Skyzzzz#1111: 4-1</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/6f2a04ca-43e0-be17-7f36-b3908627744d/displayicon.png" class="agent-img" alt="Skye">
+                        <strong>Bienaymé#17yo</strong> (Skye)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 317</small></td>
+                    <td><strong>5445</strong><br>19/19/7</td>
+                    <td>37% / 63% / 0%</td>
+                    <td>3726¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Phantom: 10, Vandal: 4, Sheriff: 2, Ghost: 1, Guardian: 1, Outlaw: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs BabarR#GRRRR: 7-2 | vs I4NIS#128GO: 4-4 | vs Skyzzzz#1111: 3-4 | vs skz#эскиз: 3-4 | vs SMK#3349: 2-5</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="agent-img" alt="Neon">
+                        <strong>I4NIS#128GO</strong> (Neon)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 313</small></td>
+                    <td><strong>5345</strong><br>19/17/1</td>
+                    <td>32% / 60% / 8%</td>
+                    <td>3141¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 9, Phantom: 5, None: 2, Guardian: 1, Classic: 1, Bucky: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs sam#rad: 3-1 | vs kikiolol#1337: 6-4 | vs Bienaymé#17yo: 4-4 | vs PRX niiwoZZ#ZMJKK: 3-5 | vs nusayaba#213: 3-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/dade69b4-4f5a-8528-247b-219e5a1facd6/displayicon.png" class="agent-img" alt="Fade">
+                        <strong>BabarR#GRRRR</strong> (Fade)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 290</small></td>
+                    <td><strong>5322</strong><br>18/16/8</td>
+                    <td>24% / 68% / 8%</td>
+                    <td>3543¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Phantom: 11, Vandal: 3, Sheriff: 2, Ghost: 1, Shorty: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs PRX niiwoZZ#ZMJKK: 6-6 | vs nusayaba#213: 3-1 | vs Bienaymé#17yo: 2-7 | vs sam#rad: 4-1 | vs kikiolol#1337: 3-1</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/df1cb487-4902-002e-5c17-d28e83e78588/displayicon.png" class="agent-img" alt="Waylay">
+                        <strong>skz#эскиз</strong> (Waylay)
+                    </td>
+                    <td>Diamond 2<br><small>Lvl 32</small></td>
+                    <td><strong>5083</strong><br>18/19/5</td>
+                    <td>33% / 67% / 0%</td>
+                    <td>3189¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 9, Ghost: 3, Stinger: 2, Bandit: 2, Spectre: 1, Guardian: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs nusayaba#213: 3-6 | vs Bienaymé#17yo: 4-3 | vs sam#rad: 4-3 | vs kikiolol#1337: 4-3 | vs PRX niiwoZZ#ZMJKK: 3-4</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/9f0d8ba9-4140-b941-57d3-a7ad57c6b417/displayicon.png" class="agent-img" alt="Brimstone">
+                        <strong>kikiolol#1337</strong> (Brimstone)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 220</small></td>
+                    <td><strong>4611</strong><br>15/16/10</td>
+                    <td>22% / 70% / 8%</td>
+                    <td>3517¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 6, Phantom: 3, Ghost: 2, Bulldog: 1, Sheriff: 1, Guardian: 1, Classic: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Skyzzzz#1111: 4-1 | vs skz#эскиз: 3-4 | vs SMK#3349: 3-2 | vs I4NIS#128GO: 4-6 | vs BabarR#GRRRR: 1-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayicon.png" class="agent-img" alt="Clove">
+                        <strong>Skyzzzz#1111</strong> (Clove)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 321</small></td>
+                    <td><strong>3668</strong><br>12/18/8</td>
+                    <td>33% / 58% / 9%</td>
+                    <td>3511¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 9, Classic: 3</div>
+                        <div class="details-small"><strong>Versus:</strong> vs nusayaba#213: 4-7 | vs Bienaymé#17yo: 4-3 | vs sam#rad: 2-0 | vs PRX niiwoZZ#ZMJKK: 1-4 | vs kikiolol#1337: 1-4</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="agent-img" alt="Chamber">
+                        <strong>sam#rad</strong> (Chamber)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 400</small></td>
+                    <td><strong>1989</strong><br>5/16/6</td>
+                    <td>8% / 88% / 4%</td>
+                    <td>3328¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Phantom: 3, Bucky: 2</div>
+                        <div class="details-small"><strong>Versus:</strong> vs skz#эскиз: 3-4 | vs BabarR#GRRRR: 1-4 | vs I4NIS#128GO: 1-3</div>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
