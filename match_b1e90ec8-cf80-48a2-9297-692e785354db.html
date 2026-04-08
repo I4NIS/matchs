@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Report - Pearl</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f1923; color: #ece8e1; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; background: #1f2326; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .header { text-align: center; border-bottom: 2px solid #ff4655; padding-bottom: 20px; margin-bottom: 30px; }
+        .header h1 { color: #ff4655; font-size: 2.5em; margin: 0 0 10px 0; text-transform: uppercase;}
+        .subtitle { font-size: 1.2em; color: #8b978f; }
+        .score { font-size: 3em; font-weight: bold; margin: 20px 0; }
+        .is-win { color: #00ff87; }
+        .is-loss { color: #ff4655; }
+        
+        .section-title { font-size: 1.5em; border-bottom: 1px solid #454545; padding-bottom: 10px; margin-top: 40px; color: #ff4655;}
+        
+        .most-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;}
+        .most-card { background: #2a2e33; padding: 15px; border-radius: 6px; text-align: center; }
+        .most-title { font-size: 0.9em; color: #8b978f; text-transform: uppercase; margin-bottom: 5px;}
+        .most-value { font-weight: bold; font-size: 1.1em; }
+        
+        .player-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .player-table th, .player-table td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
+        .player-table th { background: #2a2e33; color: #ff4655; text-transform: uppercase; font-size: 0.9em; }
+        .player-row:hover { background: #2a2e33; }
+        
+        .agent-img { width: 40px; border-radius: 50%; vertical-align: middle; margin-right: 10px; }
+        .blue-team { border-left: 4px solid #00ff87; }
+        .red-team { border-left: 4px solid #ff4655; }
+        
+        .details-small { font-size: 0.8em; color: #aaa; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Rapport de Match - Pearl</h1>
+            <div class="subtitle">Competitive | EU | Friday, April 03, 2026 07:11 PM</div>
+            <div class="score"><span class="is-win">Victoire</span> 13 - 6</div>
+        </div>
+
+        <h2 class="section-title">Les "Most" du Match</h2>
+        <div class="most-grid">
+            <div class="most-card"><div class="most-title">Spike Planté</div><div class="most-value">BL Juker#Gmar (7)</div></div>
+            <div class="most-card"><div class="most-title">Spike Désamorcé</div><div class="most-value">HirooTwoo#5805 (3)</div></div>
+            <div class="most-card"><div class="most-title">Headshot %</div><div class="most-value">brandaoV9#7251 (40%)</div></div>
+            <div class="most-card"><div class="most-title">Legshot %</div><div class="most-value">HirooTwoo#5805 (7%)</div></div>
+            <div class="most-card"><div class="most-title">Dégats Infligés</div><div class="most-value">brandaoV9#7251 (3389)</div></div>
+            <div class="most-card"><div class="most-title">Dégats Reçus</div><div class="most-value">OBEY UR MASTER#MAMBO (3212)</div></div>
+            <div class="most-card"><div class="most-title">Écart Dégats (Made-Received)</div><div class="most-value">brandaoV9#7251 (1703)</div></div>
+        </div>
+
+        <h2 class="section-title">Tableau des scores</h2>
+        <table class="player-table">
+            <thead>
+                <tr>
+                    <th>Joueur</th>
+                    <th>Rank / Lvl</th>
+                    <th>Score / KDA</th>
+                    <th>Précision (H/B/L)</th>
+                    <th>Économie (Loadout)</th>
+                    <th>Armes / Versus</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/dade69b4-4f5a-8528-247b-219e5a1facd6/displayicon.png" class="agent-img" alt="Fade">
+                        <strong>brandaoV9#7251</strong> (Fade)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 200</small></td>
+                    <td><strong>5216</strong><br>19/9/3</td>
+                    <td>40% / 56% / 4%</td>
+                    <td>3829¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Spectre: 7, Vandal: 5, Phantom: 4, Ghost: 2, Sheriff: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs thanos95saian#1234: 3-4 | vs Tm Opera O#EZWP: 5-0 | vs HirooTwoo#5805: 3-3 | vs OBEY UR MASTER#MAMBO: 5-1 | vs Vidfvigst#Jspfr: 3-1</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/7c8a4701-4de6-9355-b254-e09bc2a34b72/displayicon.png" class="agent-img" alt="Miks">
+                        <strong>BL Juker#Gmar</strong> (Miks)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 472</small></td>
+                    <td><strong>4563</strong><br>17/9/10</td>
+                    <td>30% / 66% / 4%</td>
+                    <td>4271¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Phantom: 12, Ghost: 3, Marshal: 1, Sheriff: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Tm Opera O#EZWP: 6-0 | vs Vidfvigst#Jspfr: 3-2 | vs thanos95saian#1234: 4-2 | vs OBEY UR MASTER#MAMBO: 2-2 | vs HirooTwoo#5805: 2-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="agent-img" alt="Phoenix">
+                        <strong>aust1n#HOT</strong> (Phoenix)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 513</small></td>
+                    <td><strong>4555</strong><br>16/14/5</td>
+                    <td>30% / 68% / 2%</td>
+                    <td>4216¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Phantom: 10, Spectre: 3, Ghost: 2, None: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Tm Opera O#EZWP: 3-2 | vs OBEY UR MASTER#MAMBO: 7-3 | vs Vidfvigst#Jspfr: 2-2 | vs thanos95saian#1234: 3-3 | vs HirooTwoo#5805: 1-4</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="agent-img" alt="Neon">
+                        <strong>I4NIS#128GO</strong> (Neon)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 313</small></td>
+                    <td><strong>4080</strong><br>16/11/0</td>
+                    <td>28% / 67% / 4%</td>
+                    <td>3742¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Phantom: 10, Spectre: 3, Ghost: 1, Vandal: 1, None: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs HirooTwoo#5805: 6-2 | vs thanos95saian#1234: 3-2 | vs OBEY UR MASTER#MAMBO: 3-0 | vs Vidfvigst#Jspfr: 3-4 | vs Tm Opera O#EZWP: 1-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/dade69b4-4f5a-8528-247b-219e5a1facd6/displayicon.png" class="agent-img" alt="Fade">
+                        <strong>HirooTwoo#5805</strong> (Fade)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 263</small></td>
+                    <td><strong>3819</strong><br>14/14/5</td>
+                    <td>23% / 70% / 7%</td>
+                    <td>3487¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Odin: 11, Classic: 1, Sheriff: 1, Phantom: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs brandaoV9#7251: 3-3 | vs aust1n#HOT: 4-1 | vs bigW#smer: 2-2 | vs BL Juker#Gmar: 3-2 | vs I4NIS#128GO: 2-6</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/7c8a4701-4de6-9355-b254-e09bc2a34b72/displayicon.png" class="agent-img" alt="Miks">
+                        <strong>thanos95saian#1234</strong> (Miks)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 347</small></td>
+                    <td><strong>3753</strong><br>11/18/13</td>
+                    <td>18% / 75% / 7%</td>
+                    <td>2992¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Phantom: 5, Vandal: 4, Judge: 2</div>
+                        <div class="details-small"><strong>Versus:</strong> vs brandaoV9#7251: 4-3 | vs aust1n#HOT: 3-3 | vs I4NIS#128GO: 2-3 | vs BL Juker#Gmar: 2-4</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="agent-img" alt="Chamber">
+                        <strong>bigW#smer</strong> (Chamber)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 514</small></td>
+                    <td><strong>3719</strong><br>14/9/1</td>
+                    <td>28% / 70% / 2%</td>
+                    <td>3747¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Odin: 8, Vandal: 3, None: 2, Ghost: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs OBEY UR MASTER#MAMBO: 1-2 | vs Vidfvigst#Jspfr: 4-2 | vs thanos95saian#1234: 5-0 | vs Tm Opera O#EZWP: 2-3 | vs HirooTwoo#5805: 2-2</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/1e58de9c-4950-5125-93e9-a0aee9f98746/displayicon.png" class="agent-img" alt="Killjoy">
+                        <strong>Vidfvigst#Jspfr</strong> (Killjoy)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 204</small></td>
+                    <td><strong>3481</strong><br>11/15/4</td>
+                    <td>36% / 60% / 5%</td>
+                    <td>2561¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 9, Classic: 2</div>
+                        <div class="details-small"><strong>Versus:</strong> vs aust1n#HOT: 2-2 | vs I4NIS#128GO: 4-3 | vs BL Juker#Gmar: 2-3 | vs bigW#smer: 2-4 | vs brandaoV9#7251: 1-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" class="agent-img" alt="Jett">
+                        <strong>OBEY UR MASTER#MAMBO</strong> (Jett)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 214</small></td>
+                    <td><strong>2811</strong><br>8/18/5</td>
+                    <td>39% / 61% / 0%</td>
+                    <td>2729¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 4, Sheriff: 2, None: 2</div>
+                        <div class="details-small"><strong>Versus:</strong> vs aust1n#HOT: 3-7 | vs BL Juker#Gmar: 2-2 | vs bigW#smer: 2-1 | vs brandaoV9#7251: 1-5</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/0e38b510-41a8-5780-5e8f-568b2a4f2d6c/displayicon.png" class="agent-img" alt="Iso">
+                        <strong>Tm Opera O#EZWP</strong> (Iso)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 147</small></td>
+                    <td><strong>2195</strong><br>8/17/1</td>
+                    <td>25% / 75% / 0%</td>
+                    <td>2939¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Phantom: 4, Guardian: 3, Vandal: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs bigW#smer: 3-2 | vs I4NIS#128GO: 3-1 | vs aust1n#HOT: 2-3</div>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
