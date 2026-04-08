@@ -70,6 +70,16 @@
         /* ECONOMY */
         .eco-badge { background: #1a1c1e; border: 1px solid #333; display: inline-block; padding: 10px 20px; border-radius: 6px; font-weight: 800; font-size: 1.1em; color: #ece8e1; }
         
+        /* TABS */
+        .tabs-nav { display: flex; gap: 10px; border-bottom: 2px solid #3d4247; margin-bottom: 20px; overflow-x: auto; padding-bottom: 10px; }
+        .tab-btn { background: transparent; border: none; color: #8b978f; font-family: 'Inter', sans-serif; font-size: 0.9em; font-weight: 600; cursor: pointer; padding: 5px 10px; border-radius: 4px; transition: all 0.2s; white-space: nowrap; }
+        .tab-btn:hover { color: #ece8e1; background: #32373d; }
+        .tab-btn.active { color: #ff4655; background: #2a2e33; box-shadow: inset 0 -2px 0 #ff4655; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
         @media (max-width: 600px) {
             .summary-content { flex-direction: column; align-items: flex-start; }
             .score-col, .kda-col { text-align: left; margin-top: 10px;}
@@ -120,12 +130,19 @@
                     </div>
                 </div>
             </summary>
-            
-            <div class="details-pane">
-                <!-- COLONNE GAUCHE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Précision (Aim)</h4>
+             <div class="details-pane" style="display: block;">
+                <!-- TABS NAVIGATION -->
+                <div class="tabs-nav">
+                    <button type="button" class="tab-btn active" onclick="switchTab(event, 'tab-aim-1d127851-93b5-54e9-b0b8-f1ec0a7b4f8d')">Précision (Aim)</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-dmg-1d127851-93b5-54e9-b0b8-f1ec0a7b4f8d')">Impact Dégâts</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-eco-1d127851-93b5-54e9-b0b8-f1ec0a7b4f8d')">Économie</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-vs-1d127851-93b5-54e9-b0b8-f1ec0a7b4f8d')">Duels</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-wpn-1d127851-93b5-54e9-b0b8-f1ec0a7b4f8d')">Armes</button>
+                </div>
+
+                <!-- TABS CONTENT -->
+                <div id="tab-aim-1d127851-93b5-54e9-b0b8-f1ec0a7b4f8d" class="tab-content active">
+                    <div class="stat-block">
                         <div class="acc-row">
                             <div class="acc-label">Tête</div>
                             <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 51%;"></div></div>
@@ -142,44 +159,232 @@
                             <div class="acc-val">2%</div>
                         </div>
                     </div>
+                </div>
 
+                <div id="tab-dmg-1d127851-93b5-54e9-b0b8-f1ec0a7b4f8d" class="tab-content">
                     <div class="stat-block">
-                        <h4>Impact Dégâts</h4>
-                        <ul class="info-list">
+                        <ul class="info-list" style="max-width: 300px;">
                             <li>Infligés <span>4022</span></li>
                             <li>Reçus <span style="color: #ff4655;">2506</span></li>
                         </ul>
                     </div>
                 </div>
                 
-                <!-- COLONNE DROITE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Kills par arme</h4>
-                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                Vandal: 15, Ghost: 2, Bulldog: 1, Guardian: 1, Phantom: 1, Sheriff: 1, None: 1
-                            
-                        </div>
-                    </div>
-
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Duels (Victime vs Tueur)</h4>
-                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                vs AtaşlıOglan#4646: 6-2 | vs berhan#King: 7-2 | vs SELBABA#3131: 5-0 | vs nilvohn#8641: 2-3 | vs OrquiLeClown#9654: 2-5
-                            
-                        </div>
-                    </div>
-                    
+                <div id="tab-eco-1d127851-93b5-54e9-b0b8-f1ec0a7b4f8d" class="tab-content">
                     <div class="stat-block">
-                        <h4>Économie moyenne</h4>
-                        <div class="eco-badge">
-                            3980 ¤
-                        </div>
+                        <div class="eco-badge">3980 ¤</div>
                     </div>
                 </div>
                 
+                <div id="tab-wpn-1d127851-93b5-54e9-b0b8-f1ec0a7b4f8d" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; padding: 15px; border-radius: 6px; border: 1px solid #2a2e33; max-width: 400px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 12px;">
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Vandal</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">15</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Ghost</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">2</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Bulldog</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">1</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Guardian</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">1</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Phantom</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">1</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Sheriff</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">1</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Inconnu</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">1</span>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-vs-1d127851-93b5-54e9-b0b8-f1ec0a7b4f8d" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; border-radius: 6px; border: 1px solid #2a2e33; overflow: hidden; max-width: 600px; padding: 15px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 10px;">
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">ChrZ</span>
+                                            <img src="https://media.valorant-api.com/agents/320b2a48-4d9b-a075-30f1-1f93a9b638fa/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">7</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">2</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/0e38b510-41a8-5780-5e8f-568b2a4f2d6c/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">berhan</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">ChrZ</span>
+                                            <img src="https://media.valorant-api.com/agents/320b2a48-4d9b-a075-30f1-1f93a9b638fa/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">6</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">2</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">AtaşlıOglan</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">ChrZ</span>
+                                            <img src="https://media.valorant-api.com/agents/320b2a48-4d9b-a075-30f1-1f93a9b638fa/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">2</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">5</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">OrquiLeClown</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">ChrZ</span>
+                                            <img src="https://media.valorant-api.com/agents/320b2a48-4d9b-a075-30f1-1f93a9b638fa/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">5</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">0</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">SELBABA</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">ChrZ</span>
+                                            <img src="https://media.valorant-api.com/agents/320b2a48-4d9b-a075-30f1-1f93a9b638fa/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">2</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">3</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">nilvohn</span>
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>   
             </div>
         </details>
         
@@ -202,12 +407,19 @@
                     </div>
                 </div>
             </summary>
-            
-            <div class="details-pane">
-                <!-- COLONNE GAUCHE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Précision (Aim)</h4>
+             <div class="details-pane" style="display: block;">
+                <!-- TABS NAVIGATION -->
+                <div class="tabs-nav">
+                    <button type="button" class="tab-btn active" onclick="switchTab(event, 'tab-aim-a13ad1c5-2a45-50fa-b337-4d7c1b32ead8')">Précision (Aim)</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-dmg-a13ad1c5-2a45-50fa-b337-4d7c1b32ead8')">Impact Dégâts</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-eco-a13ad1c5-2a45-50fa-b337-4d7c1b32ead8')">Économie</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-vs-a13ad1c5-2a45-50fa-b337-4d7c1b32ead8')">Duels</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-wpn-a13ad1c5-2a45-50fa-b337-4d7c1b32ead8')">Armes</button>
+                </div>
+
+                <!-- TABS CONTENT -->
+                <div id="tab-aim-a13ad1c5-2a45-50fa-b337-4d7c1b32ead8" class="tab-content active">
+                    <div class="stat-block">
                         <div class="acc-row">
                             <div class="acc-label">Tête</div>
                             <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 55%;"></div></div>
@@ -224,44 +436,192 @@
                             <div class="acc-val">0%</div>
                         </div>
                     </div>
+                </div>
 
+                <div id="tab-dmg-a13ad1c5-2a45-50fa-b337-4d7c1b32ead8" class="tab-content">
                     <div class="stat-block">
-                        <h4>Impact Dégâts</h4>
-                        <ul class="info-list">
+                        <ul class="info-list" style="max-width: 300px;">
                             <li>Infligés <span>4029</span></li>
                             <li>Reçus <span style="color: #ff4655;">3318</span></li>
                         </ul>
                     </div>
                 </div>
                 
-                <!-- COLONNE DROITE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Kills par arme</h4>
-                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                Vandal: 12, Sheriff: 7, Phantom: 3
-                            
-                        </div>
-                    </div>
-
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Duels (Victime vs Tueur)</h4>
-                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                vs YabR#6565: 4-4 | vs CH122ツ#KBLDツ: 4-3 | vs ChrZ#12345: 5-2 | vs I4NIS#128GO: 6-3 | vs Yuta#2455: 3-5
-                            
-                        </div>
-                    </div>
-                    
+                <div id="tab-eco-a13ad1c5-2a45-50fa-b337-4d7c1b32ead8" class="tab-content">
                     <div class="stat-block">
-                        <h4>Économie moyenne</h4>
-                        <div class="eco-badge">
-                            3489 ¤
-                        </div>
+                        <div class="eco-badge">3489 ¤</div>
                     </div>
                 </div>
                 
+                <div id="tab-wpn-a13ad1c5-2a45-50fa-b337-4d7c1b32ead8" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; padding: 15px; border-radius: 6px; border: 1px solid #2a2e33; max-width: 400px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 12px;">
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Vandal</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">12</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Sheriff</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">7</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Phantom</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">3</span>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-vs-a13ad1c5-2a45-50fa-b337-4d7c1b32ead8" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; border-radius: 6px; border: 1px solid #2a2e33; overflow: hidden; max-width: 600px; padding: 15px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 10px;">
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">OrquiLeClown</span>
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">6</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">3</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">I4NIS</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">OrquiLeClown</span>
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">4</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">4</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/7c8a4701-4de6-9355-b254-e09bc2a34b72/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">YabR</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">OrquiLeClown</span>
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">3</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">5</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">Yuta</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">OrquiLeClown</span>
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">4</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">3</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">CH122ツ</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">OrquiLeClown</span>
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">5</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">2</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/320b2a48-4d9b-a075-30f1-1f93a9b638fa/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">ChrZ</span>
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>   
             </div>
         </details>
         
@@ -284,12 +644,19 @@
                     </div>
                 </div>
             </summary>
-            
-            <div class="details-pane">
-                <!-- COLONNE GAUCHE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Précision (Aim)</h4>
+             <div class="details-pane" style="display: block;">
+                <!-- TABS NAVIGATION -->
+                <div class="tabs-nav">
+                    <button type="button" class="tab-btn active" onclick="switchTab(event, 'tab-aim-5f8ca6dd-fc85-57b3-a3f2-a9d8532d31a6')">Précision (Aim)</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-dmg-5f8ca6dd-fc85-57b3-a3f2-a9d8532d31a6')">Impact Dégâts</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-eco-5f8ca6dd-fc85-57b3-a3f2-a9d8532d31a6')">Économie</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-vs-5f8ca6dd-fc85-57b3-a3f2-a9d8532d31a6')">Duels</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-wpn-5f8ca6dd-fc85-57b3-a3f2-a9d8532d31a6')">Armes</button>
+                </div>
+
+                <!-- TABS CONTENT -->
+                <div id="tab-aim-5f8ca6dd-fc85-57b3-a3f2-a9d8532d31a6" class="tab-content active">
+                    <div class="stat-block">
                         <div class="acc-row">
                             <div class="acc-label">Tête</div>
                             <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 56%;"></div></div>
@@ -306,44 +673,202 @@
                             <div class="acc-val">6%</div>
                         </div>
                     </div>
+                </div>
 
+                <div id="tab-dmg-5f8ca6dd-fc85-57b3-a3f2-a9d8532d31a6" class="tab-content">
                     <div class="stat-block">
-                        <h4>Impact Dégâts</h4>
-                        <ul class="info-list">
+                        <ul class="info-list" style="max-width: 300px;">
                             <li>Infligés <span>3297</span></li>
                             <li>Reçus <span style="color: #ff4655;">2852</span></li>
                         </ul>
                     </div>
                 </div>
                 
-                <!-- COLONNE DROITE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Kills par arme</h4>
-                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                Vandal: 12, Bandit: 2, Sheriff: 2, Classic: 1
-                            
-                        </div>
-                    </div>
-
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Duels (Victime vs Tueur)</h4>
-                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                vs nilvohn#8641: 3-4 | vs SELBABA#3131: 4-3 | vs berhan#King: 5-1 | vs OrquiLeClown#9654: 4-4 | vs AtaşlıOglan#4646: 1-3
-                            
-                        </div>
-                    </div>
-                    
+                <div id="tab-eco-5f8ca6dd-fc85-57b3-a3f2-a9d8532d31a6" class="tab-content">
                     <div class="stat-block">
-                        <h4>Économie moyenne</h4>
-                        <div class="eco-badge">
-                            3830 ¤
-                        </div>
+                        <div class="eco-badge">3830 ¤</div>
                     </div>
                 </div>
                 
+                <div id="tab-wpn-5f8ca6dd-fc85-57b3-a3f2-a9d8532d31a6" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; padding: 15px; border-radius: 6px; border: 1px solid #2a2e33; max-width: 400px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 12px;">
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Vandal</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">12</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Bandit</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">2</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Sheriff</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">2</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Classic</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">1</span>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-vs-5f8ca6dd-fc85-57b3-a3f2-a9d8532d31a6" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; border-radius: 6px; border: 1px solid #2a2e33; overflow: hidden; max-width: 600px; padding: 15px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 10px;">
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">YabR</span>
+                                            <img src="https://media.valorant-api.com/agents/7c8a4701-4de6-9355-b254-e09bc2a34b72/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">4</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">4</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">OrquiLeClown</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">YabR</span>
+                                            <img src="https://media.valorant-api.com/agents/7c8a4701-4de6-9355-b254-e09bc2a34b72/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">3</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">4</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">nilvohn</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">YabR</span>
+                                            <img src="https://media.valorant-api.com/agents/7c8a4701-4de6-9355-b254-e09bc2a34b72/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">4</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">3</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">SELBABA</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">YabR</span>
+                                            <img src="https://media.valorant-api.com/agents/7c8a4701-4de6-9355-b254-e09bc2a34b72/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">5</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">1</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/0e38b510-41a8-5780-5e8f-568b2a4f2d6c/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">berhan</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">YabR</span>
+                                            <img src="https://media.valorant-api.com/agents/7c8a4701-4de6-9355-b254-e09bc2a34b72/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">1</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">3</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">AtaşlıOglan</span>
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>   
             </div>
         </details>
         
@@ -366,12 +891,19 @@
                     </div>
                 </div>
             </summary>
-            
-            <div class="details-pane">
-                <!-- COLONNE GAUCHE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Précision (Aim)</h4>
+             <div class="details-pane" style="display: block;">
+                <!-- TABS NAVIGATION -->
+                <div class="tabs-nav">
+                    <button type="button" class="tab-btn active" onclick="switchTab(event, 'tab-aim-0f707ea5-6302-5021-baf2-143e63686065')">Précision (Aim)</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-dmg-0f707ea5-6302-5021-baf2-143e63686065')">Impact Dégâts</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-eco-0f707ea5-6302-5021-baf2-143e63686065')">Économie</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-vs-0f707ea5-6302-5021-baf2-143e63686065')">Duels</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-wpn-0f707ea5-6302-5021-baf2-143e63686065')">Armes</button>
+                </div>
+
+                <!-- TABS CONTENT -->
+                <div id="tab-aim-0f707ea5-6302-5021-baf2-143e63686065" class="tab-content active">
+                    <div class="stat-block">
                         <div class="acc-row">
                             <div class="acc-label">Tête</div>
                             <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 19%;"></div></div>
@@ -388,44 +920,202 @@
                             <div class="acc-val">8%</div>
                         </div>
                     </div>
+                </div>
 
+                <div id="tab-dmg-0f707ea5-6302-5021-baf2-143e63686065" class="tab-content">
                     <div class="stat-block">
-                        <h4>Impact Dégâts</h4>
-                        <ul class="info-list">
+                        <ul class="info-list" style="max-width: 300px;">
                             <li>Infligés <span>3517</span></li>
                             <li>Reçus <span style="color: #ff4655;">2635</span></li>
                         </ul>
                     </div>
                 </div>
                 
-                <!-- COLONNE DROITE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Kills par arme</h4>
-                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                Vandal: 11, Ghost: 4, Spectre: 2, None: 2
-                            
-                        </div>
-                    </div>
-
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Duels (Victime vs Tueur)</h4>
-                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                vs berhan#King: 4-3 | vs AtaşlıOglan#4646: 4-3 | vs nilvohn#8641: 5-2 | vs OrquiLeClown#9654: 3-6 | vs SELBABA#3131: 3-0
-                            
-                        </div>
-                    </div>
-                    
+                <div id="tab-eco-0f707ea5-6302-5021-baf2-143e63686065" class="tab-content">
                     <div class="stat-block">
-                        <h4>Économie moyenne</h4>
-                        <div class="eco-badge">
-                            3698 ¤
-                        </div>
+                        <div class="eco-badge">3698 ¤</div>
                     </div>
                 </div>
                 
+                <div id="tab-wpn-0f707ea5-6302-5021-baf2-143e63686065" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; padding: 15px; border-radius: 6px; border: 1px solid #2a2e33; max-width: 400px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 12px;">
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Vandal</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">11</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Ghost</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">4</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Spectre</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">2</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Inconnu</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">2</span>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-vs-0f707ea5-6302-5021-baf2-143e63686065" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; border-radius: 6px; border: 1px solid #2a2e33; overflow: hidden; max-width: 600px; padding: 15px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 10px;">
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">I4NIS</span>
+                                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">3</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">6</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">OrquiLeClown</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">I4NIS</span>
+                                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">4</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">3</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/0e38b510-41a8-5780-5e8f-568b2a4f2d6c/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">berhan</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">I4NIS</span>
+                                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">4</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">3</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">AtaşlıOglan</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">I4NIS</span>
+                                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">5</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">2</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">nilvohn</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">I4NIS</span>
+                                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">3</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">0</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">SELBABA</span>
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>   
             </div>
         </details>
         
@@ -448,12 +1138,19 @@
                     </div>
                 </div>
             </summary>
-            
-            <div class="details-pane">
-                <!-- COLONNE GAUCHE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Précision (Aim)</h4>
+             <div class="details-pane" style="display: block;">
+                <!-- TABS NAVIGATION -->
+                <div class="tabs-nav">
+                    <button type="button" class="tab-btn active" onclick="switchTab(event, 'tab-aim-e1eef941-2ab8-5151-8088-6087c14188cc')">Précision (Aim)</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-dmg-e1eef941-2ab8-5151-8088-6087c14188cc')">Impact Dégâts</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-eco-e1eef941-2ab8-5151-8088-6087c14188cc')">Économie</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-vs-e1eef941-2ab8-5151-8088-6087c14188cc')">Duels</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-wpn-e1eef941-2ab8-5151-8088-6087c14188cc')">Armes</button>
+                </div>
+
+                <!-- TABS CONTENT -->
+                <div id="tab-aim-e1eef941-2ab8-5151-8088-6087c14188cc" class="tab-content active">
+                    <div class="stat-block">
                         <div class="acc-row">
                             <div class="acc-label">Tête</div>
                             <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 29%;"></div></div>
@@ -470,44 +1167,189 @@
                             <div class="acc-val">0%</div>
                         </div>
                     </div>
+                </div>
 
+                <div id="tab-dmg-e1eef941-2ab8-5151-8088-6087c14188cc" class="tab-content">
                     <div class="stat-block">
-                        <h4>Impact Dégâts</h4>
-                        <ul class="info-list">
+                        <ul class="info-list" style="max-width: 300px;">
                             <li>Infligés <span>3509</span></li>
                             <li>Reçus <span style="color: #ff4655;">2623</span></li>
                         </ul>
                     </div>
                 </div>
                 
-                <!-- COLONNE DROITE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Kills par arme</h4>
-                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                Vandal: 8, Phantom: 7, Spectre: 2, Ghost: 1, Sheriff: 1
-                            
-                        </div>
-                    </div>
-
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Duels (Victime vs Tueur)</h4>
-                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                vs SELBABA#3131: 3-6 | vs OrquiLeClown#9654: 5-3 | vs nilvohn#8641: 5-0 | vs AtaşlıOglan#4646: 6-2
-                            
-                        </div>
-                    </div>
-                    
+                <div id="tab-eco-e1eef941-2ab8-5151-8088-6087c14188cc" class="tab-content">
                     <div class="stat-block">
-                        <h4>Économie moyenne</h4>
-                        <div class="eco-badge">
-                            3430 ¤
-                        </div>
+                        <div class="eco-badge">3430 ¤</div>
                     </div>
                 </div>
                 
+                <div id="tab-wpn-e1eef941-2ab8-5151-8088-6087c14188cc" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; padding: 15px; border-radius: 6px; border: 1px solid #2a2e33; max-width: 400px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 12px;">
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Vandal</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">8</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Phantom</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">7</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Spectre</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">2</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Ghost</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">1</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Sheriff</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">1</span>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-vs-e1eef941-2ab8-5151-8088-6087c14188cc" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; border-radius: 6px; border: 1px solid #2a2e33; overflow: hidden; max-width: 600px; padding: 15px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 10px;">
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">Yuta</span>
+                                            <img src="https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">3</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">6</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">SELBABA</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">Yuta</span>
+                                            <img src="https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">5</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">3</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">OrquiLeClown</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">Yuta</span>
+                                            <img src="https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">6</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">2</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">AtaşlıOglan</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">Yuta</span>
+                                            <img src="https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">5</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">0</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">nilvohn</span>
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>   
             </div>
         </details>
         
@@ -530,12 +1372,19 @@
                     </div>
                 </div>
             </summary>
-            
-            <div class="details-pane">
-                <!-- COLONNE GAUCHE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Précision (Aim)</h4>
+             <div class="details-pane" style="display: block;">
+                <!-- TABS NAVIGATION -->
+                <div class="tabs-nav">
+                    <button type="button" class="tab-btn active" onclick="switchTab(event, 'tab-aim-58511a03-9607-5952-953b-7015dfa007a2')">Précision (Aim)</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-dmg-58511a03-9607-5952-953b-7015dfa007a2')">Impact Dégâts</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-eco-58511a03-9607-5952-953b-7015dfa007a2')">Économie</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-vs-58511a03-9607-5952-953b-7015dfa007a2')">Duels</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-wpn-58511a03-9607-5952-953b-7015dfa007a2')">Armes</button>
+                </div>
+
+                <!-- TABS CONTENT -->
+                <div id="tab-aim-58511a03-9607-5952-953b-7015dfa007a2" class="tab-content active">
+                    <div class="stat-block">
                         <div class="acc-row">
                             <div class="acc-label">Tête</div>
                             <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 42%;"></div></div>
@@ -552,44 +1401,192 @@
                             <div class="acc-val">0%</div>
                         </div>
                     </div>
+                </div>
 
+                <div id="tab-dmg-58511a03-9607-5952-953b-7015dfa007a2" class="tab-content">
                     <div class="stat-block">
-                        <h4>Impact Dégâts</h4>
-                        <ul class="info-list">
+                        <ul class="info-list" style="max-width: 300px;">
                             <li>Infligés <span>2594</span></li>
                             <li>Reçus <span style="color: #ff4655;">3521</span></li>
                         </ul>
                     </div>
                 </div>
                 
-                <!-- COLONNE DROITE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Kills par arme</h4>
-                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                Vandal: 9, Ghost: 3, Bulldog: 1
-                            
-                        </div>
-                    </div>
-
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Duels (Victime vs Tueur)</h4>
-                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                vs ChrZ#12345: 2-7 | vs CH122ツ#KBLDツ: 3-3 | vs Yuta#2455: 4-0 | vs I4NIS#128GO: 3-4 | vs YabR#6565: 1-5
-                            
-                        </div>
-                    </div>
-                    
+                <div id="tab-eco-58511a03-9607-5952-953b-7015dfa007a2" class="tab-content">
                     <div class="stat-block">
-                        <h4>Économie moyenne</h4>
-                        <div class="eco-badge">
-                            3500 ¤
-                        </div>
+                        <div class="eco-badge">3500 ¤</div>
                     </div>
                 </div>
                 
+                <div id="tab-wpn-58511a03-9607-5952-953b-7015dfa007a2" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; padding: 15px; border-radius: 6px; border: 1px solid #2a2e33; max-width: 400px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 12px;">
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Vandal</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">9</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Ghost</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">3</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Bulldog</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">1</span>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-vs-58511a03-9607-5952-953b-7015dfa007a2" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; border-radius: 6px; border: 1px solid #2a2e33; overflow: hidden; max-width: 600px; padding: 15px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 10px;">
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">berhan</span>
+                                            <img src="https://media.valorant-api.com/agents/0e38b510-41a8-5780-5e8f-568b2a4f2d6c/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">2</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">7</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/320b2a48-4d9b-a075-30f1-1f93a9b638fa/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">ChrZ</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">berhan</span>
+                                            <img src="https://media.valorant-api.com/agents/0e38b510-41a8-5780-5e8f-568b2a4f2d6c/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">3</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">4</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">I4NIS</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">berhan</span>
+                                            <img src="https://media.valorant-api.com/agents/0e38b510-41a8-5780-5e8f-568b2a4f2d6c/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">3</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">3</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">CH122ツ</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">berhan</span>
+                                            <img src="https://media.valorant-api.com/agents/0e38b510-41a8-5780-5e8f-568b2a4f2d6c/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">1</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">5</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/7c8a4701-4de6-9355-b254-e09bc2a34b72/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">YabR</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">berhan</span>
+                                            <img src="https://media.valorant-api.com/agents/0e38b510-41a8-5780-5e8f-568b2a4f2d6c/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">4</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">0</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">Yuta</span>
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>   
             </div>
         </details>
         
@@ -612,12 +1609,19 @@
                     </div>
                 </div>
             </summary>
-            
-            <div class="details-pane">
-                <!-- COLONNE GAUCHE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Précision (Aim)</h4>
+             <div class="details-pane" style="display: block;">
+                <!-- TABS NAVIGATION -->
+                <div class="tabs-nav">
+                    <button type="button" class="tab-btn active" onclick="switchTab(event, 'tab-aim-ac7d4f33-895f-5706-9404-1bdf441fdd96')">Précision (Aim)</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-dmg-ac7d4f33-895f-5706-9404-1bdf441fdd96')">Impact Dégâts</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-eco-ac7d4f33-895f-5706-9404-1bdf441fdd96')">Économie</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-vs-ac7d4f33-895f-5706-9404-1bdf441fdd96')">Duels</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-wpn-ac7d4f33-895f-5706-9404-1bdf441fdd96')">Armes</button>
+                </div>
+
+                <!-- TABS CONTENT -->
+                <div id="tab-aim-ac7d4f33-895f-5706-9404-1bdf441fdd96" class="tab-content active">
+                    <div class="stat-block">
                         <div class="acc-row">
                             <div class="acc-label">Tête</div>
                             <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 24%;"></div></div>
@@ -634,44 +1638,202 @@
                             <div class="acc-val">8%</div>
                         </div>
                     </div>
+                </div>
 
+                <div id="tab-dmg-ac7d4f33-895f-5706-9404-1bdf441fdd96" class="tab-content">
                     <div class="stat-block">
-                        <h4>Impact Dégâts</h4>
-                        <ul class="info-list">
+                        <ul class="info-list" style="max-width: 300px;">
                             <li>Infligés <span>2231</span></li>
                             <li>Reçus <span style="color: #ff4655;">3544</span></li>
                         </ul>
                     </div>
                 </div>
                 
-                <!-- COLONNE DROITE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Kills par arme</h4>
-                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                Vandal: 6, Phantom: 5, Ghost: 1, Sheriff: 1
-                            
-                        </div>
-                    </div>
-
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Duels (Victime vs Tueur)</h4>
-                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                vs YabR#6565: 3-1 | vs CH122ツ#KBLDツ: 3-1 | vs I4NIS#128GO: 3-4 | vs Yuta#2455: 2-6 | vs ChrZ#12345: 2-6
-                            
-                        </div>
-                    </div>
-                    
+                <div id="tab-eco-ac7d4f33-895f-5706-9404-1bdf441fdd96" class="tab-content">
                     <div class="stat-block">
-                        <h4>Économie moyenne</h4>
-                        <div class="eco-badge">
-                            3545 ¤
-                        </div>
+                        <div class="eco-badge">3545 ¤</div>
                     </div>
                 </div>
                 
+                <div id="tab-wpn-ac7d4f33-895f-5706-9404-1bdf441fdd96" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; padding: 15px; border-radius: 6px; border: 1px solid #2a2e33; max-width: 400px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 12px;">
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Vandal</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">6</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Phantom</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">5</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Ghost</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">1</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Sheriff</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">1</span>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-vs-ac7d4f33-895f-5706-9404-1bdf441fdd96" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; border-radius: 6px; border: 1px solid #2a2e33; overflow: hidden; max-width: 600px; padding: 15px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 10px;">
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">AtaşlıOglan</span>
+                                            <img src="https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">2</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">6</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">Yuta</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">AtaşlıOglan</span>
+                                            <img src="https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">2</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">6</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/320b2a48-4d9b-a075-30f1-1f93a9b638fa/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">ChrZ</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">AtaşlıOglan</span>
+                                            <img src="https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">3</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">4</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">I4NIS</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">AtaşlıOglan</span>
+                                            <img src="https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">3</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">1</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/7c8a4701-4de6-9355-b254-e09bc2a34b72/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">YabR</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">AtaşlıOglan</span>
+                                            <img src="https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">3</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">1</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">CH122ツ</span>
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>   
             </div>
         </details>
         
@@ -694,12 +1856,19 @@
                     </div>
                 </div>
             </summary>
-            
-            <div class="details-pane">
-                <!-- COLONNE GAUCHE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Précision (Aim)</h4>
+             <div class="details-pane" style="display: block;">
+                <!-- TABS NAVIGATION -->
+                <div class="tabs-nav">
+                    <button type="button" class="tab-btn active" onclick="switchTab(event, 'tab-aim-480919a6-4a28-5c60-83a5-0427821481f5')">Précision (Aim)</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-dmg-480919a6-4a28-5c60-83a5-0427821481f5')">Impact Dégâts</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-eco-480919a6-4a28-5c60-83a5-0427821481f5')">Économie</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-vs-480919a6-4a28-5c60-83a5-0427821481f5')">Duels</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-wpn-480919a6-4a28-5c60-83a5-0427821481f5')">Armes</button>
+                </div>
+
+                <!-- TABS CONTENT -->
+                <div id="tab-aim-480919a6-4a28-5c60-83a5-0427821481f5" class="tab-content active">
+                    <div class="stat-block">
                         <div class="acc-row">
                             <div class="acc-label">Tête</div>
                             <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 21%;"></div></div>
@@ -716,44 +1885,146 @@
                             <div class="acc-val">3%</div>
                         </div>
                     </div>
+                </div>
 
+                <div id="tab-dmg-480919a6-4a28-5c60-83a5-0427821481f5" class="tab-content">
                     <div class="stat-block">
-                        <h4>Impact Dégâts</h4>
-                        <ul class="info-list">
+                        <ul class="info-list" style="max-width: 300px;">
                             <li>Infligés <span>2235</span></li>
                             <li>Reçus <span style="color: #ff4655;">3070</span></li>
                         </ul>
                     </div>
                 </div>
                 
-                <!-- COLONNE DROITE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Kills par arme</h4>
-                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                Vandal: 7, Phantom: 3, Spectre: 1
-                            
-                        </div>
-                    </div>
-
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Duels (Victime vs Tueur)</h4>
-                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                vs Yuta#2455: 6-3 | vs YabR#6565: 3-4 | vs CH122ツ#KBLDツ: 2-3
-                            
-                        </div>
-                    </div>
-                    
+                <div id="tab-eco-480919a6-4a28-5c60-83a5-0427821481f5" class="tab-content">
                     <div class="stat-block">
-                        <h4>Économie moyenne</h4>
-                        <div class="eco-badge">
-                            3107 ¤
-                        </div>
+                        <div class="eco-badge">3107 ¤</div>
                     </div>
                 </div>
                 
+                <div id="tab-wpn-480919a6-4a28-5c60-83a5-0427821481f5" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; padding: 15px; border-radius: 6px; border: 1px solid #2a2e33; max-width: 400px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 12px;">
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Vandal</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">7</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Phantom</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">3</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Spectre</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">1</span>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-vs-480919a6-4a28-5c60-83a5-0427821481f5" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; border-radius: 6px; border: 1px solid #2a2e33; overflow: hidden; max-width: 600px; padding: 15px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 10px;">
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">SELBABA</span>
+                                            <img src="https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">6</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">3</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">Yuta</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">SELBABA</span>
+                                            <img src="https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">3</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">4</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/7c8a4701-4de6-9355-b254-e09bc2a34b72/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">YabR</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">SELBABA</span>
+                                            <img src="https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">2</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">3</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">CH122ツ</span>
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>   
             </div>
         </details>
         
@@ -776,12 +2047,19 @@
                     </div>
                 </div>
             </summary>
-            
-            <div class="details-pane">
-                <!-- COLONNE GAUCHE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Précision (Aim)</h4>
+             <div class="details-pane" style="display: block;">
+                <!-- TABS NAVIGATION -->
+                <div class="tabs-nav">
+                    <button type="button" class="tab-btn active" onclick="switchTab(event, 'tab-aim-ae869584-3391-519a-92f7-4f100295f524')">Précision (Aim)</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-dmg-ae869584-3391-519a-92f7-4f100295f524')">Impact Dégâts</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-eco-ae869584-3391-519a-92f7-4f100295f524')">Économie</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-vs-ae869584-3391-519a-92f7-4f100295f524')">Duels</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-wpn-ae869584-3391-519a-92f7-4f100295f524')">Armes</button>
+                </div>
+
+                <!-- TABS CONTENT -->
+                <div id="tab-aim-ae869584-3391-519a-92f7-4f100295f524" class="tab-content active">
+                    <div class="stat-block">
                         <div class="acc-row">
                             <div class="acc-label">Tête</div>
                             <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 40%;"></div></div>
@@ -798,44 +2076,179 @@
                             <div class="acc-val">3%</div>
                         </div>
                     </div>
+                </div>
 
+                <div id="tab-dmg-ae869584-3391-519a-92f7-4f100295f524" class="tab-content">
                     <div class="stat-block">
-                        <h4>Impact Dégâts</h4>
-                        <ul class="info-list">
+                        <ul class="info-list" style="max-width: 300px;">
                             <li>Infligés <span>2425</span></li>
                             <li>Reçus <span style="color: #ff4655;">3372</span></li>
                         </ul>
                     </div>
                 </div>
                 
-                <!-- COLONNE DROITE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Kills par arme</h4>
-                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                Phantom: 5, Guardian: 3, Vandal: 2, Ghost: 1
-                            
-                        </div>
-                    </div>
-
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Duels (Victime vs Tueur)</h4>
-                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                vs YabR#6565: 4-3 | vs I4NIS#128GO: 2-5 | vs ChrZ#12345: 3-2 | vs CH122ツ#KBLDツ: 2-3
-                            
-                        </div>
-                    </div>
-                    
+                <div id="tab-eco-ae869584-3391-519a-92f7-4f100295f524" class="tab-content">
                     <div class="stat-block">
-                        <h4>Économie moyenne</h4>
-                        <div class="eco-badge">
-                            3634 ¤
-                        </div>
+                        <div class="eco-badge">3634 ¤</div>
                     </div>
                 </div>
                 
+                <div id="tab-wpn-ae869584-3391-519a-92f7-4f100295f524" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; padding: 15px; border-radius: 6px; border: 1px solid #2a2e33; max-width: 400px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 12px;">
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Phantom</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">5</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Guardian</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">3</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Vandal</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">2</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Ghost</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">1</span>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-vs-ae869584-3391-519a-92f7-4f100295f524" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; border-radius: 6px; border: 1px solid #2a2e33; overflow: hidden; max-width: 600px; padding: 15px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 10px;">
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">nilvohn</span>
+                                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">4</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">3</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/7c8a4701-4de6-9355-b254-e09bc2a34b72/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">YabR</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">nilvohn</span>
+                                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">2</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">5</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">I4NIS</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">nilvohn</span>
+                                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">3</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">2</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/320b2a48-4d9b-a075-30f1-1f93a9b638fa/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">ChrZ</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">nilvohn</span>
+                                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">2</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">3</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">CH122ツ</span>
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>   
             </div>
         </details>
         
@@ -858,12 +2271,19 @@
                     </div>
                 </div>
             </summary>
-            
-            <div class="details-pane">
-                <!-- COLONNE GAUCHE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Précision (Aim)</h4>
+             <div class="details-pane" style="display: block;">
+                <!-- TABS NAVIGATION -->
+                <div class="tabs-nav">
+                    <button type="button" class="tab-btn active" onclick="switchTab(event, 'tab-aim-cf54fe89-1df7-57f9-9503-eea6fad679b5')">Précision (Aim)</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-dmg-cf54fe89-1df7-57f9-9503-eea6fad679b5')">Impact Dégâts</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-eco-cf54fe89-1df7-57f9-9503-eea6fad679b5')">Économie</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-vs-cf54fe89-1df7-57f9-9503-eea6fad679b5')">Duels</button>
+                    <button type="button" class="tab-btn" onclick="switchTab(event, 'tab-wpn-cf54fe89-1df7-57f9-9503-eea6fad679b5')">Armes</button>
+                </div>
+
+                <!-- TABS CONTENT -->
+                <div id="tab-aim-cf54fe89-1df7-57f9-9503-eea6fad679b5" class="tab-content active">
+                    <div class="stat-block">
                         <div class="acc-row">
                             <div class="acc-label">Tête</div>
                             <div class="acc-bar"><div class="acc-fill fill-hs" style="width: 29%;"></div></div>
@@ -880,48 +2300,206 @@
                             <div class="acc-val">0%</div>
                         </div>
                     </div>
+                </div>
 
+                <div id="tab-dmg-cf54fe89-1df7-57f9-9503-eea6fad679b5" class="tab-content">
                     <div class="stat-block">
-                        <h4>Impact Dégâts</h4>
-                        <ul class="info-list">
+                        <ul class="info-list" style="max-width: 300px;">
                             <li>Infligés <span>2480</span></li>
                             <li>Reçus <span style="color: #ff4655;">2898</span></li>
                         </ul>
                     </div>
                 </div>
                 
-                <!-- COLONNE DROITE -->
-                <div>
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Kills par arme</h4>
-                        <div style="font-size: 0.9em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                Vandal: 12, Ghost: 1
-                            
-                        </div>
-                    </div>
-
-                    <div class="stat-block" style="margin-bottom: 30px;">
-                        <h4>Duels (Victime vs Tueur)</h4>
-                        <div style="font-size: 0.85em; color: #a9b5ab; background: #1a1c1e; padding: 12px; border-radius: 6px; border: 1px solid #2a2e33; line-height: 1.8;">
-                            
-                                vs OrquiLeClown#9654: 3-4 | vs nilvohn#8641: 3-2 | vs berhan#King: 3-3 | vs SELBABA#3131: 3-2 | vs AtaşlıOglan#4646: 1-3
-                            
-                        </div>
-                    </div>
-                    
+                <div id="tab-eco-cf54fe89-1df7-57f9-9503-eea6fad679b5" class="tab-content">
                     <div class="stat-block">
-                        <h4>Économie moyenne</h4>
-                        <div class="eco-badge">
-                            2930 ¤
-                        </div>
+                        <div class="eco-badge">2930 ¤</div>
                     </div>
                 </div>
                 
+                <div id="tab-wpn-cf54fe89-1df7-57f9-9503-eea6fad679b5" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; padding: 15px; border-radius: 6px; border: 1px solid #2a2e33; max-width: 400px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 12px;">
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Vandal</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">12</span>
+                                    </div>
+                                
+                                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 15px;">
+                                            
+                                            <div style="width: 80px; height: 35px;"></div>
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600; text-transform: capitalize;">Ghost</span>
+                                        </div>
+                                        <span style="font-weight: 800; color: #00ff87; font-size: 1.1em;">1</span>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-vs-cf54fe89-1df7-57f9-9503-eea6fad679b5" class="tab-content">
+                    <div class="stat-block">
+                        <div style="background: #1a1c1e; border-radius: 6px; border: 1px solid #2a2e33; overflow: hidden; max-width: 600px; padding: 15px;">
+                            
+                                <div style="display: flex; flex-direction: column; gap: 10px;">
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">CH122ツ</span>
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">3</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">4</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">OrquiLeClown</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">CH122ツ</span>
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">3</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">3</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/0e38b510-41a8-5780-5e8f-568b2a4f2d6c/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">berhan</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">CH122ツ</span>
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">3</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">2</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">nilvohn</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">CH122ツ</span>
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">3</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">2</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">SELBABA</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="display: flex; align-items: center; justify-content: space-between; background: #23272b; padding: 8px 15px; border-radius: 6px;">
+                                        <!-- Self Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
+                                            <span style="color: #ece8e1; font-weight: 600;">CH122ツ</span>
+                                            <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #00ff87;">
+                                        </div>
+                                        
+                                        <!-- Score -->
+                                        <div style="min-width: 80px; text-align: center; font-weight: 800; font-size: 1.2em; background: #1a1c1e; padding: 5px; border-radius: 4px; margin: 0 15px;">
+                                            <span style="color: #00ff87;">1</span> 
+                                            <span style="color: #555; margin: 0 2px;">-</span> 
+                                            <span style="color: #ff4655;">3</span>
+                                        </div>
+                                        
+                                        <!-- Enemy Side -->
+                                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-start;">
+                                            
+                                            <img src="https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayicon.png" style="width: 35px; height: 35px; border-radius: 6px; border: 1px solid #ff4655;">
+                                            
+                                            <span style="color: #ece8e1; font-weight: 600;">AtaşlıOglan</span>
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>   
             </div>
         </details>
         
         
     </div>
+    <script>
+        function switchTab(event, targetId) {
+            // Empêche de fermer le détails principal
+            event.preventDefault();
+            event.stopPropagation();
+            
+            // Trouver le container "details-pane" le plus proche
+            const pane = event.target.closest('.details-pane');
+            
+            // Retirer l'état actif sur les boutons
+            pane.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Cacher tous les onglets
+            pane.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Afficher la cible
+            pane.querySelector('#' + targetId).classList.add('active');
+        }
+    </script>
 </body>
 </html>
