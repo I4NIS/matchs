@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Report - Pearl</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f1923; color: #ece8e1; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; background: #1f2326; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .header { text-align: center; border-bottom: 2px solid #ff4655; padding-bottom: 20px; margin-bottom: 30px; }
+        .header h1 { color: #ff4655; font-size: 2.5em; margin: 0 0 10px 0; text-transform: uppercase;}
+        .subtitle { font-size: 1.2em; color: #8b978f; }
+        .score { font-size: 3em; font-weight: bold; margin: 20px 0; }
+        .is-win { color: #00ff87; }
+        .is-loss { color: #ff4655; }
+        
+        .section-title { font-size: 1.5em; border-bottom: 1px solid #454545; padding-bottom: 10px; margin-top: 40px; color: #ff4655;}
+        
+        .most-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;}
+        .most-card { background: #2a2e33; padding: 15px; border-radius: 6px; text-align: center; }
+        .most-title { font-size: 0.9em; color: #8b978f; text-transform: uppercase; margin-bottom: 5px;}
+        .most-value { font-weight: bold; font-size: 1.1em; }
+        
+        .player-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .player-table th, .player-table td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
+        .player-table th { background: #2a2e33; color: #ff4655; text-transform: uppercase; font-size: 0.9em; }
+        .player-row:hover { background: #2a2e33; }
+        
+        .agent-img { width: 40px; border-radius: 50%; vertical-align: middle; margin-right: 10px; }
+        .blue-team { border-left: 4px solid #00ff87; }
+        .red-team { border-left: 4px solid #ff4655; }
+        
+        .details-small { font-size: 0.8em; color: #aaa; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Rapport de Match - Pearl</h1>
+            <div class="subtitle">Competitive | EU | Wednesday, April 01, 2026 06:22 PM</div>
+            <div class="score"><span class="is-win">Victoire</span> 18 - 16</div>
+        </div>
+
+        <h2 class="section-title">Les "Most" du Match</h2>
+        <div class="most-grid">
+            <div class="most-card"><div class="most-title">Spike Planté</div><div class="most-value">cholot#qlf (10)</div></div>
+            <div class="most-card"><div class="most-title">Spike Désamorcé</div><div class="most-value">sisuka la pta#XXXL (2)</div></div>
+            <div class="most-card"><div class="most-title">Headshot %</div><div class="most-value">TestorrOoO#EUW (52%)</div></div>
+            <div class="most-card"><div class="most-title">Legshot %</div><div class="most-value">I4NIS#128GO (8%)</div></div>
+            <div class="most-card"><div class="most-title">Dégats Infligés</div><div class="most-value">cholot#qlf (6165)</div></div>
+            <div class="most-card"><div class="most-title">Dégats Reçus</div><div class="most-value">cholot#qlf (5433)</div></div>
+            <div class="most-card"><div class="most-title">Écart Dégats (Made-Received)</div><div class="most-value">cholot#qlf (732)</div></div>
+        </div>
+
+        <h2 class="section-title">Tableau des scores</h2>
+        <table class="player-table">
+            <thead>
+                <tr>
+                    <th>Joueur</th>
+                    <th>Rank / Lvl</th>
+                    <th>Score / KDA</th>
+                    <th>Précision (H/B/L)</th>
+                    <th>Économie (Loadout)</th>
+                    <th>Armes / Versus</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="agent-img" alt="Gekko">
+                        <strong>cholot#qlf</strong> (Gekko)
+                    </td>
+                    <td>Diamond 1<br><small>Lvl 170</small></td>
+                    <td><strong>9672</strong><br>30/29/11</td>
+                    <td>42% / 51% / 7%</td>
+                    <td>3607¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 26, Marshal: 2, Classic: 1, Ghost: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs goitiaﾌ#ESP: 5-8 | vs sisuka la pta#XXXL: 9-3 | vs Midnight Venom#XVEN: 5-4 | vs Faluko77#1543: 6-8 | vs Tmax560 peek#illo: 5-6</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="agent-img" alt="Chamber">
+                        <strong>sisuka la pta#XXXL</strong> (Chamber)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 263</small></td>
+                    <td><strong>7857</strong><br>27/25/12</td>
+                    <td>21% / 74% / 5%</td>
+                    <td>3863¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 14, None: 4, Outlaw: 4, Phantom: 4, Operator: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs ihou#CICI: 7-1 | vs massif#SQL: 5-3 | vs cholot#qlf: 3-9 | vs TestorrOoO#EUW: 3-4 | vs I4NIS#128GO: 9-8</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" class="agent-img" alt="Reyna">
+                        <strong>ihou#CICI</strong> (Reyna)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 225</small></td>
+                    <td><strong>7469</strong><br>26/23/5</td>
+                    <td>25% / 74% / 1%</td>
+                    <td>4265¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 16, Odin: 4, Operator: 2, Outlaw: 1, Classic: 1, Phantom: 1, Guardian: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Midnight Venom#XVEN: 6-2 | vs Faluko77#1543: 4-3 | vs goitiaﾌ#ESP: 8-5 | vs Tmax560 peek#illo: 7-6 | vs sisuka la pta#XXXL: 1-7</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png" class="agent-img" alt="Omen">
+                        <strong>Faluko77#1543</strong> (Omen)
+                    </td>
+                    <td>Platinum 2<br><small>Lvl 217</small></td>
+                    <td><strong>7465</strong><br>24/28/11</td>
+                    <td>33% / 63% / 5%</td>
+                    <td>3841¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 14, Phantom: 3, Ghost: 3, Bucky: 2, Stinger: 1, Guardian: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs I4NIS#128GO: 4-5 | vs ihou#CICI: 3-4 | vs cholot#qlf: 8-6 | vs TestorrOoO#EUW: 5-4 | vs massif#SQL: 4-9</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" class="agent-img" alt="Jett">
+                        <strong>goitiaﾌ#ESP</strong> (Jett)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 288</small></td>
+                    <td><strong>7408</strong><br>27/26/2</td>
+                    <td>38% / 60% / 2%</td>
+                    <td>3803¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Phantom: 11, Vandal: 9, None: 3, Ghost: 2, Sheriff: 2</div>
+                        <div class="details-small"><strong>Versus:</strong> vs I4NIS#128GO: 6-6 | vs cholot#qlf: 8-5 | vs ihou#CICI: 5-8 | vs TestorrOoO#EUW: 5-4 | vs massif#SQL: 3-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="agent-img" alt="Neon">
+                        <strong>I4NIS#128GO</strong> (Neon)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 312</small></td>
+                    <td><strong>7281</strong><br>25/26/4</td>
+                    <td>22% / 70% / 8%</td>
+                    <td>3831¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Phantom: 20, Vandal: 2, Ghost: 1, Classic: 1, None: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs goitiaﾌ#ESP: 6-6 | vs Tmax560 peek#illo: 4-4 | vs sisuka la pta#XXXL: 8-9 | vs Midnight Venom#XVEN: 2-3 | vs Faluko77#1543: 5-4</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/7c8a4701-4de6-9355-b254-e09bc2a34b72/displayicon.png" class="agent-img" alt="Miks">
+                        <strong>TestorrOoO#EUW</strong> (Miks)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 156</small></td>
+                    <td><strong>6890</strong><br>25/21/13</td>
+                    <td>52% / 41% / 7%</td>
+                    <td>3959¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Phantom: 11, Vandal: 9, Classic: 4, None: 1, Sheriff: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs goitiaﾌ#ESP: 4-5 | vs Midnight Venom#XVEN: 8-3 | vs Tmax560 peek#illo: 5-5 | vs sisuka la pta#XXXL: 4-3 | vs Faluko77#1543: 4-5 | vs TestorrOoO#EUW: 1-1</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/569fdd95-4d10-43ab-ca70-79becc718b46/displayicon.png" class="agent-img" alt="Sage">
+                        <strong>massif#SQL</strong> (Sage)
+                    </td>
+                    <td>Unrated<br><small>Lvl 258</small></td>
+                    <td><strong>6526</strong><br>22/21/7</td>
+                    <td>31% / 67% / 2%</td>
+                    <td>3828¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 20, Classic: 1, Sheriff: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Tmax560 peek#illo: 4-4 | vs goitiaﾌ#ESP: 3-3 | vs Faluko77#1543: 9-4 | vs Midnight Venom#XVEN: 3-5 | vs sisuka la pta#XXXL: 3-5</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/df1cb487-4902-002e-5c17-d28e83e78588/displayicon.png" class="agent-img" alt="Waylay">
+                        <strong>Tmax560 peek#illo</strong> (Waylay)
+                    </td>
+                    <td>Platinum 3<br><small>Lvl 313</small></td>
+                    <td><strong>6438</strong><br>25/25/4</td>
+                    <td>44% / 56% / 0%</td>
+                    <td>3760¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 19, Sheriff: 2, Marshal: 1, Ghost: 1, Stinger: 1, Phantom: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs massif#SQL: 4-4 | vs TestorrOoO#EUW: 5-5 | vs ihou#CICI: 6-7 | vs cholot#qlf: 6-5 | vs I4NIS#128GO: 4-4</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/6f2a04ca-43e0-be17-7f36-b3908627744d/displayicon.png" class="agent-img" alt="Skye">
+                        <strong>Midnight Venom#XVEN</strong> (Skye)
+                    </td>
+                    <td>Diamond 2<br><small>Lvl 310</small></td>
+                    <td><strong>5255</strong><br>17/24/19</td>
+                    <td>24% / 69% / 7%</td>
+                    <td>4025¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 6, Ghost: 4, Phantom: 4, Sheriff: 2, Spectre: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs TestorrOoO#EUW: 3-8 | vs massif#SQL: 5-3 | vs cholot#qlf: 4-5 | vs I4NIS#128GO: 3-2 | vs ihou#CICI: 2-6</div>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
