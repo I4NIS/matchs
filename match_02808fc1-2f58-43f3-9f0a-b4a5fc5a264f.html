@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Report - Breeze</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f1923; color: #ece8e1; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; background: #1f2326; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .header { text-align: center; border-bottom: 2px solid #ff4655; padding-bottom: 20px; margin-bottom: 30px; }
+        .header h1 { color: #ff4655; font-size: 2.5em; margin: 0 0 10px 0; text-transform: uppercase;}
+        .subtitle { font-size: 1.2em; color: #8b978f; }
+        .score { font-size: 3em; font-weight: bold; margin: 20px 0; }
+        .is-win { color: #00ff87; }
+        .is-loss { color: #ff4655; }
+        
+        .section-title { font-size: 1.5em; border-bottom: 1px solid #454545; padding-bottom: 10px; margin-top: 40px; color: #ff4655;}
+        
+        .most-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;}
+        .most-card { background: #2a2e33; padding: 15px; border-radius: 6px; text-align: center; }
+        .most-title { font-size: 0.9em; color: #8b978f; text-transform: uppercase; margin-bottom: 5px;}
+        .most-value { font-weight: bold; font-size: 1.1em; }
+        
+        .player-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .player-table th, .player-table td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
+        .player-table th { background: #2a2e33; color: #ff4655; text-transform: uppercase; font-size: 0.9em; }
+        .player-row:hover { background: #2a2e33; }
+        
+        .agent-img { width: 40px; border-radius: 50%; vertical-align: middle; margin-right: 10px; }
+        .blue-team { border-left: 4px solid #00ff87; }
+        .red-team { border-left: 4px solid #ff4655; }
+        
+        .details-small { font-size: 0.8em; color: #aaa; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Rapport de Match - Breeze</h1>
+            <div class="subtitle">Competitive | EU | Saturday, April 04, 2026 09:27 AM</div>
+            <div class="score"><span class="is-loss">Défaite</span> 14 - 16</div>
+        </div>
+
+        <h2 class="section-title">Les "Most" du Match</h2>
+        <div class="most-grid">
+            <div class="most-card"><div class="most-title">Spike Planté</div><div class="most-value">P 3 n d e t t a#FLOP (7)</div></div>
+            <div class="most-card"><div class="most-title">Spike Désamorcé</div><div class="most-value">BRAA LA FAMÉÉ#1234 (3)</div></div>
+            <div class="most-card"><div class="most-title">Headshot %</div><div class="most-value">Salam#011 (44%)</div></div>
+            <div class="most-card"><div class="most-title">Legshot %</div><div class="most-value">NODÏA#0000 (20%)</div></div>
+            <div class="most-card"><div class="most-title">Dégats Infligés</div><div class="most-value">V0rteX#V4X0 (5504)</div></div>
+            <div class="most-card"><div class="most-title">Dégats Reçus</div><div class="most-value">NODÏA#0000 (4710)</div></div>
+            <div class="most-card"><div class="most-title">Écart Dégats (Made-Received)</div><div class="most-value">Salam#011 (1117)</div></div>
+        </div>
+
+        <h2 class="section-title">Tableau des scores</h2>
+        <table class="player-table">
+            <thead>
+                <tr>
+                    <th>Joueur</th>
+                    <th>Rank / Lvl</th>
+                    <th>Score / KDA</th>
+                    <th>Précision (H/B/L)</th>
+                    <th>Économie (Loadout)</th>
+                    <th>Armes / Versus</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" class="agent-img" alt="Jett">
+                        <strong>V0rteX#V4X0</strong> (Jett)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 324</small></td>
+                    <td><strong>8556</strong><br>31/23/7</td>
+                    <td>38% / 58% / 4%</td>
+                    <td>3827¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 20, Sheriff: 4, Phantom: 4, Ghost: 3</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Salam#011: 5-7 | vs Rylex#018: 9-6 | vs I4NIS#128GO: 5-6 | vs NODÏA#0000: 6-1 | vs P 3 n d e t t a#FLOP: 6-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="agent-img" alt="Chamber">
+                        <strong>Salam#011</strong> (Chamber)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 276</small></td>
+                    <td><strong>7691</strong><br>28/21/7</td>
+                    <td>44% / 54% / 2%</td>
+                    <td>3717¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 20, Ghost: 4, None: 4</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Bottelademadder#3045: 4-7 | vs Mental KoKayn#KZH: 9-1 | vs V0rteX#V4X0: 7-5 | vs BRAA LA FAMÉÉ#1234: 5-5 | vs Azoxe RoadToImmo#WAOY: 3-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/320b2a48-4d9b-a075-30f1-1f93a9b638fa/displayicon.png" class="agent-img" alt="Sova">
+                        <strong>BRAA LA FAMÉÉ#1234</strong> (Sova)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 148</small></td>
+                    <td><strong>6850</strong><br>25/18/12</td>
+                    <td>27% / 64% / 9%</td>
+                    <td>3827¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 12, Phantom: 9, Ghost: 2, Bulldog: 1, Outlaw: 1, None: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs P 3 n d e t t a#FLOP: 6-3 | vs Rylex#018: 5-3 | vs Salam#011: 5-5 | vs I4NIS#128GO: 7-4 | vs NODÏA#0000: 2-3 | vs Bottelademadder#3045: 1-0</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="agent-img" alt="Neon">
+                        <strong>I4NIS#128GO</strong> (Neon)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 313</small></td>
+                    <td><strong>6680</strong><br>22/23/8</td>
+                    <td>21% / 70% / 9%</td>
+                    <td>3658¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 11, Phantom: 6, Ghost: 2, Spectre: 2, Classic: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs V0rteX#V4X0: 6-5 | vs BRAA LA FAMÉÉ#1234: 4-7 | vs Azoxe RoadToImmo#WAOY: 5-5 | vs Mental KoKayn#KZH: 2-4 | vs Bottelademadder#3045: 5-2</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/707eab51-4836-f488-046a-cda6bf494859/displayicon.png" class="agent-img" alt="Viper">
+                        <strong>Bottelademadder#3045</strong> (Viper)
+                    </td>
+                    <td>Diamond 3<br><small>Lvl 165</small></td>
+                    <td><strong>6585</strong><br>21/18/9</td>
+                    <td>29% / 61% / 10%</td>
+                    <td>4077¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 15, Phantom: 3, Ghost: 2, Marshal: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs I4NIS#128GO: 2-5 | vs Salam#011: 7-4 | vs NODÏA#0000: 7-5 | vs P 3 n d e t t a#FLOP: 4-1 | vs Rylex#018: 1-2</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="agent-img" alt="Neon">
+                        <strong>Azoxe RoadToImmo#WAOY</strong> (Neon)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 165</small></td>
+                    <td><strong>6272</strong><br>25/21/3</td>
+                    <td>27% / 73% / 0%</td>
+                    <td>3813¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 15, Phantom: 4, Bucky: 3, None: 2, Shorty: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Salam#011: 3-3 | vs I4NIS#128GO: 5-5 | vs P 3 n d e t t a#FLOP: 5-7 | vs Rylex#018: 6-3 | vs NODÏA#0000: 6-3</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/95b78ed7-4637-86d9-7e41-71ba8c293152/displayicon.png" class="agent-img" alt="Harbor">
+                        <strong>P 3 n d e t t a#FLOP</strong> (Harbor)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 199</small></td>
+                    <td><strong>5574</strong><br>17/26/8</td>
+                    <td>16% / 77% / 6%</td>
+                    <td>3698¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 8, Odin: 7, Ghost: 1, Classic: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs V0rteX#V4X0: 3-6 | vs BRAA LA FAMÉÉ#1234: 3-6 | vs Mental KoKayn#KZH: 3-5 | vs Azoxe RoadToImmo#WAOY: 7-5 | vs Bottelademadder#3045: 1-4</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/320b2a48-4d9b-a075-30f1-1f93a9b638fa/displayicon.png" class="agent-img" alt="Sova">
+                        <strong>Rylex#018</strong> (Sova)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 207</small></td>
+                    <td><strong>5405</strong><br>19/22/8</td>
+                    <td>33% / 61% / 7%</td>
+                    <td>3690¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 16, Classic: 1, Bulldog: 1, None: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs V0rteX#V4X0: 6-9 | vs Azoxe RoadToImmo#WAOY: 3-6 | vs Mental KoKayn#KZH: 5-1 | vs Bottelademadder#3045: 2-1 | vs BRAA LA FAMÉÉ#1234: 3-5</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row blue-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="agent-img" alt="Chamber">
+                        <strong>Mental KoKayn#KZH</strong> (Chamber)
+                    </td>
+                    <td>Ascendant 2<br><small>Lvl 184</small></td>
+                    <td><strong>4902</strong><br>17/21/6</td>
+                    <td>19% / 77% / 4%</td>
+                    <td>3942¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 9, None: 5, Marshal: 1, Ghost: 1, Bulldog: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs NODÏA#0000: 6-2 | vs P 3 n d e t t a#FLOP: 5-3 | vs I4NIS#128GO: 4-2 | vs Rylex#018: 1-5 | vs Salam#011: 1-9</div>
+                    </td>
+                </tr>
+                
+                <tr class="player-row red-team">
+                    <td>
+                        <img src="https://media.valorant-api.com/agents/df1cb487-4902-002e-5c17-d28e83e78588/displayicon.png" class="agent-img" alt="Waylay">
+                        <strong>NODÏA#0000</strong> (Waylay)
+                    </td>
+                    <td>Ascendant 1<br><small>Lvl 213</small></td>
+                    <td><strong>4339</strong><br>14/27/3</td>
+                    <td>11% / 69% / 20%</td>
+                    <td>3572¤</td>
+                    <td>
+                        <div class="details-small"><strong>Armes:</strong> Vandal: 11, Bucky: 2, Judge: 1</div>
+                        <div class="details-small"><strong>Versus:</strong> vs Bottelademadder#3045: 5-7 | vs Mental KoKayn#KZH: 2-6 | vs Azoxe RoadToImmo#WAOY: 3-6 | vs BRAA LA FAMÉÉ#1234: 3-2 | vs V0rteX#V4X0: 1-6</div>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
