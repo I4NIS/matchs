@@ -31,7 +31,7 @@
         details[open] { background: #23272b; border-color: #454a50; }
         summary { display: flex; align-items: center; padding: 15px 20px; cursor: pointer; list-style: none; position: relative; border-left: 5px solid #555; border-radius: 8px; }
         summary::-webkit-details-marker { display: none; }
-        .blue-team summary { border-left-color: #00ff87; }
+        .blue-team summary { border-left-color: #00a8ff; }
         .red-team summary { border-left-color: #ff4655; }
         
         /* SUMMARY ROW */
@@ -48,7 +48,7 @@
         .expand-hint { color: #555; font-size: 0.8em; margin-left: 10px; }
         
         /* DETAILED STATS PANE */
-        .details-pane { padding: 25px; border-top: 1px solid #3d4247; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .details-pane { padding: 25px; border-top: 1px solid #3d4247; }
         
         .stat-block h4 { margin: 0 0 15px 0; color: #ff4655; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; }
         
@@ -83,7 +83,6 @@
         @media (max-width: 600px) {
             .summary-content { flex-direction: column; align-items: flex-start; }
             .score-col, .kda-col { text-align: left; margin-top: 10px;}
-            .details-pane { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -118,7 +117,10 @@
                         <img src="https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png" class="agent-img" alt="Omen">
                         <div>
                             <div class="player-name">Cekica#GTNIK</div>
-                            <div class="player-meta">Omen • Platinum 2 (Lvl 381)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Omen • Platinum 2 (Lvl 381)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
@@ -364,7 +366,10 @@
                         <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="agent-img" alt="Neon">
                         <div>
                             <div class="player-name">I4NIS#128GO</div>
-                            <div class="player-meta">Neon • Ascendant 2 (Lvl 315)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Neon • Ascendant 2 (Lvl 315)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
@@ -640,7 +645,10 @@
                         <img src="https://media.valorant-api.com/agents/df1cb487-4902-002e-5c17-d28e83e78588/displayicon.png" class="agent-img" alt="Waylay">
                         <div>
                             <div class="player-name">Lutenitsa#BGN</div>
-                            <div class="player-meta">Waylay • Platinum 3 (Lvl 229)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Waylay • Platinum 3 (Lvl 229)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
@@ -896,7 +904,10 @@
                         <img src="https://media.valorant-api.com/agents/5f8d3a7f-467b-97f3-062c-13acf203c006/displayicon.png" class="agent-img" alt="Breach">
                         <div>
                             <div class="player-name">VOSVOS#3737</div>
-                            <div class="player-meta">Breach • Platinum 2 (Lvl 470)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Breach • Platinum 2 (Lvl 470)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
@@ -1132,7 +1143,10 @@
                         <img src="https://media.valorant-api.com/agents/f94c3b30-42be-e959-889c-5aa313dba261/displayicon.png" class="agent-img" alt="Raze">
                         <div>
                             <div class="player-name">fiiisssssss#SENKC</div>
-                            <div class="player-meta">Raze • Unrated (Lvl 116)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Raze • Unrated (Lvl 116)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
@@ -1358,7 +1372,10 @@
                         <img src="https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayicon.png" class="agent-img" alt="Clove">
                         <div>
                             <div class="player-name">LetItHappen#lovin</div>
-                            <div class="player-meta">Clove • Platinum 3 (Lvl 495)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Clove • Platinum 3 (Lvl 495)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
@@ -1604,7 +1621,10 @@
                         <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="agent-img" alt="Chamber">
                         <div>
                             <div class="player-name">Zikorigolo#1324</div>
-                            <div class="player-meta">Chamber • Gold 1 (Lvl 127)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Chamber • Gold 1 (Lvl 127)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
@@ -1860,7 +1880,10 @@
                         <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" class="agent-img" alt="Jett">
                         <div>
                             <div class="player-name">FreeDork#4504</div>
-                            <div class="player-meta">Jett • Platinum 3 (Lvl 42)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Jett • Platinum 3 (Lvl 42)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
@@ -2083,7 +2106,10 @@
                         <img src="https://media.valorant-api.com/agents/1e58de9c-4950-5125-93e9-a0aee9f98746/displayicon.png" class="agent-img" alt="Killjoy">
                         <div>
                             <div class="player-name">xMihawk#CKR</div>
-                            <div class="player-meta">Killjoy • Gold 1 (Lvl 201)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Killjoy • Gold 1 (Lvl 201)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
@@ -2296,7 +2322,10 @@
                         <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="agent-img" alt="Gekko">
                         <div>
                             <div class="player-name">massif#SQL</div>
-                            <div class="player-meta">Gekko • Unrated (Lvl 258)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Gekko • Unrated (Lvl 258)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
