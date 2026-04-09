@@ -31,7 +31,7 @@
         details[open] { background: #23272b; border-color: #454a50; }
         summary { display: flex; align-items: center; padding: 15px 20px; cursor: pointer; list-style: none; position: relative; border-left: 5px solid #555; border-radius: 8px; }
         summary::-webkit-details-marker { display: none; }
-        .blue-team summary { border-left-color: #00ff87; }
+        .blue-team summary { border-left-color: #00a8ff; }
         .red-team summary { border-left-color: #ff4655; }
         
         /* SUMMARY ROW */
@@ -48,7 +48,7 @@
         .expand-hint { color: #555; font-size: 0.8em; margin-left: 10px; }
         
         /* DETAILED STATS PANE */
-        .details-pane { padding: 25px; border-top: 1px solid #3d4247; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .details-pane { padding: 25px; border-top: 1px solid #3d4247; }
         
         .stat-block h4 { margin: 0 0 15px 0; color: #ff4655; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; }
         
@@ -83,7 +83,6 @@
         @media (max-width: 600px) {
             .summary-content { flex-direction: column; align-items: flex-start; }
             .score-col, .kda-col { text-align: left; margin-top: 10px;}
-            .details-pane { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -118,7 +117,10 @@
                         <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="agent-img" alt="Neon">
                         <div>
                             <div class="player-name">Moustasinho#sqz</div>
-                            <div class="player-meta">Neon • Diamond 1 (Lvl 216)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Neon • Diamond 1 (Lvl 216)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
@@ -417,7 +419,10 @@
                         <img src="https://media.valorant-api.com/agents/6f2a04ca-43e0-be17-7f36-b3908627744d/displayicon.png" class="agent-img" alt="Skye">
                         <div>
                             <div class="player-name">cac#SSL</div>
-                            <div class="player-meta">Skye • Diamond 2 (Lvl 168)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Skye • Diamond 2 (Lvl 168)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
@@ -673,7 +678,10 @@
                         <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="agent-img" alt="Neon">
                         <div>
                             <div class="player-name">I4NIS#128GO</div>
-                            <div class="player-meta">Neon • Ascendant 2 (Lvl 314)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Neon • Ascendant 2 (Lvl 314)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
@@ -939,7 +947,10 @@
                         <img src="https://media.valorant-api.com/agents/efba5359-4016-a1e5-7626-b1ae76895940/displayicon.png" class="agent-img" alt="Vyse">
                         <div>
                             <div class="player-name">L0sk#007</div>
-                            <div class="player-meta">Vyse • Platinum 2 (Lvl 208)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Vyse • Platinum 2 (Lvl 208)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
@@ -1185,7 +1196,10 @@
                         <img src="https://media.valorant-api.com/agents/569fdd95-4d10-43ab-ca70-79becc718b46/displayicon.png" class="agent-img" alt="Sage">
                         <div>
                             <div class="player-name">massif#SQL</div>
-                            <div class="player-meta">Sage • Unrated (Lvl 258)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Sage • Unrated (Lvl 258)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
@@ -1431,7 +1445,10 @@
                         <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="agent-img" alt="Gekko">
                         <div>
                             <div class="player-name">cholot#qlf</div>
-                            <div class="player-meta">Gekko • Diamond 1 (Lvl 171)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Gekko • Diamond 1 (Lvl 171)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
@@ -1687,7 +1704,10 @@
                         <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" class="agent-img" alt="Reyna">
                         <div>
                             <div class="player-name">WayLow#FRA21</div>
-                            <div class="player-meta">Reyna • Unrated (Lvl 91)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Reyna • Unrated (Lvl 91)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
@@ -1963,7 +1983,10 @@
                         <img src="https://media.valorant-api.com/agents/7c8a4701-4de6-9355-b254-e09bc2a34b72/displayicon.png" class="agent-img" alt="Miks">
                         <div>
                             <div class="player-name">Isagi 自我#ola</div>
-                            <div class="player-meta">Miks • Platinum 2 (Lvl 181)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Miks • Platinum 2 (Lvl 181)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
@@ -2219,7 +2242,10 @@
                         <img src="https://media.valorant-api.com/agents/41fb69c1-4189-7b37-f117-bcaf1e96f1bf/displayicon.png" class="agent-img" alt="Astra">
                         <div>
                             <div class="player-name">LAMOUSSEWONTFF#M8WIN</div>
-                            <div class="player-meta">Astra • Unrated (Lvl 171)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Astra • Unrated (Lvl 171)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
@@ -2475,7 +2501,10 @@
                         <img src="https://media.valorant-api.com/agents/569fdd95-4d10-43ab-ca70-79becc718b46/displayicon.png" class="agent-img" alt="Sage">
                         <div>
                             <div class="player-name">MiniCastor#666</div>
-                            <div class="player-meta">Sage • Platinum 3 (Lvl 179)</div>
+                            <div class="player-meta" style="display: flex; align-items: center;">
+                                
+                                Sage • Platinum 3 (Lvl 179)
+                            </div>
                         </div>
                     </div>
                     <div class="score-col">
