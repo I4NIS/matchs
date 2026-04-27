@@ -1,0 +1,2733 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breeze — Match Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg:       #0d1117;
+            --s1:       #161b22;
+            --s2:       #21262d;
+            --s3:       #2d333b;
+            --border:   #30363d;
+            --text:     #e6edf3;
+            --muted:    #7d8590;
+            --red:      #ff4655;
+            --blue:     #58a6ff;
+            --green:    #3fb950;
+            --lime:     #00ff87;
+            --gold:     #e3b341;
+        }
+
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+        /* ─── HERO ──────────────────────────────────────────────── */
+        .hero {
+            position: relative;
+            min-height: 300px;
+            display: flex;
+            align-items: flex-end;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; inset: 0;
+            background: url('https://media.valorant-api.com/maps/2fb9a4fd-47b8-4e7d-a969-74b4046ebd53/splash.png') center/cover no-repeat;
+            filter: brightness(0.22) saturate(0.7);
+        }
+        .hero-vignette {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, var(--bg) 0%, rgba(13,17,23,0.4) 60%, transparent 100%);
+        }
+        .hero-body {
+            position: relative; z-index: 1;
+            width: 100%; padding: 36px 40px;
+        }
+        .hero-eyebrow {
+            font-size: 0.68rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.18em;
+            color: var(--muted); margin-bottom: 10px;
+        }
+        .hero-map {
+            font-size: 3.2rem; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 0.06em;
+            line-height: 1; margin-bottom: 24px;
+        }
+        .hero-score {
+            display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+        }
+        .team-pill {
+            display: flex; align-items: center; gap: 16px;
+            padding: 12px 20px; border-radius: 10px;
+            background: rgba(0,0,0,0.55); border: 1px solid var(--border);
+            backdrop-filter: blur(6px);
+        }
+        .team-pill-info { display: flex; flex-direction: column; gap: 4px; }
+        .team-pill-label {
+            font-size: 0.62rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.14em;
+        }
+        .team-pill-badge {
+            display: inline-block; font-size: 0.55rem; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            padding: 2px 6px; border-radius: 3px;
+            background: var(--lime); color: #000; line-height: 1.4;
+        }
+        .team-pill-rounds { font-size: 2.4rem; font-weight: 900; line-height: 1; }
+        .pill-red .team-pill-label,
+        .pill-red .team-pill-rounds { color: var(--red); }
+        .pill-blue .team-pill-label,
+        .pill-blue .team-pill-rounds { color: var(--blue); }
+        .hero-vs { font-size: 1.1rem; font-weight: 700; color: var(--muted); }
+
+        /* ─── LAYOUT ────────────────────────────────────────────── */
+        .page { max-width: 1100px; margin: 0 auto; padding: 32px 24px 60px; }
+
+        /* ─── SECTION HEADING ───────────────────────────────────── */
+        .sec-head {
+            display: flex; align-items: center; gap: 14px;
+            margin: 44px 0 16px;
+        }
+        .sec-label {
+            font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.22em; color: var(--muted); white-space: nowrap;
+        }
+        .sec-line { flex: 1; height: 1px; background: var(--border); }
+
+        /* ─── SCOREBOARD ────────────────────────────────────────── */
+        .scoreboard {
+            border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+        }
+        .sb-team-bar {
+            padding: 9px 18px; display: flex; align-items: center; gap: 8px;
+            font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em;
+        }
+        .sb-team-bar + .sb-team-bar { border-top: 1px solid var(--border); }
+        .sb-team-bar.red { background: rgba(255,70,85,0.1); color: var(--red); }
+        .sb-team-bar.blue { background: rgba(88,166,255,0.1); color: var(--blue); }
+        .sb-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); flex-shrink: 0; }
+
+        .sb-head, .sb-row {
+            display: grid;
+            grid-template-columns: 1fr 54px 110px 56px 70px 34px;
+            align-items: center;
+            padding: 0 18px;
+        }
+        .sb-head {
+            background: var(--s2); border-bottom: 1px solid var(--border);
+            padding-top: 7px; padding-bottom: 7px;
+        }
+        .sb-col-label {
+            font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.1em; color: var(--muted); text-align: center;
+        }
+        .sb-col-label:first-child { text-align: left; }
+
+        .sb-row { padding-top: 9px; padding-bottom: 9px; border-bottom: 1px solid rgba(255,255,255,0.03); transition: background 0.12s; }
+        .sb-row:last-child { border-bottom: none; }
+        .sb-row:hover { background: var(--s2); }
+
+        .sb-player { display: flex; align-items: center; gap: 10px; min-width: 0; }
+        .sb-agent { width: 36px; height: 36px; border-radius: 6px; object-fit: cover; flex-shrink: 0; background: var(--s3); }
+        .sb-pname { font-weight: 700; font-size: 0.86rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .sb-pchar { font-size: 0.7rem; color: var(--muted); }
+
+        .sb-cell { text-align: center; font-size: 0.86rem; }
+        .sb-acs { font-weight: 800; }
+        .sb-kda { font-weight: 700; }
+        .sb-kda .d { color: var(--muted); font-weight: 500; }
+        .sb-hs { color: var(--lime); font-weight: 700; }
+        .sb-dmg { color: var(--muted); font-weight: 500; }
+        .sb-rank-img { width: 22px; height: 22px; object-fit: contain; display: block; margin: auto; }
+
+        /* ─── AWARDS ────────────────────────────────────────────── */
+        .awards {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 10px;
+        }
+        .award {
+            background: var(--s1); border: 1px solid var(--border); border-radius: 10px;
+            padding: 16px 14px; text-align: center; transition: border-color 0.18s, background 0.18s;
+        }
+        .award:hover { background: var(--s2); border-color: var(--muted); }
+        .award-icon { font-size: 1.5rem; line-height: 1; margin-bottom: 10px; }
+        .award-type { font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 6px; }
+        .award-name { font-size: 0.86rem; font-weight: 700; line-height: 1.3; }
+        .award-sub { font-size: 0.72rem; color: var(--muted); margin-top: 3px; }
+
+        /* ─── PLAYER CARDS ──────────────────────────────────────── */
+        .player-list { display: flex; flex-direction: column; gap: 6px; }
+
+        details {
+            background: var(--s1); border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+        }
+        details[open] { border-color: var(--s3); }
+
+        summary {
+            list-style: none; cursor: pointer;
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 16px;
+            border-left: 3px solid transparent;
+            transition: background 0.12s;
+            user-select: none;
+        }
+        summary::-webkit-details-marker { display: none; }
+        summary:hover { background: var(--s2); }
+        .red-team  summary { border-left-color: var(--red); }
+        .blue-team summary { border-left-color: var(--blue); }
+
+        .sum-agent { width: 42px; height: 42px; border-radius: 8px; object-fit: cover; flex-shrink: 0; background: var(--s3); }
+        .sum-body { flex: 1; min-width: 0; }
+        .sum-name { font-weight: 700; font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .sum-meta { font-size: 0.7rem; color: var(--muted); display: flex; align-items: center; gap: 5px; margin-top: 2px; }
+        .sum-meta img { width: 14px; height: 14px; object-fit: contain; }
+
+        .sum-stat { text-align: center; flex-shrink: 0; min-width: 70px; }
+        .sum-stat-val { font-weight: 800; font-size: 0.98rem; }
+        .sum-stat-lbl { font-size: 0.58rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-top: 2px; }
+
+        .sum-arrow { font-size: 0.72rem; color: var(--muted); flex-shrink: 0; transition: transform 0.2s; }
+        details[open] .sum-arrow { transform: rotate(180deg); }
+
+        /* ─── DETAIL PANEL ──────────────────────────────────────── */
+        .detail-panel { border-top: 1px solid var(--border); }
+
+        .tabs-bar {
+            display: flex; gap: 2px; padding: 10px 16px 0;
+            overflow-x: auto; scrollbar-width: none;
+        }
+        .tabs-bar::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
+            font-family: 'Inter', sans-serif; background: none; border: none;
+            border-bottom: 2px solid transparent; color: var(--muted);
+            cursor: pointer; font-size: 0.68rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            padding: 7px 12px 9px; white-space: nowrap;
+            transition: color 0.12s, border-color 0.12s;
+        }
+        .tab-btn:hover { color: var(--text); }
+        .tab-btn.active { color: var(--red); border-bottom-color: var(--red); }
+
+        .tab-pane { display: none; padding: 20px 16px; }
+        .tab-pane.active { display: block; animation: fadeUp 0.18s ease; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Aim */
+        .aim-rows { max-width: 310px; display: flex; flex-direction: column; gap: 12px; }
+        .aim-row { display: flex; align-items: center; gap: 10px; }
+        .aim-lbl { font-size: 0.72rem; font-weight: 600; color: var(--muted); width: 48px; }
+        .aim-track { flex: 1; height: 7px; background: var(--s3); border-radius: 99px; overflow: hidden; }
+        .aim-fill { height: 100%; border-radius: 99px; }
+        .fill-hs   { background: var(--lime); }
+        .fill-body { background: var(--gold); }
+        .fill-leg  { background: var(--red); }
+        .aim-pct { font-size: 0.76rem; font-weight: 700; width: 34px; text-align: right; }
+
+        /* Damage */
+        .dmg-row { display: flex; gap: 12px; flex-wrap: wrap; }
+        .dmg-box {
+            background: var(--s2); border: 1px solid var(--border); border-radius: 9px;
+            padding: 16px 22px; text-align: center; min-width: 110px;
+        }
+        .dmg-box-lbl { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 8px; }
+        .dmg-box-val { font-size: 1.8rem; font-weight: 900; }
+        .dmg-made { color: var(--lime); }
+        .dmg-recv { color: var(--red); }
+
+        /* Eco */
+        .eco-box {
+            display: inline-block; background: var(--s2); border: 1px solid var(--border);
+            border-radius: 9px; padding: 18px 26px;
+        }
+        .eco-val { font-size: 2rem; font-weight: 900; }
+        .eco-lbl { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-top: 5px; }
+
+        /* Weapons */
+        .wpn-col { display: flex; flex-direction: column; gap: 6px; max-width: 370px; }
+        .wpn-row {
+            display: flex; align-items: center; gap: 12px;
+            background: var(--s2); padding: 9px 14px; border-radius: 8px;
+        }
+        .wpn-img { width: 72px; height: 30px; display: flex; align-items: center; flex-shrink: 0; }
+        .wpn-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .wpn-name { flex: 1; font-size: 0.84rem; font-weight: 600; text-transform: capitalize; }
+        .wpn-kills { font-weight: 900; font-size: 1rem; color: var(--lime); }
+        .wpn-kills-lbl { font-size: 0.6rem; color: var(--muted); }
+
+        /* Duels */
+        .duel-col { display: flex; flex-direction: column; gap: 5px; max-width: 460px; }
+        .duel-row { display: flex; align-items: stretch; background: var(--s2); border-radius: 8px; overflow: hidden; }
+        .duel-side { display: flex; align-items: center; gap: 8px; flex: 1; padding: 9px 12px; min-width: 0; }
+        .duel-side.right { justify-content: flex-end; }
+        .duel-agent { width: 30px; height: 30px; border-radius: 5px; object-fit: cover; flex-shrink: 0; background: var(--s3); }
+        .duel-name { font-size: 0.8rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 88px; }
+        .duel-score {
+            flex-shrink: 0; background: var(--s1);
+            padding: 9px 10px; text-align: center; min-width: 62px;
+            display: flex; align-items: center; justify-content: center; gap: 3px;
+        }
+        .dk { font-size: 1rem; font-weight: 900; color: var(--lime); }
+        .dd { font-size: 1rem; font-weight: 900; color: var(--red); }
+        .ds { font-size: 0.8rem; color: var(--border); }
+
+        /* ─── FOOTER ────────────────────────────────────────────── */
+        .footer {
+            margin-top: 48px; padding: 20px 24px;
+            border-top: 1px solid var(--border);
+            text-align: center; font-size: 0.68rem; color: var(--muted);
+        }
+
+        /* ─── RESPONSIVE ────────────────────────────────────────── */
+        @media (max-width: 680px) {
+            .hero-map { font-size: 2rem; }
+            .hero-body { padding: 22px 20px; }
+            .page { padding: 16px 14px 40px; }
+            .sb-head, .sb-row { grid-template-columns: 1fr 54px 90px; }
+            .sb-head > *:nth-child(n+4),
+            .sb-row  > *:nth-child(n+4) { display: none; }
+            .sum-stat:last-of-type { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+
+
+<!-- ═══ HERO ═══════════════════════════════════════════════════ -->
+<div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-vignette"></div>
+    <div class="hero-body">
+        <div class="hero-eyebrow">Competitive &bull; EU &bull; 27/04/2026 à 16h39</div>
+        <h1 class="hero-map">Breeze</h1>
+        <div class="hero-score">
+            <div class="team-pill pill-red">
+                <div class="team-pill-rounds">2</div>
+                <div class="team-pill-info">
+                    <span class="team-pill-label">Équipe Rouge</span>
+                    
+                </div>
+            </div>
+            <span class="hero-vs">—</span>
+            <div class="team-pill pill-blue">
+                <div class="team-pill-info" style="text-align:right;">
+                    <span class="team-pill-label">Équipe Bleue</span>
+                    <span class="team-pill-badge">Victoire</span>
+                </div>
+                <div class="team-pill-rounds">13</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page">
+
+    <!-- ═══ SCOREBOARD ═════════════════════════════════════════ -->
+    <div class="sec-head"><span class="sec-label">Tableau des scores</span><div class="sec-line"></div></div>
+    <div class="scoreboard">
+
+        <!-- Red team -->
+        <div class="sb-team-bar red">
+            
+            Équipe Rouge &mdash; 2 rounds
+        </div>
+        <div class="sb-head">
+            <div class="sb-col-label" style="text-align:left;">Joueur</div>
+            <div class="sb-col-label">ACS</div>
+            <div class="sb-col-label">K / D / A</div>
+            <div class="sb-col-label">HS%</div>
+            <div class="sb-col-label">Dégâts</div>
+            <div class="sb-col-label">Rang</div>
+        </div>
+        
+        <div class="sb-row">
+            <div class="sb-player">
+                <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="sb-agent" alt="Neon">
+                <div>
+                    <div class="sb-pname">I4NIS#128GO</div>
+                    <div class="sb-pchar">Neon</div>
+                </div>
+            </div>
+            <div class="sb-cell sb-acs">265</div>
+            <div class="sb-cell sb-kda">14<span class="d"> / 14 / </span>2</div>
+            <div class="sb-cell sb-hs">23%</div>
+            <div class="sb-cell sb-dmg">2412</div>
+            <div class="sb-cell"><img src="https://media.valorant-api.com/competitivetiers/03621f52-342b-cf4e-4f86-9350a49c6d04/21/largeicon.png" class="sb-rank-img" alt="Ascendant 1"></div>
+        </div>
+        
+        <div class="sb-row">
+            <div class="sb-player">
+                <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="sb-agent" alt="Gekko">
+                <div>
+                    <div class="sb-pname">cholot#qlf</div>
+                    <div class="sb-pchar">Gekko</div>
+                </div>
+            </div>
+            <div class="sb-cell sb-acs">149</div>
+            <div class="sb-cell sb-kda">7<span class="d"> / 14 / </span>4</div>
+            <div class="sb-cell sb-hs">41%</div>
+            <div class="sb-cell sb-dmg">1706</div>
+            <div class="sb-cell"><img src="https://media.valorant-api.com/competitivetiers/564d8e28-c226-3180-6285-e48a390db8b1/18/largeicon.png" class="sb-rank-img" alt="Diamond 1"></div>
+        </div>
+        
+        <div class="sb-row">
+            <div class="sb-player">
+                <img src="https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png" class="sb-agent" alt="Omen">
+                <div>
+                    <div class="sb-pname">1for0#000</div>
+                    <div class="sb-pchar">Omen</div>
+                </div>
+            </div>
+            <div class="sb-cell sb-acs">145</div>
+            <div class="sb-cell sb-kda">5<span class="d"> / 15 / </span>5</div>
+            <div class="sb-cell sb-hs">31%</div>
+            <div class="sb-cell sb-dmg">1503</div>
+            <div class="sb-cell"><img src="https://media.valorant-api.com/competitivetiers/564d8e28-c226-3180-6285-e48a390db8b1/19/largeicon.png" class="sb-rank-img" alt="Diamond 2"></div>
+        </div>
+        
+        <div class="sb-row">
+            <div class="sb-player">
+                <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="sb-agent" alt="Chamber">
+                <div>
+                    <div class="sb-pname">Kellogs#0902</div>
+                    <div class="sb-pchar">Chamber</div>
+                </div>
+            </div>
+            <div class="sb-cell sb-acs">142</div>
+            <div class="sb-cell sb-kda">7<span class="d"> / 14 / </span>1</div>
+            <div class="sb-cell sb-hs">14%</div>
+            <div class="sb-cell sb-dmg">1509</div>
+            <div class="sb-cell"><img src="https://media.valorant-api.com/competitivetiers/564d8e28-c226-3180-6285-e48a390db8b1/19/largeicon.png" class="sb-rank-img" alt="Diamond 2"></div>
+        </div>
+        
+        <div class="sb-row">
+            <div class="sb-player">
+                <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="sb-agent" alt="Phoenix">
+                <div>
+                    <div class="sb-pname">KaamuuSaarii#2027</div>
+                    <div class="sb-pchar">Phoenix</div>
+                </div>
+            </div>
+            <div class="sb-cell sb-acs">134</div>
+            <div class="sb-cell sb-kda">6<span class="d"> / 14 / </span>2</div>
+            <div class="sb-cell sb-hs">20%</div>
+            <div class="sb-cell sb-dmg">1376</div>
+            <div class="sb-cell"><img src="https://media.valorant-api.com/competitivetiers/564d8e28-c226-3180-6285-e48a390db8b1/20/largeicon.png" class="sb-rank-img" alt="Diamond 3"></div>
+        </div>
+        
+
+        <!-- Blue team -->
+        <div class="sb-team-bar blue">
+            <div class="sb-dot"></div>
+            Équipe Bleue &mdash; 13 rounds
+        </div>
+        <div class="sb-head">
+            <div class="sb-col-label" style="text-align:left;">Joueur</div>
+            <div class="sb-col-label">ACS</div>
+            <div class="sb-col-label">K / D / A</div>
+            <div class="sb-col-label">HS%</div>
+            <div class="sb-col-label">Dégâts</div>
+            <div class="sb-col-label">Rang</div>
+        </div>
+        
+        <div class="sb-row">
+            <div class="sb-player">
+                <img src="https://media.valorant-api.com/agents/707eab51-4836-f488-046a-cda6bf494859/displayicon.png" class="sb-agent" alt="Viper">
+                <div>
+                    <div class="sb-pname">积顿辛祖#88888</div>
+                    <div class="sb-pchar">Viper</div>
+                </div>
+            </div>
+            <div class="sb-cell sb-acs">296</div>
+            <div class="sb-cell sb-kda">15<span class="d"> / 6 / </span>5</div>
+            <div class="sb-cell sb-hs">16%</div>
+            <div class="sb-cell sb-dmg">3140</div>
+            <div class="sb-cell"><img src="https://media.valorant-api.com/competitivetiers/564d8e28-c226-3180-6285-e48a390db8b1/19/largeicon.png" class="sb-rank-img" alt="Diamond 2"></div>
+        </div>
+        
+        <div class="sb-row">
+            <div class="sb-player">
+                <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="sb-agent" alt="Chamber">
+                <div>
+                    <div class="sb-pname">ChasseurDePizza#7948</div>
+                    <div class="sb-pchar">Chamber</div>
+                </div>
+            </div>
+            <div class="sb-cell sb-acs">296</div>
+            <div class="sb-cell sb-kda">16<span class="d"> / 8 / </span>4</div>
+            <div class="sb-cell sb-hs">19%</div>
+            <div class="sb-cell sb-dmg">2813</div>
+            <div class="sb-cell"><img src="https://media.valorant-api.com/competitivetiers/564d8e28-c226-3180-6285-e48a390db8b1/20/largeicon.png" class="sb-rank-img" alt="Diamond 3"></div>
+        </div>
+        
+        <div class="sb-row">
+            <div class="sb-player">
+                <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" class="sb-agent" alt="Reyna">
+                <div>
+                    <div class="sb-pname">AKH Shway Shway#QAMAR</div>
+                    <div class="sb-pchar">Reyna</div>
+                </div>
+            </div>
+            <div class="sb-cell sb-acs">258</div>
+            <div class="sb-cell sb-kda">16<span class="d"> / 6 / </span>7</div>
+            <div class="sb-cell sb-hs">23%</div>
+            <div class="sb-cell sb-dmg">2662</div>
+            <div class="sb-cell"><img src="https://media.valorant-api.com/competitivetiers/564d8e28-c226-3180-6285-e48a390db8b1/20/largeicon.png" class="sb-rank-img" alt="Diamond 3"></div>
+        </div>
+        
+        <div class="sb-row">
+            <div class="sb-player">
+                <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="sb-agent" alt="Gekko">
+                <div>
+                    <div class="sb-pname">DDD#GOAT</div>
+                    <div class="sb-pchar">Gekko</div>
+                </div>
+            </div>
+            <div class="sb-cell sb-acs">222</div>
+            <div class="sb-cell sb-kda">11<span class="d"> / 10 / </span>8</div>
+            <div class="sb-cell sb-hs">32%</div>
+            <div class="sb-cell sb-dmg">2424</div>
+            <div class="sb-cell"><img src="https://media.valorant-api.com/competitivetiers/03621f52-342b-cf4e-4f86-9350a49c6d04/21/largeicon.png" class="sb-rank-img" alt="Ascendant 1"></div>
+        </div>
+        
+        <div class="sb-row">
+            <div class="sb-player">
+                <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="sb-agent" alt="Phoenix">
+                <div>
+                    <div class="sb-pname">Phabyeau#7788</div>
+                    <div class="sb-pchar">Phoenix</div>
+                </div>
+            </div>
+            <div class="sb-cell sb-acs">193</div>
+            <div class="sb-cell sb-kda">13<span class="d"> / 9 / </span>2</div>
+            <div class="sb-cell sb-hs">22%</div>
+            <div class="sb-cell sb-dmg">2188</div>
+            <div class="sb-cell"><img src="https://media.valorant-api.com/competitivetiers/564d8e28-c226-3180-6285-e48a390db8b1/20/largeicon.png" class="sb-rank-img" alt="Diamond 3"></div>
+        </div>
+        
+
+    </div>
+
+    <!-- ═══ AWARDS ══════════════════════════════════════════════ -->
+    <div class="sec-head"><span class="sec-label">Palmarès</span><div class="sec-line"></div></div>
+    <div class="awards">
+        
+        
+        <div class="award">
+            <div class="award-icon">💣</div>
+            <div class="award-type">Planteur</div>
+            
+            <div class="award-name">cholot#qlf</div>
+            <div class="award-sub">(6)</div>
+            
+        </div>
+        
+        <div class="award">
+            <div class="award-icon">🔵</div>
+            <div class="award-type">Désamorceur</div>
+            
+            <div class="award-name">DDD#GOAT</div>
+            <div class="award-sub">(2)</div>
+            
+        </div>
+        
+        <div class="award">
+            <div class="award-icon">🔥</div>
+            <div class="award-type">Gros Dégâts</div>
+            
+            <div class="award-name">积顿辛祖#88888</div>
+            <div class="award-sub">(3140)</div>
+            
+        </div>
+        
+        <div class="award">
+            <div class="award-icon">🎯</div>
+            <div class="award-type">Roi du Headshot</div>
+            
+            <div class="award-name">cholot#qlf</div>
+            <div class="award-sub">(41%)</div>
+            
+        </div>
+        
+        <div class="award">
+            <div class="award-icon">🦵</div>
+            <div class="award-type">Aim Chevilles</div>
+            
+            <div class="award-name">1for0#000</div>
+            <div class="award-sub">(15%)</div>
+            
+        </div>
+        
+    </div>
+
+    <!-- ═══ PLAYER DETAILS ══════════════════════════════════════ -->
+    <div class="sec-head"><span class="sec-label">Rapports individuels</span><div class="sec-line"></div></div>
+    <div class="player-list">
+    
+    <details class="blue-team">
+        <summary>
+            <img src="https://media.valorant-api.com/agents/707eab51-4836-f488-046a-cda6bf494859/displayicon.png" class="sum-agent" alt="Viper">
+            <div class="sum-body">
+                <div class="sum-name">积顿辛祖#88888</div>
+                <div class="sum-meta">
+                    <img src="https://media.valorant-api.com/competitivetiers/564d8e28-c226-3180-6285-e48a390db8b1/19/largeicon.png" alt="">
+                    Viper &bull; Diamond 2
+                </div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">15/6/5</div>
+                <div class="sum-stat-lbl">K / D / A</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">296</div>
+                <div class="sum-stat-lbl">ACS</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val" style="color:var(--lime)">16%</div>
+                <div class="sum-stat-lbl">HS</div>
+            </div>
+            <div class="sum-arrow">&#9660;</div>
+        </summary>
+
+        <div class="detail-panel">
+            <div class="tabs-bar">
+                <button class="tab-btn active" onclick="sw(event,'aim-d148868f-36ad-5ba0-865c-0f9fd5d7bdb9')">Précision</button>
+                <button class="tab-btn" onclick="sw(event,'dmg-d148868f-36ad-5ba0-865c-0f9fd5d7bdb9')">Dégâts</button>
+                <button class="tab-btn" onclick="sw(event,'eco-d148868f-36ad-5ba0-865c-0f9fd5d7bdb9')">Économie</button>
+                <button class="tab-btn" onclick="sw(event,'duel-d148868f-36ad-5ba0-865c-0f9fd5d7bdb9')">Duels</button>
+                <button class="tab-btn" onclick="sw(event,'wpn-d148868f-36ad-5ba0-865c-0f9fd5d7bdb9')">Armes</button>
+            </div>
+
+            <!-- Précision -->
+            <div id="aim-d148868f-36ad-5ba0-865c-0f9fd5d7bdb9" class="tab-pane active">
+                <div class="aim-rows">
+                    <div class="aim-row">
+                        <div class="aim-lbl">Tête</div>
+                        <div class="aim-track"><div class="aim-fill fill-hs" data-w="16"></div></div>
+                        <div class="aim-pct">16%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Corps</div>
+                        <div class="aim-track"><div class="aim-fill fill-body" data-w="78"></div></div>
+                        <div class="aim-pct">78%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Jambes</div>
+                        <div class="aim-track"><div class="aim-fill fill-leg" data-w="5"></div></div>
+                        <div class="aim-pct">5%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dégâts -->
+            <div id="dmg-d148868f-36ad-5ba0-865c-0f9fd5d7bdb9" class="tab-pane">
+                <div class="dmg-row">
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Infligés</div>
+                        <div class="dmg-box-val dmg-made">3140</div>
+                    </div>
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Reçus</div>
+                        <div class="dmg-box-val dmg-recv">1444</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Économie -->
+            <div id="eco-d148868f-36ad-5ba0-865c-0f9fd5d7bdb9" class="tab-pane">
+                <div class="eco-box">
+                    <div class="eco-val">3453 ¤</div>
+                    <div class="eco-lbl">Valeur moyenne de l'inventaire</div>
+                </div>
+            </div>
+
+            <!-- Duels -->
+            <div id="duel-d148868f-36ad-5ba0-865c-0f9fd5d7bdb9" class="tab-pane">
+                <div class="duel-col">
+                    
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">积顿辛祖</span>
+                            <img src="https://media.valorant-api.com/agents/707eab51-4836-f488-046a-cda6bf494859/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">5</span>
+                            <span class="ds">—</span>
+                            <span class="dd">1</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">Kellogs</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">积顿辛祖</span>
+                            <img src="https://media.valorant-api.com/agents/707eab51-4836-f488-046a-cda6bf494859/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">4</span>
+                            <span class="ds">—</span>
+                            <span class="dd">2</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">I4NIS</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">积顿辛祖</span>
+                            <img src="https://media.valorant-api.com/agents/707eab51-4836-f488-046a-cda6bf494859/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">2</span>
+                            <span class="ds">—</span>
+                            <span class="dd">2</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">cholot</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">积顿辛祖</span>
+                            <img src="https://media.valorant-api.com/agents/707eab51-4836-f488-046a-cda6bf494859/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">2</span>
+                            <span class="ds">—</span>
+                            <span class="dd">1</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">KaamuuSaarii</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">积顿辛祖</span>
+                            <img src="https://media.valorant-api.com/agents/707eab51-4836-f488-046a-cda6bf494859/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">2</span>
+                            <span class="ds">—</span>
+                            <span class="dd">0</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">1for0</span>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+            <!-- Armes -->
+            <div id="wpn-d148868f-36ad-5ba0-865c-0f9fd5d7bdb9" class="tab-pane">
+                <div class="wpn-col">
+                    
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/5f0aaf7a-4289-3998-d5ff-eb9a5cf7ef5c/displayicon.png" alt="Outlaw"></div>
+                        <div class="wpn-name">Outlaw</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">5</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/9c82e19d-4575-0200-1a81-3eacf00cf872/displayicon.png" alt="Vandal"></div>
+                        <div class="wpn-name">Vandal</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">5</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/e336c6b8-418d-9340-d77f-7a9e4cfe0702/displayicon.png" alt="Sheriff"></div>
+                        <div class="wpn-name">Sheriff</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">2</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/a03b24d3-4319-996d-0f8c-94bbfba1dfc7/displayicon.png" alt="Operator"></div>
+                        <div class="wpn-name">Operator</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">1</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/1baa85b4-4c70-1284-64bb-6481dfc3bb4e/displayicon.png" alt="Ghost"></div>
+                        <div class="wpn-name">Ghost</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">1</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/4ade7faa-4cf1-8376-95ef-39884480959b/displayicon.png" alt="Guardian"></div>
+                        <div class="wpn-name">Guardian</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">1</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+        </div>
+    </details>
+    
+    <details class="blue-team">
+        <summary>
+            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="sum-agent" alt="Chamber">
+            <div class="sum-body">
+                <div class="sum-name">ChasseurDePizza#7948</div>
+                <div class="sum-meta">
+                    <img src="https://media.valorant-api.com/competitivetiers/564d8e28-c226-3180-6285-e48a390db8b1/20/largeicon.png" alt="">
+                    Chamber &bull; Diamond 3
+                </div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">16/8/4</div>
+                <div class="sum-stat-lbl">K / D / A</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">296</div>
+                <div class="sum-stat-lbl">ACS</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val" style="color:var(--lime)">19%</div>
+                <div class="sum-stat-lbl">HS</div>
+            </div>
+            <div class="sum-arrow">&#9660;</div>
+        </summary>
+
+        <div class="detail-panel">
+            <div class="tabs-bar">
+                <button class="tab-btn active" onclick="sw(event,'aim-63676286-00ef-5684-8268-f1229a49ee1d')">Précision</button>
+                <button class="tab-btn" onclick="sw(event,'dmg-63676286-00ef-5684-8268-f1229a49ee1d')">Dégâts</button>
+                <button class="tab-btn" onclick="sw(event,'eco-63676286-00ef-5684-8268-f1229a49ee1d')">Économie</button>
+                <button class="tab-btn" onclick="sw(event,'duel-63676286-00ef-5684-8268-f1229a49ee1d')">Duels</button>
+                <button class="tab-btn" onclick="sw(event,'wpn-63676286-00ef-5684-8268-f1229a49ee1d')">Armes</button>
+            </div>
+
+            <!-- Précision -->
+            <div id="aim-63676286-00ef-5684-8268-f1229a49ee1d" class="tab-pane active">
+                <div class="aim-rows">
+                    <div class="aim-row">
+                        <div class="aim-lbl">Tête</div>
+                        <div class="aim-track"><div class="aim-fill fill-hs" data-w="19"></div></div>
+                        <div class="aim-pct">19%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Corps</div>
+                        <div class="aim-track"><div class="aim-fill fill-body" data-w="69"></div></div>
+                        <div class="aim-pct">69%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Jambes</div>
+                        <div class="aim-track"><div class="aim-fill fill-leg" data-w="12"></div></div>
+                        <div class="aim-pct">12%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dégâts -->
+            <div id="dmg-63676286-00ef-5684-8268-f1229a49ee1d" class="tab-pane">
+                <div class="dmg-row">
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Infligés</div>
+                        <div class="dmg-box-val dmg-made">2813</div>
+                    </div>
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Reçus</div>
+                        <div class="dmg-box-val dmg-recv">1394</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Économie -->
+            <div id="eco-63676286-00ef-5684-8268-f1229a49ee1d" class="tab-pane">
+                <div class="eco-box">
+                    <div class="eco-val">4370 ¤</div>
+                    <div class="eco-lbl">Valeur moyenne de l'inventaire</div>
+                </div>
+            </div>
+
+            <!-- Duels -->
+            <div id="duel-63676286-00ef-5684-8268-f1229a49ee1d" class="tab-pane">
+                <div class="duel-col">
+                    
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">ChasseurDePizza</span>
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">3</span>
+                            <span class="ds">—</span>
+                            <span class="dd">4</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">I4NIS</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">ChasseurDePizza</span>
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">4</span>
+                            <span class="ds">—</span>
+                            <span class="dd">3</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">1for0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">ChasseurDePizza</span>
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">4</span>
+                            <span class="ds">—</span>
+                            <span class="dd">0</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">cholot</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">ChasseurDePizza</span>
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">3</span>
+                            <span class="ds">—</span>
+                            <span class="dd">0</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">KaamuuSaarii</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">ChasseurDePizza</span>
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">2</span>
+                            <span class="ds">—</span>
+                            <span class="dd">1</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">Kellogs</span>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+            <!-- Armes -->
+            <div id="wpn-63676286-00ef-5684-8268-f1229a49ee1d" class="tab-pane">
+                <div class="wpn-col">
+                    
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/a03b24d3-4319-996d-0f8c-94bbfba1dfc7/displayicon.png" alt="Operator"></div>
+                        <div class="wpn-name">Operator</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">9</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"></div>
+                        <div class="wpn-name">Inconnu</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">3</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/5f0aaf7a-4289-3998-d5ff-eb9a5cf7ef5c/displayicon.png" alt="Outlaw"></div>
+                        <div class="wpn-name">Outlaw</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">2</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/29a0cfab-485b-f5d5-779a-b59f85e204a8/displayicon.png" alt="Classic"></div>
+                        <div class="wpn-name">Classic</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">1</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/ee8e8d15-496b-07ac-e5f6-8fae5d4c7b1a/displayicon.png" alt="Phantom"></div>
+                        <div class="wpn-name">Phantom</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">1</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+        </div>
+    </details>
+    
+    <details class="red-team">
+        <summary>
+            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="sum-agent" alt="Neon">
+            <div class="sum-body">
+                <div class="sum-name">I4NIS#128GO</div>
+                <div class="sum-meta">
+                    <img src="https://media.valorant-api.com/competitivetiers/03621f52-342b-cf4e-4f86-9350a49c6d04/21/largeicon.png" alt="">
+                    Neon &bull; Ascendant 1
+                </div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">14/14/2</div>
+                <div class="sum-stat-lbl">K / D / A</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">265</div>
+                <div class="sum-stat-lbl">ACS</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val" style="color:var(--lime)">23%</div>
+                <div class="sum-stat-lbl">HS</div>
+            </div>
+            <div class="sum-arrow">&#9660;</div>
+        </summary>
+
+        <div class="detail-panel">
+            <div class="tabs-bar">
+                <button class="tab-btn active" onclick="sw(event,'aim-0f707ea5-6302-5021-baf2-143e63686065')">Précision</button>
+                <button class="tab-btn" onclick="sw(event,'dmg-0f707ea5-6302-5021-baf2-143e63686065')">Dégâts</button>
+                <button class="tab-btn" onclick="sw(event,'eco-0f707ea5-6302-5021-baf2-143e63686065')">Économie</button>
+                <button class="tab-btn" onclick="sw(event,'duel-0f707ea5-6302-5021-baf2-143e63686065')">Duels</button>
+                <button class="tab-btn" onclick="sw(event,'wpn-0f707ea5-6302-5021-baf2-143e63686065')">Armes</button>
+            </div>
+
+            <!-- Précision -->
+            <div id="aim-0f707ea5-6302-5021-baf2-143e63686065" class="tab-pane active">
+                <div class="aim-rows">
+                    <div class="aim-row">
+                        <div class="aim-lbl">Tête</div>
+                        <div class="aim-track"><div class="aim-fill fill-hs" data-w="23"></div></div>
+                        <div class="aim-pct">23%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Corps</div>
+                        <div class="aim-track"><div class="aim-fill fill-body" data-w="70"></div></div>
+                        <div class="aim-pct">70%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Jambes</div>
+                        <div class="aim-track"><div class="aim-fill fill-leg" data-w="6"></div></div>
+                        <div class="aim-pct">6%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dégâts -->
+            <div id="dmg-0f707ea5-6302-5021-baf2-143e63686065" class="tab-pane">
+                <div class="dmg-row">
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Infligés</div>
+                        <div class="dmg-box-val dmg-made">2412</div>
+                    </div>
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Reçus</div>
+                        <div class="dmg-box-val dmg-recv">2750</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Économie -->
+            <div id="eco-0f707ea5-6302-5021-baf2-143e63686065" class="tab-pane">
+                <div class="eco-box">
+                    <div class="eco-val">2970 ¤</div>
+                    <div class="eco-lbl">Valeur moyenne de l'inventaire</div>
+                </div>
+            </div>
+
+            <!-- Duels -->
+            <div id="duel-0f707ea5-6302-5021-baf2-143e63686065" class="tab-pane">
+                <div class="duel-col">
+                    
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">I4NIS</span>
+                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">4</span>
+                            <span class="ds">—</span>
+                            <span class="dd">3</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">ChasseurDePizza</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">I4NIS</span>
+                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">4</span>
+                            <span class="ds">—</span>
+                            <span class="dd">2</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">DDD</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">I4NIS</span>
+                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">2</span>
+                            <span class="ds">—</span>
+                            <span class="dd">4</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/707eab51-4836-f488-046a-cda6bf494859/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">积顿辛祖</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">I4NIS</span>
+                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">2</span>
+                            <span class="ds">—</span>
+                            <span class="dd">3</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">AKH Shway Shway</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">I4NIS</span>
+                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">2</span>
+                            <span class="ds">—</span>
+                            <span class="dd">2</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">Phabyeau</span>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+            <!-- Armes -->
+            <div id="wpn-0f707ea5-6302-5021-baf2-143e63686065" class="tab-pane">
+                <div class="wpn-col">
+                    
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/9c82e19d-4575-0200-1a81-3eacf00cf872/displayicon.png" alt="Vandal"></div>
+                        <div class="wpn-name">Vandal</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">7</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/ee8e8d15-496b-07ac-e5f6-8fae5d4c7b1a/displayicon.png" alt="Phantom"></div>
+                        <div class="wpn-name">Phantom</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">4</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/1baa85b4-4c70-1284-64bb-6481dfc3bb4e/displayicon.png" alt="Ghost"></div>
+                        <div class="wpn-name">Ghost</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">1</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"></div>
+                        <div class="wpn-name">Inconnu</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">1</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/910be174-449b-c412-ab22-d0873436b21b/displayicon.png" alt="Bucky"></div>
+                        <div class="wpn-name">Bucky</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">1</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+        </div>
+    </details>
+    
+    <details class="blue-team">
+        <summary>
+            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" class="sum-agent" alt="Reyna">
+            <div class="sum-body">
+                <div class="sum-name">AKH Shway Shway#QAMAR</div>
+                <div class="sum-meta">
+                    <img src="https://media.valorant-api.com/competitivetiers/564d8e28-c226-3180-6285-e48a390db8b1/20/largeicon.png" alt="">
+                    Reyna &bull; Diamond 3
+                </div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">16/6/7</div>
+                <div class="sum-stat-lbl">K / D / A</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">258</div>
+                <div class="sum-stat-lbl">ACS</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val" style="color:var(--lime)">23%</div>
+                <div class="sum-stat-lbl">HS</div>
+            </div>
+            <div class="sum-arrow">&#9660;</div>
+        </summary>
+
+        <div class="detail-panel">
+            <div class="tabs-bar">
+                <button class="tab-btn active" onclick="sw(event,'aim-e3a9ab2a-85d5-58da-8408-afd674c439c7')">Précision</button>
+                <button class="tab-btn" onclick="sw(event,'dmg-e3a9ab2a-85d5-58da-8408-afd674c439c7')">Dégâts</button>
+                <button class="tab-btn" onclick="sw(event,'eco-e3a9ab2a-85d5-58da-8408-afd674c439c7')">Économie</button>
+                <button class="tab-btn" onclick="sw(event,'duel-e3a9ab2a-85d5-58da-8408-afd674c439c7')">Duels</button>
+                <button class="tab-btn" onclick="sw(event,'wpn-e3a9ab2a-85d5-58da-8408-afd674c439c7')">Armes</button>
+            </div>
+
+            <!-- Précision -->
+            <div id="aim-e3a9ab2a-85d5-58da-8408-afd674c439c7" class="tab-pane active">
+                <div class="aim-rows">
+                    <div class="aim-row">
+                        <div class="aim-lbl">Tête</div>
+                        <div class="aim-track"><div class="aim-fill fill-hs" data-w="23"></div></div>
+                        <div class="aim-pct">23%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Corps</div>
+                        <div class="aim-track"><div class="aim-fill fill-body" data-w="74"></div></div>
+                        <div class="aim-pct">74%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Jambes</div>
+                        <div class="aim-track"><div class="aim-fill fill-leg" data-w="2"></div></div>
+                        <div class="aim-pct">2%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dégâts -->
+            <div id="dmg-e3a9ab2a-85d5-58da-8408-afd674c439c7" class="tab-pane">
+                <div class="dmg-row">
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Infligés</div>
+                        <div class="dmg-box-val dmg-made">2662</div>
+                    </div>
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Reçus</div>
+                        <div class="dmg-box-val dmg-recv">1465</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Économie -->
+            <div id="eco-e3a9ab2a-85d5-58da-8408-afd674c439c7" class="tab-pane">
+                <div class="eco-box">
+                    <div class="eco-val">3750 ¤</div>
+                    <div class="eco-lbl">Valeur moyenne de l'inventaire</div>
+                </div>
+            </div>
+
+            <!-- Duels -->
+            <div id="duel-e3a9ab2a-85d5-58da-8408-afd674c439c7" class="tab-pane">
+                <div class="duel-col">
+                    
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">AKH Shway Shway</span>
+                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">4</span>
+                            <span class="ds">—</span>
+                            <span class="dd">2</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">Kellogs</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">AKH Shway Shway</span>
+                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">5</span>
+                            <span class="ds">—</span>
+                            <span class="dd">1</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">1for0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">AKH Shway Shway</span>
+                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">3</span>
+                            <span class="ds">—</span>
+                            <span class="dd">2</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">I4NIS</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">AKH Shway Shway</span>
+                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">3</span>
+                            <span class="ds">—</span>
+                            <span class="dd">0</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">KaamuuSaarii</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">AKH Shway Shway</span>
+                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">1</span>
+                            <span class="ds">—</span>
+                            <span class="dd">1</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">cholot</span>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+            <!-- Armes -->
+            <div id="wpn-e3a9ab2a-85d5-58da-8408-afd674c439c7" class="tab-pane">
+                <div class="wpn-col">
+                    
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/ee8e8d15-496b-07ac-e5f6-8fae5d4c7b1a/displayicon.png" alt="Phantom"></div>
+                        <div class="wpn-name">Phantom</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">7</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/29a0cfab-485b-f5d5-779a-b59f85e204a8/displayicon.png" alt="Classic"></div>
+                        <div class="wpn-name">Classic</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">4</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/9c82e19d-4575-0200-1a81-3eacf00cf872/displayicon.png" alt="Vandal"></div>
+                        <div class="wpn-name">Vandal</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">3</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/1baa85b4-4c70-1284-64bb-6481dfc3bb4e/displayicon.png" alt="Ghost"></div>
+                        <div class="wpn-name">Ghost</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">1</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/e336c6b8-418d-9340-d77f-7a9e4cfe0702/displayicon.png" alt="Sheriff"></div>
+                        <div class="wpn-name">Sheriff</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">1</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+        </div>
+    </details>
+    
+    <details class="blue-team">
+        <summary>
+            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="sum-agent" alt="Gekko">
+            <div class="sum-body">
+                <div class="sum-name">DDD#GOAT</div>
+                <div class="sum-meta">
+                    <img src="https://media.valorant-api.com/competitivetiers/03621f52-342b-cf4e-4f86-9350a49c6d04/21/largeicon.png" alt="">
+                    Gekko &bull; Ascendant 1
+                </div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">11/10/8</div>
+                <div class="sum-stat-lbl">K / D / A</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">222</div>
+                <div class="sum-stat-lbl">ACS</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val" style="color:var(--lime)">32%</div>
+                <div class="sum-stat-lbl">HS</div>
+            </div>
+            <div class="sum-arrow">&#9660;</div>
+        </summary>
+
+        <div class="detail-panel">
+            <div class="tabs-bar">
+                <button class="tab-btn active" onclick="sw(event,'aim-907d43ee-4d71-5c5c-8af3-3536269b3946')">Précision</button>
+                <button class="tab-btn" onclick="sw(event,'dmg-907d43ee-4d71-5c5c-8af3-3536269b3946')">Dégâts</button>
+                <button class="tab-btn" onclick="sw(event,'eco-907d43ee-4d71-5c5c-8af3-3536269b3946')">Économie</button>
+                <button class="tab-btn" onclick="sw(event,'duel-907d43ee-4d71-5c5c-8af3-3536269b3946')">Duels</button>
+                <button class="tab-btn" onclick="sw(event,'wpn-907d43ee-4d71-5c5c-8af3-3536269b3946')">Armes</button>
+            </div>
+
+            <!-- Précision -->
+            <div id="aim-907d43ee-4d71-5c5c-8af3-3536269b3946" class="tab-pane active">
+                <div class="aim-rows">
+                    <div class="aim-row">
+                        <div class="aim-lbl">Tête</div>
+                        <div class="aim-track"><div class="aim-fill fill-hs" data-w="32"></div></div>
+                        <div class="aim-pct">32%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Corps</div>
+                        <div class="aim-track"><div class="aim-fill fill-body" data-w="68"></div></div>
+                        <div class="aim-pct">68%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Jambes</div>
+                        <div class="aim-track"><div class="aim-fill fill-leg" data-w="0"></div></div>
+                        <div class="aim-pct">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dégâts -->
+            <div id="dmg-907d43ee-4d71-5c5c-8af3-3536269b3946" class="tab-pane">
+                <div class="dmg-row">
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Infligés</div>
+                        <div class="dmg-box-val dmg-made">2424</div>
+                    </div>
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Reçus</div>
+                        <div class="dmg-box-val dmg-recv">1935</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Économie -->
+            <div id="eco-907d43ee-4d71-5c5c-8af3-3536269b3946" class="tab-pane">
+                <div class="eco-box">
+                    <div class="eco-val">3663 ¤</div>
+                    <div class="eco-lbl">Valeur moyenne de l'inventaire</div>
+                </div>
+            </div>
+
+            <!-- Duels -->
+            <div id="duel-907d43ee-4d71-5c5c-8af3-3536269b3946" class="tab-pane">
+                <div class="duel-col">
+                    
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">DDD</span>
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">2</span>
+                            <span class="ds">—</span>
+                            <span class="dd">4</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">I4NIS</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">DDD</span>
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">2</span>
+                            <span class="ds">—</span>
+                            <span class="dd">3</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">KaamuuSaarii</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">DDD</span>
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">3</span>
+                            <span class="ds">—</span>
+                            <span class="dd">1</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">1for0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">DDD</span>
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">2</span>
+                            <span class="ds">—</span>
+                            <span class="dd">2</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">cholot</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">DDD</span>
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">2</span>
+                            <span class="ds">—</span>
+                            <span class="dd">0</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">Kellogs</span>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+            <!-- Armes -->
+            <div id="wpn-907d43ee-4d71-5c5c-8af3-3536269b3946" class="tab-pane">
+                <div class="wpn-col">
+                    
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/4ade7faa-4cf1-8376-95ef-39884480959b/displayicon.png" alt="Guardian"></div>
+                        <div class="wpn-name">Guardian</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">6</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/9c82e19d-4575-0200-1a81-3eacf00cf872/displayicon.png" alt="Vandal"></div>
+                        <div class="wpn-name">Vandal</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">4</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/1baa85b4-4c70-1284-64bb-6481dfc3bb4e/displayicon.png" alt="Ghost"></div>
+                        <div class="wpn-name">Ghost</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">1</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+        </div>
+    </details>
+    
+    <details class="blue-team">
+        <summary>
+            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="sum-agent" alt="Phoenix">
+            <div class="sum-body">
+                <div class="sum-name">Phabyeau#7788</div>
+                <div class="sum-meta">
+                    <img src="https://media.valorant-api.com/competitivetiers/564d8e28-c226-3180-6285-e48a390db8b1/20/largeicon.png" alt="">
+                    Phoenix &bull; Diamond 3
+                </div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">13/9/2</div>
+                <div class="sum-stat-lbl">K / D / A</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">193</div>
+                <div class="sum-stat-lbl">ACS</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val" style="color:var(--lime)">22%</div>
+                <div class="sum-stat-lbl">HS</div>
+            </div>
+            <div class="sum-arrow">&#9660;</div>
+        </summary>
+
+        <div class="detail-panel">
+            <div class="tabs-bar">
+                <button class="tab-btn active" onclick="sw(event,'aim-a5591cab-5649-53ec-a6fa-b5c17d43e6ab')">Précision</button>
+                <button class="tab-btn" onclick="sw(event,'dmg-a5591cab-5649-53ec-a6fa-b5c17d43e6ab')">Dégâts</button>
+                <button class="tab-btn" onclick="sw(event,'eco-a5591cab-5649-53ec-a6fa-b5c17d43e6ab')">Économie</button>
+                <button class="tab-btn" onclick="sw(event,'duel-a5591cab-5649-53ec-a6fa-b5c17d43e6ab')">Duels</button>
+                <button class="tab-btn" onclick="sw(event,'wpn-a5591cab-5649-53ec-a6fa-b5c17d43e6ab')">Armes</button>
+            </div>
+
+            <!-- Précision -->
+            <div id="aim-a5591cab-5649-53ec-a6fa-b5c17d43e6ab" class="tab-pane active">
+                <div class="aim-rows">
+                    <div class="aim-row">
+                        <div class="aim-lbl">Tête</div>
+                        <div class="aim-track"><div class="aim-fill fill-hs" data-w="22"></div></div>
+                        <div class="aim-pct">22%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Corps</div>
+                        <div class="aim-track"><div class="aim-fill fill-body" data-w="78"></div></div>
+                        <div class="aim-pct">78%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Jambes</div>
+                        <div class="aim-track"><div class="aim-fill fill-leg" data-w="0"></div></div>
+                        <div class="aim-pct">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dégâts -->
+            <div id="dmg-a5591cab-5649-53ec-a6fa-b5c17d43e6ab" class="tab-pane">
+                <div class="dmg-row">
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Infligés</div>
+                        <div class="dmg-box-val dmg-made">2188</div>
+                    </div>
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Reçus</div>
+                        <div class="dmg-box-val dmg-recv">2282</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Économie -->
+            <div id="eco-a5591cab-5649-53ec-a6fa-b5c17d43e6ab" class="tab-pane">
+                <div class="eco-box">
+                    <div class="eco-val">3933 ¤</div>
+                    <div class="eco-lbl">Valeur moyenne de l'inventaire</div>
+                </div>
+            </div>
+
+            <!-- Duels -->
+            <div id="duel-a5591cab-5649-53ec-a6fa-b5c17d43e6ab" class="tab-pane">
+                <div class="duel-col">
+                    
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">Phabyeau</span>
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">5</span>
+                            <span class="ds">—</span>
+                            <span class="dd">2</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">cholot</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">Phabyeau</span>
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">4</span>
+                            <span class="ds">—</span>
+                            <span class="dd">2</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">KaamuuSaarii</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">Phabyeau</span>
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">2</span>
+                            <span class="ds">—</span>
+                            <span class="dd">2</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">I4NIS</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">Phabyeau</span>
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">1</span>
+                            <span class="ds">—</span>
+                            <span class="dd">3</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">Kellogs</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">Phabyeau</span>
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">1</span>
+                            <span class="ds">—</span>
+                            <span class="dd">0</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">1for0</span>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+            <!-- Armes -->
+            <div id="wpn-a5591cab-5649-53ec-a6fa-b5c17d43e6ab" class="tab-pane">
+                <div class="wpn-col">
+                    
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/9c82e19d-4575-0200-1a81-3eacf00cf872/displayicon.png" alt="Vandal"></div>
+                        <div class="wpn-name">Vandal</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">7</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/462080d1-4035-2937-7c09-27aa2a5c27a7/displayicon.png" alt="Spectre"></div>
+                        <div class="wpn-name">Spectre</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">4</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/1baa85b4-4c70-1284-64bb-6481dfc3bb4e/displayicon.png" alt="Ghost"></div>
+                        <div class="wpn-name">Ghost</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">2</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+        </div>
+    </details>
+    
+    <details class="red-team">
+        <summary>
+            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="sum-agent" alt="Gekko">
+            <div class="sum-body">
+                <div class="sum-name">cholot#qlf</div>
+                <div class="sum-meta">
+                    <img src="https://media.valorant-api.com/competitivetiers/564d8e28-c226-3180-6285-e48a390db8b1/18/largeicon.png" alt="">
+                    Gekko &bull; Diamond 1
+                </div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">7/14/4</div>
+                <div class="sum-stat-lbl">K / D / A</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">149</div>
+                <div class="sum-stat-lbl">ACS</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val" style="color:var(--lime)">41%</div>
+                <div class="sum-stat-lbl">HS</div>
+            </div>
+            <div class="sum-arrow">&#9660;</div>
+        </summary>
+
+        <div class="detail-panel">
+            <div class="tabs-bar">
+                <button class="tab-btn active" onclick="sw(event,'aim-362f30dd-85dd-5f8e-a833-56da6828323c')">Précision</button>
+                <button class="tab-btn" onclick="sw(event,'dmg-362f30dd-85dd-5f8e-a833-56da6828323c')">Dégâts</button>
+                <button class="tab-btn" onclick="sw(event,'eco-362f30dd-85dd-5f8e-a833-56da6828323c')">Économie</button>
+                <button class="tab-btn" onclick="sw(event,'duel-362f30dd-85dd-5f8e-a833-56da6828323c')">Duels</button>
+                <button class="tab-btn" onclick="sw(event,'wpn-362f30dd-85dd-5f8e-a833-56da6828323c')">Armes</button>
+            </div>
+
+            <!-- Précision -->
+            <div id="aim-362f30dd-85dd-5f8e-a833-56da6828323c" class="tab-pane active">
+                <div class="aim-rows">
+                    <div class="aim-row">
+                        <div class="aim-lbl">Tête</div>
+                        <div class="aim-track"><div class="aim-fill fill-hs" data-w="41"></div></div>
+                        <div class="aim-pct">41%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Corps</div>
+                        <div class="aim-track"><div class="aim-fill fill-body" data-w="59"></div></div>
+                        <div class="aim-pct">59%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Jambes</div>
+                        <div class="aim-track"><div class="aim-fill fill-leg" data-w="0"></div></div>
+                        <div class="aim-pct">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dégâts -->
+            <div id="dmg-362f30dd-85dd-5f8e-a833-56da6828323c" class="tab-pane">
+                <div class="dmg-row">
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Infligés</div>
+                        <div class="dmg-box-val dmg-made">1706</div>
+                    </div>
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Reçus</div>
+                        <div class="dmg-box-val dmg-recv">2540</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Économie -->
+            <div id="eco-362f30dd-85dd-5f8e-a833-56da6828323c" class="tab-pane">
+                <div class="eco-box">
+                    <div class="eco-val">2853 ¤</div>
+                    <div class="eco-lbl">Valeur moyenne de l'inventaire</div>
+                </div>
+            </div>
+
+            <!-- Duels -->
+            <div id="duel-362f30dd-85dd-5f8e-a833-56da6828323c" class="tab-pane">
+                <div class="duel-col">
+                    
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">cholot</span>
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">2</span>
+                            <span class="ds">—</span>
+                            <span class="dd">5</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">Phabyeau</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">cholot</span>
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">2</span>
+                            <span class="ds">—</span>
+                            <span class="dd">2</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/707eab51-4836-f488-046a-cda6bf494859/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">积顿辛祖</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">cholot</span>
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">2</span>
+                            <span class="ds">—</span>
+                            <span class="dd">2</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">DDD</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">cholot</span>
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">0</span>
+                            <span class="ds">—</span>
+                            <span class="dd">4</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">ChasseurDePizza</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">cholot</span>
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">1</span>
+                            <span class="ds">—</span>
+                            <span class="dd">1</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">AKH Shway Shway</span>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+            <!-- Armes -->
+            <div id="wpn-362f30dd-85dd-5f8e-a833-56da6828323c" class="tab-pane">
+                <div class="wpn-col">
+                    
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/c4883e50-4494-202c-3ec3-6b8a9284f00b/displayicon.png" alt="Marshal"></div>
+                        <div class="wpn-name">Marshal</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">4</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/9c82e19d-4575-0200-1a81-3eacf00cf872/displayicon.png" alt="Vandal"></div>
+                        <div class="wpn-name">Vandal</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">3</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+        </div>
+    </details>
+    
+    <details class="red-team">
+        <summary>
+            <img src="https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png" class="sum-agent" alt="Omen">
+            <div class="sum-body">
+                <div class="sum-name">1for0#000</div>
+                <div class="sum-meta">
+                    <img src="https://media.valorant-api.com/competitivetiers/564d8e28-c226-3180-6285-e48a390db8b1/19/largeicon.png" alt="">
+                    Omen &bull; Diamond 2
+                </div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">5/15/5</div>
+                <div class="sum-stat-lbl">K / D / A</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">145</div>
+                <div class="sum-stat-lbl">ACS</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val" style="color:var(--lime)">31%</div>
+                <div class="sum-stat-lbl">HS</div>
+            </div>
+            <div class="sum-arrow">&#9660;</div>
+        </summary>
+
+        <div class="detail-panel">
+            <div class="tabs-bar">
+                <button class="tab-btn active" onclick="sw(event,'aim-d823d096-ca3e-5a5c-a9fe-4508a07d530c')">Précision</button>
+                <button class="tab-btn" onclick="sw(event,'dmg-d823d096-ca3e-5a5c-a9fe-4508a07d530c')">Dégâts</button>
+                <button class="tab-btn" onclick="sw(event,'eco-d823d096-ca3e-5a5c-a9fe-4508a07d530c')">Économie</button>
+                <button class="tab-btn" onclick="sw(event,'duel-d823d096-ca3e-5a5c-a9fe-4508a07d530c')">Duels</button>
+                <button class="tab-btn" onclick="sw(event,'wpn-d823d096-ca3e-5a5c-a9fe-4508a07d530c')">Armes</button>
+            </div>
+
+            <!-- Précision -->
+            <div id="aim-d823d096-ca3e-5a5c-a9fe-4508a07d530c" class="tab-pane active">
+                <div class="aim-rows">
+                    <div class="aim-row">
+                        <div class="aim-lbl">Tête</div>
+                        <div class="aim-track"><div class="aim-fill fill-hs" data-w="31"></div></div>
+                        <div class="aim-pct">31%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Corps</div>
+                        <div class="aim-track"><div class="aim-fill fill-body" data-w="54"></div></div>
+                        <div class="aim-pct">54%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Jambes</div>
+                        <div class="aim-track"><div class="aim-fill fill-leg" data-w="15"></div></div>
+                        <div class="aim-pct">15%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dégâts -->
+            <div id="dmg-d823d096-ca3e-5a5c-a9fe-4508a07d530c" class="tab-pane">
+                <div class="dmg-row">
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Infligés</div>
+                        <div class="dmg-box-val dmg-made">1503</div>
+                    </div>
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Reçus</div>
+                        <div class="dmg-box-val dmg-recv">2685</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Économie -->
+            <div id="eco-d823d096-ca3e-5a5c-a9fe-4508a07d530c" class="tab-pane">
+                <div class="eco-box">
+                    <div class="eco-val">2947 ¤</div>
+                    <div class="eco-lbl">Valeur moyenne de l'inventaire</div>
+                </div>
+            </div>
+
+            <!-- Duels -->
+            <div id="duel-d823d096-ca3e-5a5c-a9fe-4508a07d530c" class="tab-pane">
+                <div class="duel-col">
+                    
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">1for0</span>
+                            <img src="https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">3</span>
+                            <span class="ds">—</span>
+                            <span class="dd">4</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">ChasseurDePizza</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">1for0</span>
+                            <img src="https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">1</span>
+                            <span class="ds">—</span>
+                            <span class="dd">5</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">AKH Shway Shway</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">1for0</span>
+                            <img src="https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">1</span>
+                            <span class="ds">—</span>
+                            <span class="dd">3</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">DDD</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">1for0</span>
+                            <img src="https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">0</span>
+                            <span class="ds">—</span>
+                            <span class="dd">2</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/707eab51-4836-f488-046a-cda6bf494859/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">积顿辛祖</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">1for0</span>
+                            <img src="https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">0</span>
+                            <span class="ds">—</span>
+                            <span class="dd">1</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">Phabyeau</span>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+            <!-- Armes -->
+            <div id="wpn-d823d096-ca3e-5a5c-a9fe-4508a07d530c" class="tab-pane">
+                <div class="wpn-col">
+                    
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/ee8e8d15-496b-07ac-e5f6-8fae5d4c7b1a/displayicon.png" alt="Phantom"></div>
+                        <div class="wpn-name">Phantom</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">3</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/4ade7faa-4cf1-8376-95ef-39884480959b/displayicon.png" alt="Guardian"></div>
+                        <div class="wpn-name">Guardian</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">1</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/29a0cfab-485b-f5d5-779a-b59f85e204a8/displayicon.png" alt="Classic"></div>
+                        <div class="wpn-name">Classic</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">1</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+        </div>
+    </details>
+    
+    <details class="red-team">
+        <summary>
+            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="sum-agent" alt="Chamber">
+            <div class="sum-body">
+                <div class="sum-name">Kellogs#0902</div>
+                <div class="sum-meta">
+                    <img src="https://media.valorant-api.com/competitivetiers/564d8e28-c226-3180-6285-e48a390db8b1/19/largeicon.png" alt="">
+                    Chamber &bull; Diamond 2
+                </div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">7/14/1</div>
+                <div class="sum-stat-lbl">K / D / A</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">142</div>
+                <div class="sum-stat-lbl">ACS</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val" style="color:var(--lime)">14%</div>
+                <div class="sum-stat-lbl">HS</div>
+            </div>
+            <div class="sum-arrow">&#9660;</div>
+        </summary>
+
+        <div class="detail-panel">
+            <div class="tabs-bar">
+                <button class="tab-btn active" onclick="sw(event,'aim-6e279b85-b44c-5b03-b950-e9224298ab16')">Précision</button>
+                <button class="tab-btn" onclick="sw(event,'dmg-6e279b85-b44c-5b03-b950-e9224298ab16')">Dégâts</button>
+                <button class="tab-btn" onclick="sw(event,'eco-6e279b85-b44c-5b03-b950-e9224298ab16')">Économie</button>
+                <button class="tab-btn" onclick="sw(event,'duel-6e279b85-b44c-5b03-b950-e9224298ab16')">Duels</button>
+                <button class="tab-btn" onclick="sw(event,'wpn-6e279b85-b44c-5b03-b950-e9224298ab16')">Armes</button>
+            </div>
+
+            <!-- Précision -->
+            <div id="aim-6e279b85-b44c-5b03-b950-e9224298ab16" class="tab-pane active">
+                <div class="aim-rows">
+                    <div class="aim-row">
+                        <div class="aim-lbl">Tête</div>
+                        <div class="aim-track"><div class="aim-fill fill-hs" data-w="14"></div></div>
+                        <div class="aim-pct">14%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Corps</div>
+                        <div class="aim-track"><div class="aim-fill fill-body" data-w="81"></div></div>
+                        <div class="aim-pct">81%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Jambes</div>
+                        <div class="aim-track"><div class="aim-fill fill-leg" data-w="5"></div></div>
+                        <div class="aim-pct">5%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dégâts -->
+            <div id="dmg-6e279b85-b44c-5b03-b950-e9224298ab16" class="tab-pane">
+                <div class="dmg-row">
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Infligés</div>
+                        <div class="dmg-box-val dmg-made">1509</div>
+                    </div>
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Reçus</div>
+                        <div class="dmg-box-val dmg-recv">2383</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Économie -->
+            <div id="eco-6e279b85-b44c-5b03-b950-e9224298ab16" class="tab-pane">
+                <div class="eco-box">
+                    <div class="eco-val">3020 ¤</div>
+                    <div class="eco-lbl">Valeur moyenne de l'inventaire</div>
+                </div>
+            </div>
+
+            <!-- Duels -->
+            <div id="duel-6e279b85-b44c-5b03-b950-e9224298ab16" class="tab-pane">
+                <div class="duel-col">
+                    
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">Kellogs</span>
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">2</span>
+                            <span class="ds">—</span>
+                            <span class="dd">4</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">AKH Shway Shway</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">Kellogs</span>
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">1</span>
+                            <span class="ds">—</span>
+                            <span class="dd">5</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/707eab51-4836-f488-046a-cda6bf494859/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">积顿辛祖</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">Kellogs</span>
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">3</span>
+                            <span class="ds">—</span>
+                            <span class="dd">1</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">Phabyeau</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">Kellogs</span>
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">1</span>
+                            <span class="ds">—</span>
+                            <span class="dd">2</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">ChasseurDePizza</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">Kellogs</span>
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">0</span>
+                            <span class="ds">—</span>
+                            <span class="dd">2</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">DDD</span>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+            <!-- Armes -->
+            <div id="wpn-6e279b85-b44c-5b03-b950-e9224298ab16" class="tab-pane">
+                <div class="wpn-col">
+                    
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"></div>
+                        <div class="wpn-name">Inconnu</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">3</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/9c82e19d-4575-0200-1a81-3eacf00cf872/displayicon.png" alt="Vandal"></div>
+                        <div class="wpn-name">Vandal</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">2</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/4ade7faa-4cf1-8376-95ef-39884480959b/displayicon.png" alt="Guardian"></div>
+                        <div class="wpn-name">Guardian</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">1</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/a03b24d3-4319-996d-0f8c-94bbfba1dfc7/displayicon.png" alt="Operator"></div>
+                        <div class="wpn-name">Operator</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">1</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+        </div>
+    </details>
+    
+    <details class="red-team">
+        <summary>
+            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="sum-agent" alt="Phoenix">
+            <div class="sum-body">
+                <div class="sum-name">KaamuuSaarii#2027</div>
+                <div class="sum-meta">
+                    <img src="https://media.valorant-api.com/competitivetiers/564d8e28-c226-3180-6285-e48a390db8b1/20/largeicon.png" alt="">
+                    Phoenix &bull; Diamond 3
+                </div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">6/14/2</div>
+                <div class="sum-stat-lbl">K / D / A</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val">134</div>
+                <div class="sum-stat-lbl">ACS</div>
+            </div>
+            <div class="sum-stat">
+                <div class="sum-stat-val" style="color:var(--lime)">20%</div>
+                <div class="sum-stat-lbl">HS</div>
+            </div>
+            <div class="sum-arrow">&#9660;</div>
+        </summary>
+
+        <div class="detail-panel">
+            <div class="tabs-bar">
+                <button class="tab-btn active" onclick="sw(event,'aim-35fcee0a-24a4-58c8-8222-8a80fd741183')">Précision</button>
+                <button class="tab-btn" onclick="sw(event,'dmg-35fcee0a-24a4-58c8-8222-8a80fd741183')">Dégâts</button>
+                <button class="tab-btn" onclick="sw(event,'eco-35fcee0a-24a4-58c8-8222-8a80fd741183')">Économie</button>
+                <button class="tab-btn" onclick="sw(event,'duel-35fcee0a-24a4-58c8-8222-8a80fd741183')">Duels</button>
+                <button class="tab-btn" onclick="sw(event,'wpn-35fcee0a-24a4-58c8-8222-8a80fd741183')">Armes</button>
+            </div>
+
+            <!-- Précision -->
+            <div id="aim-35fcee0a-24a4-58c8-8222-8a80fd741183" class="tab-pane active">
+                <div class="aim-rows">
+                    <div class="aim-row">
+                        <div class="aim-lbl">Tête</div>
+                        <div class="aim-track"><div class="aim-fill fill-hs" data-w="20"></div></div>
+                        <div class="aim-pct">20%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Corps</div>
+                        <div class="aim-track"><div class="aim-fill fill-body" data-w="76"></div></div>
+                        <div class="aim-pct">76%</div>
+                    </div>
+                    <div class="aim-row">
+                        <div class="aim-lbl">Jambes</div>
+                        <div class="aim-track"><div class="aim-fill fill-leg" data-w="4"></div></div>
+                        <div class="aim-pct">4%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dégâts -->
+            <div id="dmg-35fcee0a-24a4-58c8-8222-8a80fd741183" class="tab-pane">
+                <div class="dmg-row">
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Infligés</div>
+                        <div class="dmg-box-val dmg-made">1376</div>
+                    </div>
+                    <div class="dmg-box">
+                        <div class="dmg-box-lbl">Reçus</div>
+                        <div class="dmg-box-val dmg-recv">2855</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Économie -->
+            <div id="eco-35fcee0a-24a4-58c8-8222-8a80fd741183" class="tab-pane">
+                <div class="eco-box">
+                    <div class="eco-val">2620 ¤</div>
+                    <div class="eco-lbl">Valeur moyenne de l'inventaire</div>
+                </div>
+            </div>
+
+            <!-- Duels -->
+            <div id="duel-35fcee0a-24a4-58c8-8222-8a80fd741183" class="tab-pane">
+                <div class="duel-col">
+                    
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">KaamuuSaarii</span>
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">2</span>
+                            <span class="ds">—</span>
+                            <span class="dd">4</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">Phabyeau</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">KaamuuSaarii</span>
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">3</span>
+                            <span class="ds">—</span>
+                            <span class="dd">2</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">DDD</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">KaamuuSaarii</span>
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">1</span>
+                            <span class="ds">—</span>
+                            <span class="dd">2</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/707eab51-4836-f488-046a-cda6bf494859/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">积顿辛祖</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">KaamuuSaarii</span>
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">0</span>
+                            <span class="ds">—</span>
+                            <span class="dd">3</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">ChasseurDePizza</span>
+                        </div>
+                    </div>
+                    
+                    <div class="duel-row">
+                        <div class="duel-side right">
+                            <span class="duel-name">KaamuuSaarii</span>
+                            <img src="https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png" class="duel-agent" alt="">
+                        </div>
+                        <div class="duel-score">
+                            <span class="dk">0</span>
+                            <span class="ds">—</span>
+                            <span class="dd">3</span>
+                        </div>
+                        <div class="duel-side">
+                            <img src="https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png" class="duel-agent" alt="">
+                            <span class="duel-name">AKH Shway Shway</span>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+            <!-- Armes -->
+            <div id="wpn-35fcee0a-24a4-58c8-8222-8a80fd741183" class="tab-pane">
+                <div class="wpn-col">
+                    
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/ee8e8d15-496b-07ac-e5f6-8fae5d4c7b1a/displayicon.png" alt="Phantom"></div>
+                        <div class="wpn-name">Phantom</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">3</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/9c82e19d-4575-0200-1a81-3eacf00cf872/displayicon.png" alt="Vandal"></div>
+                        <div class="wpn-name">Vandal</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">1</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/e336c6b8-418d-9340-d77f-7a9e4cfe0702/displayicon.png" alt="Sheriff"></div>
+                        <div class="wpn-name">Sheriff</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">1</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    <div class="wpn-row">
+                        <div class="wpn-img"><img src="https://media.valorant-api.com/weapons/ae3de142-4d85-2547-dd26-4e90bed35cf7/displayicon.png" alt="Bulldog"></div>
+                        <div class="wpn-name">Bulldog</div>
+                        <div style="text-align:center">
+                            <div class="wpn-kills">1</div>
+                            <div class="wpn-kills-lbl">kills</div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+        </div>
+    </details>
+    
+    </div>
+
+</div>
+
+<div class="footer">
+    Match ID: baa18833-434b-4269-8ec3-c202816b463d &bull; Généré automatiquement par VALBOT
+</div>
+
+<script>
+function sw(e, id) {
+    e.preventDefault(); e.stopPropagation();
+    var panel = e.target.closest('.detail-panel');
+    panel.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+    e.target.classList.add('active');
+    panel.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
+    panel.querySelector('#' + id).classList.add('active');
+}
+document.querySelectorAll('.aim-fill[data-w]').forEach(function(el) {
+    el.style.width = el.getAttribute('data-w') + '%';
+});
+</script>
+</body>
+</html>
